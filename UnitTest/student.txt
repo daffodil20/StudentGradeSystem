@@ -1,0 +1,8 @@
+01,Lihua,m,19,Computer
+02,Xiaoli,f,20,kuaiji
+03,Xiaohong,f,21,math
+04,Xiaoming,m,19,engineer
+05,Zhangsan,m,20,Computer
+06,Lisi,m,21,management
+07,Xiaoliu,f,22,bigdata
+08,Liming,m,20,AI
