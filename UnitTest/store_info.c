@@ -151,9 +151,9 @@ void score(){
 int main(){
     setlocale(LC_CTYPE,"it_IT.UTF-8");//区域设置
 
-    // student();
+    student();
     // course();
-    score();
+    // score();
 
     return 0;
 }

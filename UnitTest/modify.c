@@ -5,6 +5,7 @@
 #include <string.h>
 #include "course.h"
 #include "score.h"
+#include <stdlib.h>
 
 void modify_stu(char* old_id, char* new_id){
     //r+打开文件
@@ -44,7 +45,7 @@ void modify_stu(char* old_id, char* new_id){
         return;
     }
 
-    while (fgets(buffer, sizeof(buffer), fp) != NULL) {
+    while (fgets(buffer, sizeof(buffer), fp) != NULL) {    
         lines[line_count] = strdup(buffer); // 保存每一行到内存
         line_count++;
     }
@@ -60,17 +61,33 @@ void modify_stu(char* old_id, char* new_id){
     //逐行读文件，比较学号
     int modified = 0;
     for (int i = 0; i < line_count; i ++){
-        sscanf(lines[i], "%s", new_id);//读取新学号到字符串
-        if (strcmp(old_id, new_id) == 0){
-            char* rest_of_line = strchr(lines[i],',');
-            sprintf(lines[i], "%s%s", new_id, rest_of_line);//存储新学号
-            modified = 1;//修改的标记
+        printf("ssssseEF\n");
+        char id[50];
+        sscanf(lines[i], "%49[^,]", id);//读取新学号到字符串
+        if (strcmp(old_id, id) == 0){
+        //     char* rest_of_line = strchr(lines[i], ',');
+        //     sprintf(lines[i], "%s%s", new_id, rest_of_line);//存储新学号
+        //     printf("lines[%d]:%s\n",i,lines[i]);
+        //     modified = 1;//修改的标记
+        //     break;//后面的不需要遍历
+            char* rest_of_line = strchr(lines[i], ','); // 找到逗号的位置
+            if (rest_of_line) {
+                rest_of_line++; // 移动到逗号后面的第一个字符
+                char new_line[MAX_LINE_LENGTH];
+                snprintf(new_line, sizeof(new_line), "%s,%s", new_id, rest_of_line); // 构造新的行
+                free(lines[i]); // 释放旧行的内存
+                lines[i] = strdup(new_line); // 用新行替换
+                modified = 1; // 设置修改标记
+            }
         }
+        // }
+        
     }
     
     //查找失败
     if (!modified){
         printf("输入的学号不存在，请重新输入。\n");
+        return;
     }
 
     //将内存写回文件
@@ -83,9 +100,13 @@ void modify_stu(char* old_id, char* new_id){
 
 int main(){
     char OldID[50], NewID[50];
-    scanf("%s %s", OldID, NewID);//输入学生id
-    modify_stu(OldID, NewID);
+    printf("请依次输入需要修改的学号：\n");
+    scanf("%s", OldID);
+    printf("请依次输入修改后的学号：\n");
+    scanf("%s", NewID);
 
+    modify_stu(OldID, NewID);
+    
     return 0;
 }
 
