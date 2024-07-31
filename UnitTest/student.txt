@@ -1,3 +1,0 @@
-01,Lihua,m,19,computer
-2415,Zhangsan,m,20,management
-22015,Xiaohong,f,21,math
