@@ -1,0 +1,4 @@
+ID,name,gender,age,department
+01,Li qiang,male,19,computer
+02,Wang song,male,20,Artificial Intelligence
+03,Li li,female,21,electronic

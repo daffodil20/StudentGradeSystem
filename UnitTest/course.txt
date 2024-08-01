@@ -1,3 +1,4 @@
-S01,computer_intro,zhang
-S02,c++ language,Liu
-S124,manipulate_system,Wu
+index,course name,teacher
+S04,data structure,lisi
+P01,High Math,Xiaohong
+P02,Clanguage,Zhang

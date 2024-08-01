@@ -1,3 +1,4 @@
+ID,index,daily score,exam score,score
 01,S01,81,81,81.00
 02,S02,98,97,97.40
 01,P01,87,96,93.30

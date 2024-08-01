@@ -1,0 +1,12 @@
+"filename", "language", "C++", "C", "comment", "blank", "total"
+"c:\code\StudentGradeSystem\UnitTest\MainMenu.c", "C", 0, 160, 19, 11, 190
+"c:\code\StudentGradeSystem\UnitTest\ShowTxtFile.c", "C", 0, 8, 0, 3, 11
+"c:\code\StudentGradeSystem\UnitTest\course.h", "C++", 5, 0, 0, 0, 5
+"c:\code\StudentGradeSystem\UnitTest\delete.c", "C", 0, 47, 11, 7, 65
+"c:\code\StudentGradeSystem\UnitTest\modify.c", "C", 0, 176, 179, 61, 416
+"c:\code\StudentGradeSystem\UnitTest\score.c", "C", 0, 45, 63, 20, 128
+"c:\code\StudentGradeSystem\UnitTest\score.h", "C++", 7, 0, 0, 1, 8
+"c:\code\StudentGradeSystem\UnitTest\store_info.c", "C", 0, 89, 54, 18, 161
+"c:\code\StudentGradeSystem\UnitTest\student.h", "C++", 7, 0, 0, 2, 9
+"c:\code\StudentGradeSystem\UnitTest\testout.c", "C", 0, 77, 201, 46, 324
+"Total", "-", 19, 602, 527, 169, 1317
