@@ -101,188 +101,188 @@
 
 #define MAX_LINE_LENGTH 256
 
-void modify_course0(int item, char* idx, char* new_info) {
-    FILE *fp;
-    char buffer[MAX_LINE_LENGTH];
-    char *lines[MAX_LINE_LENGTH];
-    int line_count = 0;
+// void modify_course0(int item, char* idx, char* new_info) {
+//     FILE *fp;
+//     char buffer[MAX_LINE_LENGTH];
+//     char *lines[MAX_LINE_LENGTH];
+//     int line_count = 0;
 
-    // 读取文件内容到内存
-    fp = fopen("course.txt", "r");
-    if (fp == NULL) {
-        printf("文件打开失败\n");
-        return;
-    }
+//     // 读取文件内容到内存
+//     fp = fopen("course.txt", "r");
+//     if (fp == NULL) {
+//         printf("文件打开失败\n");
+//         return;
+//     }
 
-    while (fgets(buffer, sizeof(buffer), fp) != NULL) {
-        lines[line_count] = strdup(buffer); // 保存每一行到内存
-        line_count++;
-    }
-    fclose(fp);
+//     while (fgets(buffer, sizeof(buffer), fp) != NULL) {
+//         lines[line_count] = strdup(buffer); // 保存每一行到内存
+//         line_count++;
+//     }
+//     fclose(fp);
 
-    // 打开文件以修改数据
-    fp = fopen("course.txt", "w");
-    if (fp == NULL) {
-        printf("文件打开失败\n");
-        return;
-    }
+//     // 打开文件以修改数据
+//     fp = fopen("course.txt", "w");
+//     if (fp == NULL) {
+//         printf("文件打开失败\n");
+//         return;
+//     }
 
-    int modified = 0;
-    for (int i = 0; i < line_count; i++) {
-        char course_idx[50];
-        sscanf(lines[i], "%49[^,]", course_idx); // 读取课程编号
-        if (strcmp(idx, course_idx) == 0) {
-            char *token;
-            char *tokens[10];
-            int token_count = 0;
+//     int modified = 0;
+//     for (int i = 0; i < line_count; i++) {
+//         char course_idx[50];
+//         sscanf(lines[i], "%49[^,]", course_idx); // 读取课程编号
+//         if (strcmp(idx, course_idx) == 0) {
+//             char *token;
+//             char *tokens[10];
+//             int token_count = 0;
 
-            // 分割行并存储各列数据，去除末尾换行符
-            token = strtok(lines[i], ",\n");
-            while (token != NULL && token_count < 10) {
-                tokens[token_count++] = token;
-                token = strtok(NULL, ",\n");
-            }
+//             // 分割行并存储各列数据，去除末尾换行符
+//             token = strtok(lines[i], ",\n");
+//             while (token != NULL && token_count < 10) {
+//                 tokens[token_count++] = token;
+//                 token = strtok(NULL, ",\n");
+//             }
 
-            // 确保item在范围内
-            if (item < 1 || item > token_count) {
-                printf("指定的项不存在\n");
-                return;
-            }
+//             // 确保item在范围内
+//             if (item < 1 || item > token_count) {
+//                 printf("指定的项不存在\n");
+//                 return;
+//             }
 
-            // 替换指定的项
-            tokens[item - 1] = new_info;
+//             // 替换指定的项
+//             tokens[item - 1] = new_info;
 
-            // 重新构建行数据
-            char new_line[MAX_LINE_LENGTH] = "";
-            for (int j = 0; j < token_count; j++) {
-                strcat(new_line, tokens[j]);
-                if (j < token_count - 1) {
-                    strcat(new_line, ",");
-                }
-            }
-            strcat(new_line, "\n");
+//             // 重新构建行数据
+//             char new_line[MAX_LINE_LENGTH] = "";
+//             for (int j = 0; j < token_count; j++) {
+//                 strcat(new_line, tokens[j]);
+//                 if (j < token_count - 1) {
+//                     strcat(new_line, ",");
+//                 }
+//             }
+//             strcat(new_line, "\n");
 
-            // 替换旧行
-            free(lines[i]);
-            lines[i] = strdup(new_line);
+//             // 替换旧行
+//             free(lines[i]);
+//             lines[i] = strdup(new_line);
 
-            modified = 1;
-            break;
-        }
-    }
+//             modified = 1;
+//             break;
+//         }
+//     }
 
-    if (!modified) {
-        printf("输入的课号不存在，请重新输入。\n");
-    } else {
-        // 将内存写回文件
-        for (int i = 0; i < line_count; i++) {
-            fprintf(fp, "%s", lines[i]);
-            free(lines[i]); // 释放内存
-        }
-    }
-    fclose(fp);
-}
+//     if (!modified) {
+//         printf("输入的课号不存在，请重新输入。\n");
+//     } else {
+//         // 将内存写回文件
+//         for (int i = 0; i < line_count; i++) {
+//             fprintf(fp, "%s", lines[i]);
+//             free(lines[i]); // 释放内存
+//         }
+//     }
+//     fclose(fp);
+// }
 
-void modify_stu0(int item, char* id, char* new_info) {
-    FILE *fp;
-    char buffer[MAX_LINE_LENGTH];
-    char *lines[MAX_LINE_LENGTH];
-    int line_count = 0;
+// void modify_stu0(int item, char* id, char* new_info) {
+//     FILE *fp;
+//     char buffer[MAX_LINE_LENGTH];
+//     char *lines[MAX_LINE_LENGTH];
+//     int line_count = 0;
 
-    // 读取文件内容到内存
-    fp = fopen("student.txt", "r");
-    if (fp == NULL) {
-        printf("文件打开失败\n");
-        return;
-    }
+//     // 读取文件内容到内存
+//     fp = fopen("student.txt", "r");
+//     if (fp == NULL) {
+//         printf("文件打开失败\n");
+//         return;
+//     }
 
-    while (fgets(buffer, sizeof(buffer), fp) != NULL) {
-        lines[line_count] = strdup(buffer); // 保存每一行到内存
-        line_count++;
-    }
-    fclose(fp);
+//     while (fgets(buffer, sizeof(buffer), fp) != NULL) {
+//         lines[line_count] = strdup(buffer); // 保存每一行到内存
+//         line_count++;
+//     }
+//     fclose(fp);
 
-    // 打开文件以修改数据
-    fp = fopen("student.txt", "w");
-    if (fp == NULL) {
-        printf("文件打开失败\n");
-        return;
-    }
+//     // 打开文件以修改数据
+//     fp = fopen("student.txt", "w");
+//     if (fp == NULL) {
+//         printf("文件打开失败\n");
+//         return;
+//     }
 
-    int modified = 0;
-    for (int i = 0; i < line_count; i++) {
-        char stu_id[50];
-        sscanf(lines[i], "%49[^,]", stu_id); // 读取课程编号
-        if (strcmp(id, stu_id) == 0) {
-            char *token;
-            char *tokens[10];
-            int token_count = 0;
+//     int modified = 0;
+//     for (int i = 0; i < line_count; i++) {
+//         char stu_id[50];
+//         sscanf(lines[i], "%49[^,]", stu_id); // 读取课程编号
+//         if (strcmp(id, stu_id) == 0) {
+//             char *token;
+//             char *tokens[10];
+//             int token_count = 0;
 
-            // 分割行并存储各列数据，去除末尾换行符
-            token = strtok(lines[i], ",\n");
-            while (token != NULL && token_count < 10) {
-                tokens[token_count++] = token;
-                token = strtok(NULL, ",\n");
-            }
+//             // 分割行并存储各列数据，去除末尾换行符
+//             token = strtok(lines[i], ",\n");
+//             while (token != NULL && token_count < 10) {
+//                 tokens[token_count++] = token;
+//                 token = strtok(NULL, ",\n");
+//             }
 
-            // 确保item在范围内
-            if (item < 1 || item > token_count) {
-                printf("指定的项不存在\n");
-                return;
-            }
+//             // 确保item在范围内
+//             if (item < 1 || item > token_count) {
+//                 printf("指定的项不存在\n");
+//                 return;
+//             }
 
-            // 替换指定的项
-            tokens[item - 1] = new_info;
+//             // 替换指定的项
+//             tokens[item - 1] = new_info;
 
-            // 重新构建行数据
-            char new_line[MAX_LINE_LENGTH] = "";
-            for (int j = 0; j < token_count; j++) {
-                strcat(new_line, tokens[j]);
-                if (j < token_count - 1) {
-                    strcat(new_line, ",");
-                }
-            }
-            strcat(new_line, "\n");
+//             // 重新构建行数据
+//             char new_line[MAX_LINE_LENGTH] = "";
+//             for (int j = 0; j < token_count; j++) {
+//                 strcat(new_line, tokens[j]);
+//                 if (j < token_count - 1) {
+//                     strcat(new_line, ",");
+//                 }
+//             }
+//             strcat(new_line, "\n");
 
-            // 替换旧行
-            free(lines[i]);
-            lines[i] = strdup(new_line);
+//             // 替换旧行
+//             free(lines[i]);
+//             lines[i] = strdup(new_line);
 
-            modified = 1;
-            break;
-        }
-    }
+//             modified = 1;
+//             break;
+//         }
+//     }
 
-    if (!modified) {
-        printf("输入的课号不存在，请重新输入。\n");
-    } else {
-        // 将内存写回文件
-        for (int i = 0; i < line_count; i++) {
-            fprintf(fp, "%s", lines[i]);
-            free(lines[i]); // 释放内存
-        }
-    }
-    fclose(fp);
-}
+//     if (!modified) {
+//         printf("输入的课号不存在，请重新输入。\n");
+//     } else {
+//         // 将内存写回文件
+//         for (int i = 0; i < line_count; i++) {
+//             fprintf(fp, "%s", lines[i]);
+//             free(lines[i]); // 释放内存
+//         }
+//     }
+//     fclose(fp);
+// }
 
 
-int main() {
-    int item;
-    char idx[50], CourseNewInfo[50], id[50], StuNewInfo[50];
-    // printf("请输入要修改的项号（例如：1 2 3 4）以及课程编号和新的信息（中间用空格隔开）：\n");
+// int main() {
+//     int item;
+//     char idx[50], CourseNewInfo[50], id[50], StuNewInfo[50];
+//     // printf("请输入要修改的项号（例如：1 2 3 4）以及课程编号和新的信息（中间用空格隔开）：\n");
     
     
-    // gets(idx);
-    // gets(CourseNewInfo);
-    // scanf("%d", &item);
-    // // modify_course0(item, idx, CourseNewInfo);
-    gets(id);
-    gets(StuNewInfo);
-    scanf("%d",&item);
-    modify_stu0(item, id, StuNewInfo);
+//     // gets(idx);
+//     // gets(CourseNewInfo);
+//     // scanf("%d", &item);
+//     // // modify_course0(item, idx, CourseNewInfo);
+//     gets(id);
+//     gets(StuNewInfo);
+//     scanf("%d",&item);
+//     modify_stu0(item, id, StuNewInfo);
 
-    return 0;
-}
+//     return 0;
+// }
 
 
 // void modify_course0(char* old_idx, char* new_idx){ //修改课程信息
@@ -500,3 +500,305 @@ void modify_course1(char* idx, char* new_name){ //修改课程名称
 //     return 0;
 // }
 
+// 修改课程数据的函数
+void modify_course0(char* idx, char* new_info, int item) {
+    FILE *fp;
+    struct CourseNode *head = NULL, *last = NULL;
+    int modified = 0;
+
+    // 读取文件内容到链表
+    fp = fopen("course.txt", "r");
+    if (fp == NULL) {
+        printf("文件打开失败\n");
+        return;
+    }
+
+    // 跳过第一行
+    char first_line[MAX_LINE_LENGTH];
+    if (fgets(first_line, sizeof(first_line), fp) == NULL) {
+        printf("无法读取文件或文件为空\n");
+        fclose(fp);
+        return;
+    }
+
+    // 逐行读取文件并创建链表
+    char line[MAX_LINE_LENGTH];
+    while (fgets(line, sizeof(line), fp)) {
+        struct CourseNode *new_node = (struct CourseNode *)malloc(sizeof(struct CourseNode));
+        if (sscanf(line, "%49[^,],%49[^,],%49[^\n]", 
+                   new_node->course.index, 
+                   new_node->course.name, 
+                   new_node->course.teacher) == 3) {
+            new_node->next = NULL;
+            if (head == NULL) {
+                head = new_node;
+            } 
+            if (head != NULL) {
+                last->next = new_node;
+            }
+            last = new_node;
+            printf("index:%s name:%s teacher:%s\n", new_node->course.index, 
+                   new_node->course.name, 
+                   new_node->course.teacher);
+            // 查找并修改数据
+            if (strcmp(new_node->course.index, idx) == 0) {
+                if (item == 1) strcpy(new_node->course.index, new_info);
+                else if (item == 2) strcpy(new_node->course.name, new_info);
+                else if (item == 3) strcpy(new_node->course.teacher, new_info);
+                else printf("修改项不存在\n");
+                modified = 1;
+            }
+        } else {
+            free(new_node); // 释放未用的内存
+            break; // 结束循环
+        }
+    }
+    fclose(fp);
+
+    // 写回文件
+    fp = fopen("course.txt", "w");
+    if (fp == NULL) {
+        printf("文件打开失败\n");
+        return;
+    }
+
+    // 重新写入第一行
+    fprintf(fp, "%s", first_line);
+
+    struct CourseNode *current = head;
+    while (current != NULL) {
+        fprintf(fp, "%s,%s,%s\n", 
+                current->course.index, 
+                current->course.name, 
+                current->course.teacher);
+        struct CourseNode *temp = current;
+        current = current->next;
+        free(temp); // 释放节点内存
+        temp = NULL;
+    }
+    fclose(fp);
+
+    if (!modified) {
+        printf("输入的课号不存在，请重新输入。\n");
+    }
+}
+
+double calculate_score(char* idx, double score0, double score1){ //计算综合成绩
+    if (idx[0] == 'S')//专业课
+        return score0 * 0.4 + score1 * 0.6;
+    if (idx[0] == 'P')//公共课
+        return score0 * 0.3 + score1 * 0.7;
+}
+
+void modify_score0(char* PassWord, char* id, char* idx, double new_grade){//是哪个成绩到gui再做，查找需要id和idx
+    //定义变量
+    FILE *fp;
+    int modified = 0;
+    char first_line[MAX_LINE_LENGTH];
+    char line[MAX_LINE_LENGTH];
+    struct ScoreNode *head = NULL, *last = NULL;
+
+    //验证密码准确性
+    char pass_word[50], num[50], account[50];
+    int passed = 0;
+
+    fp = fopen("account_info.txt", "r");
+
+    while (fgets(line, sizeof(line), fp)) { //逐行读取
+        if (sscanf(line, "%49[^,],%49[^,],%49[^\n]", num, account, pass_word) == 3) { //解析字符串
+            if (strcmp(pass_word, PassWord) == 0){
+                passed = 1;//密码正确
+                break;
+            }
+        }
+    }
+    if (passed == 0){
+        printf("输入密码错误，请重新输入：\n");
+        return;
+    }
+    fclose(fp);
+
+    // 读取文件内容到链表
+    fp = fopen("score.txt", "r");
+    if (fp == NULL) {
+        printf("文件打开失败\n");
+        return;
+    }
+
+    // 跳过第一行   
+    if (fgets(first_line, sizeof(first_line), fp) == NULL) {
+        printf("无法读取文件或文件为空\n");
+        fclose(fp);
+        return;
+    }
+
+    char score_line[MAX_LINE_LENGTH];
+    // 逐行读取文件并创建链表
+    while (fgets(score_line, sizeof(score_line), fp)) {
+        struct ScoreNode *new_node = (struct ScoreNode *)malloc(sizeof(struct ScoreNode));
+        if (sscanf(score_line, "%49[^,],%49[^,],%lf,%lf,%lf", new_node->score.ID, new_node->score.index, &new_node->score.daily_grade, &new_node->score.exam_grade, &new_node->score.score) == 5) {
+            // printf("asssseAfzsdreWef\n");
+            // printf("WQedd:id:%s,index:%s,daily grade:%lf,exam grade:%lf,score:%lf\n", new_node->score.ID, new_node->score.index, new_node->score.daily_grade, new_node->score.exam_grade, new_node->score.score);
+            new_node->next = NULL;
+            if (head == NULL) {
+                head = new_node;
+            } else {
+                last->next = new_node;
+            }
+            last = new_node;
+            // printf("id:%s,index:%s,daily grade:%lf,exam grade:%lf,score:%lf\n", new_node->score.ID, new_node->score.index, new_node->score.daily_grade, new_node->score.exam_grade, new_node->score.score);
+            // 查找并修改数据
+            if (strcmp(new_node->score.ID, id) == 0 && strcmp(new_node->score.index, idx) == 0) {//学号与课号都相同
+                new_node->score.daily_grade = new_grade;//平时成绩修改
+                new_node->score.score = calculate_score(idx, new_grade, new_node->score.exam_grade);//调用计算综合成绩的函数
+                modified = 1;
+            }
+        } else {
+            free(new_node); // 释放未用的内存
+            break; // 结束循环
+        }
+    }
+    fclose(fp);
+
+    // 写回文件
+    fp = fopen("score.txt", "w");
+    if (fp == NULL) {
+        printf("文件打开失败\n");
+        return;
+    }
+
+    // 重新写入第一行
+    fprintf(fp, "%s", first_line);
+
+    struct ScoreNode *current = head;
+    while (current != NULL) {
+        fprintf(fp, "%s,%s,%d,%d,%.1f\n", current->score.ID, current->score.index, (int)current->score.daily_grade, (int)current->score.exam_grade, (float)current->score.score);//.1f控制小数部分为1位
+        struct ScoreNode *temp = current;
+        current = current->next;
+        free(temp); // 释放节点内存
+        temp = NULL;
+    }
+    fclose(fp);
+
+    if (!modified) {
+        printf("输入的课号或学号不存在，请重新输入。\n");
+        return;
+    }
+}
+
+void modify_score1(char* PassWord, char* id, char* idx, double new_grade){//是哪个成绩到gui再做，查找需要id和idx
+    //定义变量
+    FILE *fp;
+    int modified = 0;
+    char first_line[MAX_LINE_LENGTH];
+    char line[MAX_LINE_LENGTH];//存储account.txt
+    struct ScoreNode *head = NULL, *last = NULL;
+
+    //验证密码准确性
+    char pass_word[50], num[50], account[50];
+    int passed = 0;
+
+    fp = fopen("account_info.txt", "r");
+
+    while (fgets(line, sizeof(line), fp)) { //逐行读取
+        if (sscanf(line, "%49[^,],%49[^,],%49[^\n]", num, account, pass_word) == 3) { //解析字符串
+            if (strcmp(pass_word, PassWord) == 0){
+                passed = 1;//密码正确
+                break;
+            }
+        }
+    }
+    if (passed == 0){
+        printf("输入密码错误，请重新输入：\n");
+        return;
+    }
+    fclose(fp);
+
+    // 读取文件内容到链表
+    fp = fopen("score.txt", "r");
+    if (fp == NULL) {
+        printf("文件打开失败\n");
+        return;
+    }
+
+    // 跳过第一行   
+    if (fgets(first_line, sizeof(first_line), fp) == NULL) {
+        printf("无法读取文件或文件为空\n");
+        fclose(fp);
+        return;
+    }
+
+    char score_line[MAX_LINE_LENGTH];//存储score.txt
+    // 逐行读取文件并创建链表
+    while (fgets(score_line, sizeof(score_line), fp)) {
+        struct ScoreNode *new_node = (struct ScoreNode *)malloc(sizeof(struct ScoreNode));
+        if (sscanf(score_line, "%49[^,],%49[^,],%lf,%lf,%lf", new_node->score.ID, new_node->score.index, &new_node->score.daily_grade, &new_node->score.exam_grade, &new_node->score.score) == 5) {
+            // printf("asssseAfzsdreWef\n");
+            // printf("WQedd:id:%s,index:%s,daily grade:%lf,exam grade:%lf,score:%lf\n", new_node->score.ID, new_node->score.index, new_node->score.daily_grade, new_node->score.exam_grade, new_node->score.score);
+            new_node->next = NULL;
+            if (head == NULL) {
+                head = new_node;
+            } else {
+                last->next = new_node;
+            }
+            last = new_node;
+            // printf("id:%s,index:%s,daily grade:%lf,exam grade:%lf,score:%lf\n", new_node->score.ID, new_node->score.index, new_node->score.daily_grade, new_node->score.exam_grade, new_node->score.score);
+            // 查找并修改数据
+            if (strcmp(new_node->score.ID, id) == 0 && strcmp(new_node->score.index, idx) == 0) {//学号与课号都相同
+                new_node->score.exam_grade = new_grade;//卷面成绩修改
+                new_node->score.score = calculate_score(idx, new_node->score.daily_grade, new_grade);//调用计算综合成绩的函数
+                modified = 1;
+            }
+        } else {
+            free(new_node); // 释放未用的内存
+            break; // 结束循环
+        }
+    }
+    fclose(fp);
+
+    // 写回文件
+    fp = fopen("score.txt", "w");
+    if (fp == NULL) {
+        printf("文件打开失败\n");
+        return;
+    }
+
+    // 重新写入第一行
+    fprintf(fp, "%s", first_line);
+
+    struct ScoreNode *current = head;
+    while (current != NULL) {
+        fprintf(fp, "%s,%s,%d,%d,%.1f\n", current->score.ID, current->score.index, (int)current->score.daily_grade, (int)current->score.exam_grade, (float)current->score.score);//.1f控制小数部分为1位
+        struct ScoreNode *temp = current;
+        current = current->next;
+        free(temp); // 释放节点内存
+        temp = NULL;
+    }
+    fclose(fp);
+
+    if (!modified) {
+        printf("输入的课号或学号不存在，请重新输入。\n");
+        return;
+    }
+}
+
+
+int main() {
+    char idx[50], new_info[50], index[50], password[50], id[50];
+    double NewGrade;//平时或卷面成绩
+    int item;
+
+    // printf("请输入课程编号、新信息和要修改的项（1: 课号, 2: 名称，3：老师）：\n");
+    // gets(idx);
+    // gets(new_info);
+    // scanf("%d", &item);
+    // modify_course0(idx, new_info, item);
+    gets(password);
+    gets(id);
+    gets(index);
+    scanf("%lf", &NewGrade);
+    modify_score0(password, id, index, NewGrade);
+    modify_score1(password, id, index, NewGrade);
+
+    return 0;
+}

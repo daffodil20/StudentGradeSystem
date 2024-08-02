@@ -1,4 +1,2 @@
 index,course name,teacher
-S04,data structure,lisi
-P01,High Math,Xiaohong
 P02,Clanguage,Zhang

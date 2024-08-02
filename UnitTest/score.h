@@ -1,7 +1,12 @@
 struct Score{
-    char ID[20];
-    char index[5];
+    char ID[50];
+    char index[50];
     double daily_grade;
     double exam_grade;
     double score;
+};
+
+struct ScoreNode{
+    struct Score score;
+    struct ScoreNode *next;
 };
