@@ -499,6 +499,84 @@ void modify_course1(char* idx, char* new_name){ //修改课程名称
 
 //     return 0;
 // }
+void modify_stu0(char* id, char* new_info, int item) {
+    FILE *fp;
+    struct StudentNode *head = NULL, *last = NULL;
+    int modified = 0;
+
+    // 读取文件内容到链表
+    fp = fopen("student.txt", "r");
+    if (fp == NULL) {
+        printf("文件打开失败\n");
+        return;
+    }
+
+    // 跳过第一行
+    char first_line[MAX_LINE_LENGTH];
+    if (fgets(first_line, sizeof(first_line), fp) == NULL) {
+        printf("无法读取文件或文件为空\n");
+        fclose(fp);
+        return;
+    }
+
+    // 逐行读取文件并创建链表
+    char line[MAX_LINE_LENGTH];
+    while (fgets(line, sizeof(line), fp)) {
+        struct StudentNode *new_node = (struct StudentNode *)malloc(sizeof(struct StudentNode));
+        if (sscanf(line, "%49[^,],%49[^,],%49[^,],%49[^,],%49[^\n]", new_node->student.ID, new_node->student.name, new_node->student.gender, new_node->student.age, new_node->student.profession) == 5) {
+            new_node->next = NULL;
+            if (head == NULL) {
+                head = new_node;
+            } else {
+                last->next = new_node;
+            }
+            last = new_node;
+            last->next = NULL;
+            // printf("index:%s name:%s teacher:%s\n", new_node->course.index, 
+                //    new_node->course.name,
+                //    new_node->course.teacher);
+            // 查找并修改数据
+            if (strcmp(new_node->student.ID, id) == 0) {
+                if (item == 1) strcpy(new_node->student.ID, new_info);
+                else if (item == 2) strcpy(new_node->student.name, new_info);
+                else if (item == 3) strcpy(new_node->student.gender, new_info);
+                else if (item == 4) strcpy(new_node->student.age, new_info);
+                else if (item == 5) strcpy(new_node->student.profession, new_info);
+                else printf("修改项不存在\n");
+                modified = 1;//修改标记
+            }
+        } else {
+            free(new_node); // 释放未用的内存
+            break; // 结束循环
+        }
+    }
+    fclose(fp);
+
+    // 写回文件
+    fp = fopen("student.txt", "w");
+    if (fp == NULL) {
+        printf("文件打开失败\n");
+        return;
+    }
+
+    // 重新写入第一行
+    fprintf(fp, "%s", first_line);
+
+    struct StudentNode *current = head;
+    while (current != NULL) {
+        fprintf(fp, "%s,%s,%s,%s,%s\n", current->student.ID, current->student.name, current->student.gender, current->student.age, current->student.profession);
+        struct StudentNode *temp = current;
+        current = current->next;
+        free(temp); // 释放节点内存
+        temp = NULL;
+    }
+    fclose(fp);
+
+    if (!modified) {
+        printf("输入的课号不存在，请重新输入。\n");
+    }
+}
+
 
 // 修改课程数据的函数
 void modify_course0(char* idx, char* new_info, int item) {
@@ -532,8 +610,7 @@ void modify_course0(char* idx, char* new_info, int item) {
             new_node->next = NULL;
             if (head == NULL) {
                 head = new_node;
-            } 
-            if (head != NULL) {
+            } else {
                 last->next = new_node;
             }
             last = new_node;
@@ -590,6 +667,7 @@ double calculate_score(char* idx, double score0, double score1){ //计算综合�
         return score0 * 0.3 + score1 * 0.7;
 }
 
+//修改成绩信息
 void modify_score0(char* PassWord, char* id, char* idx, double new_grade){//是哪个成绩到gui再做，查找需要id和idx
     //定义变量
     FILE *fp;
@@ -793,12 +871,15 @@ int main() {
     // gets(new_info);
     // scanf("%d", &item);
     // modify_course0(idx, new_info, item);
-    gets(password);
+    // gets(password);
     gets(id);
-    gets(index);
-    scanf("%lf", &NewGrade);
-    modify_score0(password, id, index, NewGrade);
-    modify_score1(password, id, index, NewGrade);
+    gets(new_info);
+    scanf("%d", &item);
+    // gets(index);
+    // scanf("%lf", &NewGrade);
+    modify_stu0(id, new_info, item);
+    // modify_score0(password, id, index, NewGrade);
+    // modify_score1(password, id, index, NewGrade);
 
     return 0;
 }

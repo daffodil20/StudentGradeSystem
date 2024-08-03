@@ -1,2 +1,8 @@
 index,course name,teacher
-P02,Clanguage,Zhang
+S01,computer introduction,Zhang ying quan
+S02,data structure,Liu jin jun
+S03,operating system,Wu ming
+P01,high level math,Li bai
+P02,probability theory,Su zhi peng
+P03,college English,Li hua
+
