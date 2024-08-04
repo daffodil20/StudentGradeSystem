@@ -301,7 +301,82 @@ void exam_statistics(){ //卷面分数分数段人数统计
 }
 
 void score_statistics(){ //综合分数分数段人数统计
+    int scoreSta[MAX_TOTAL_COURSE][6] = {0}; //综合成绩分数段 
+    FILE *fp;
+    struct Score score;
+    struct Course course;
+    int scores[MAX_TOTAL_COURSE][MAX_STU_PER_COURSE] = {0}; //存储不同课程所有选修学生综合成绩的数组
+    char line[MAX_LINE_LENGTH], courseIdxs[MAX_TOTAL_COURSE][50], courseNames[MAX_TOTAL_COURSE][50];
+    int totalCourse = 0, stuCounter[MAX_TOTAL_COURSE] = {0}, tmp;//存储课程数目和选修人数
+    int notSign = 0;
 
+    //遍历course文件
+    fp = fopen("course.txt", "r");
+    fgets(line, sizeof(line), fp);
+
+    while (fgets(line, sizeof(line), fp)){
+        if (sscanf(line, "%49[^,],%49[^,],%49[^\n]", course.index, course.name, course.teacher) == 3){ 
+            strcpy(courseIdxs[totalCourse], course.index); //记录课号
+            strcpy(courseNames[totalCourse], course.name); //记录课名
+        }
+        totalCourse ++; //统计课程数量
+    } 
+    fclose(fp);
+
+    //遍历score.txt
+    fp = fopen("score.txt", "r");
+    fgets(line, sizeof(line), fp);
+    
+    while (fgets(line, sizeof(line), fp)){
+        if (sscanf(line, "%49[^,],%49[^,],%lf,%lf,%lf", score.ID, score.index, &score.daily_grade, &score.exam_grade, &score.score) == 5){
+            for (int i = 0; i < totalCourse; i ++){
+                if (strcmp(score.index, courseIdxs[i]) == 0){ //找到对应的课程
+                    scores[i][stuCounter[i]] = score.score; //记录综合成绩score
+                    stuCounter[i] ++;
+                }
+            }
+        }
+    }
+    fclose(fp);
+
+    //按分数段统计
+    for (int i = 0; i < totalCourse; i ++){
+        for (int j = 0; j < stuCounter[i]; j ++){
+            if (scores[i][j] == 100)
+                scoreSta[i][5] ++;
+            else if (scores[i][j] < 100 && scores[i][j] >= 90)
+                scoreSta[i][4] ++;
+            else if (scores[i][j] < 90 && scores[i][j] >= 80)
+                scoreSta[i][3] ++;
+            else if (scores[i][j] < 80 && scores[i][j] >= 70)
+                scoreSta[i][2] ++;
+            else if (scores[i][j] < 70 && scores[i][j] >= 60)
+                scoreSta[i][1] ++;
+            else if (scores[i][j] < 60 && scores[i][j] >= 0)
+                scoreSta[i][0] ++;
+            else
+                printf("成绩范围错误，不计入。\n");
+        }
+    }
+
+    //输出结果
+    for (int i = 0; i < totalCourse; i ++){
+        for (int j = 0; j < 6; j ++){
+            if (scoreSta[i][j] > 0){ 
+                notSign ++; //有人报名
+            }
+        }
+        if (notSign > 0){
+            printf("课程: %s,%s\n综合成绩分数段（单位：人）：\n", courseIdxs[i], courseNames[i]); //哪个课程
+            printf("0-60分: %d ", scoreSta[i][0]);
+            printf("60-70分: %d ", scoreSta[i][1]);
+            printf("70-80分: %d ", scoreSta[i][2]);
+            printf("80-90分: %d ", scoreSta[i][3]);
+            printf("90-100分: %d ", scoreSta[i][4]);
+            printf("100分: %d\n\n", scoreSta[i][5]);
+        }
+        notSign = 0;
+    }
 }
 
 int main(){
@@ -309,7 +384,8 @@ int main(){
     // average_exam_grade();
     // max_exam_grade();
     // max_score();
-    exam_statistics();
+    // exam_statistics();
+    score_statistics();
 
-    return 9;
+    return 0;
 }
