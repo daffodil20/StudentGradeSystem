@@ -23,8 +23,8 @@ void average_score(){ //综合成绩平均分
         if (sscanf(line, "%49[^,],%49[^,],%49[^\n]", course.index, course.name, course.teacher) == 3){ 
             strcpy(courseIdxs[totalCourse], course.index); //记录课号
             strcpy(courseNames[totalCourse], course.name); //记录课名
+            totalCourse ++; //统计课程数量
         }
-        totalCourse ++; //统计课程数量
     } 
     fclose(fp);
     
@@ -69,8 +69,8 @@ void average_exam_grade(){ //卷面成绩平均分
         if (sscanf(line, "%49[^,],%49[^,],%49[^\n]", course.index, course.name, course.teacher) == 3){ 
             strcpy(courseIdxs[totalCourse], course.index); //记录课号
             strcpy(courseNames[totalCourse], course.name); //记录课名
+            totalCourse ++; //统计课程数量
         }
-        totalCourse ++; //统计课程数量
     } 
     fclose(fp);
     
@@ -115,8 +115,8 @@ void max_exam_grade(){ //卷面成绩最高分
         if (sscanf(line, "%49[^,],%49[^,],%49[^\n]", course.index, course.name, course.teacher) == 3){ 
             strcpy(courseIdxs[totalCourse], course.index); //记录课号
             strcpy(courseNames[totalCourse], course.name); //记录课名
+            totalCourse ++; //统计课程数量
         }
-        totalCourse ++; //统计课程数量
     } 
     fclose(fp);
     
@@ -176,8 +176,8 @@ void max_score(){ //综合成绩最高分
         if (sscanf(line, "%49[^,],%49[^,],%49[^\n]", course.index, course.name, course.teacher) == 3){ 
             strcpy(courseIdxs[totalCourse], course.index); //记录课号
             strcpy(courseNames[totalCourse], course.name); //记录课名
+            totalCourse ++; //统计课程数量
         }
-        totalCourse ++; //统计课程数量
     } 
     fclose(fp);
     
@@ -239,8 +239,8 @@ void exam_statistics(){ //卷面分数分数段人数统计
         if (sscanf(line, "%49[^,],%49[^,],%49[^\n]", course.index, course.name, course.teacher) == 3){ 
             strcpy(courseIdxs[totalCourse], course.index); //记录课号
             strcpy(courseNames[totalCourse], course.name); //记录课名
+            totalCourse ++; //统计课程数量
         }
-        totalCourse ++; //统计课程数量
     } 
     fclose(fp);
 
@@ -318,8 +318,8 @@ void score_statistics(){ //综合分数分数段人数统计
         if (sscanf(line, "%49[^,],%49[^,],%49[^\n]", course.index, course.name, course.teacher) == 3){ 
             strcpy(courseIdxs[totalCourse], course.index); //记录课号
             strcpy(courseNames[totalCourse], course.name); //记录课名
+            totalCourse ++; //统计课程数量
         }
-        totalCourse ++; //统计课程数量
     } 
     fclose(fp);
 
