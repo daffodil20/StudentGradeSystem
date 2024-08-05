@@ -1,6 +1,6 @@
 ID,name,gender,age,department
-01,Li qiang,male,19,computer
-02,Wang song,male,20,telecommunication
+01,Li qiang,male,19,math
+02,Wang song,male,21,telecommunication
 03,Li li,female,18,electronic
 04,Zhang ping,female,21,computer
 06,Wang xiao ke,male,20,computer

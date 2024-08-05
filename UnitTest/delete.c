@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-void delete_stu0(char* old_id){ //根据学生学号删除学生信息
+void delete_stu(char* old_id, char* old_name){ //根据学生学号和姓名删除学生信息
     #define MAX_LINE_LENGTH 256
     FILE *fp;
     char first_line[MAX_LINE_LENGTH];
@@ -31,7 +31,7 @@ void delete_stu0(char* old_id){ //根据学生学号删除学生信息
     while (fgets(line, sizeof(line), fp) != NULL){
         struct StudentNode *new_node = (struct StudentNode*)malloc(sizeof(struct StudentNode));//创建节点
         if (sscanf(line, "%49[^,],%49[^,],%49[^,],%49[^,],%49[^\n]", new_node->student.ID, new_node->student.name, new_node->student.gender, new_node->student.age, new_node->student.profession) == 5){ //解析字符串
-            if (strcmp(old_id, new_node->student.ID) == 0){ //判断id是否相同
+            if (strcmp(old_id, new_node->student.ID) == 0 && strcmp(old_name, new_node->student.name) == 0){ //判断id,name是否匹配
                 free(new_node);//删除对应节点
                 deleted = 1;
             }else{
@@ -75,7 +75,7 @@ void delete_stu0(char* old_id){ //根据学生学号删除学生信息
     fclose(fp);
 }
 
-void delete_course0(char *idx){ //根据课程课号删除课程信息
+void delete_course(char *idx, char *name){ //根据课程课号删除课程信息
     #define MAX_LINE_LENGTH 256
     FILE *fp;
     char first_line[MAX_LINE_LENGTH];
@@ -101,7 +101,7 @@ void delete_course0(char *idx){ //根据课程课号删除课程信息
     while (fgets(line, sizeof(line), fp) != NULL){
         struct CourseNode *new_node = (struct CourseNode*)malloc(sizeof(struct CourseNode));//创建节点
         if (sscanf(line, "%49[^,],%49[^,],%49[^\n]", new_node->course.index, new_node->course.name, new_node->course.teacher) == 3){ //解析字符串
-            if (strcmp(idx, new_node->course.index) == 0){ //判断id是否相同
+            if (strcmp(idx, new_node->course.index) == 0 && strcmp(name, new_node->course.name) == 0 ){ //判断id是否相同
                 free(new_node);//删除对应节点
                 deleted = 1;
             }else{
@@ -140,7 +140,7 @@ void delete_course0(char *idx){ //根据课程课号删除课程信息
     
     //查找失败
     if (!deleted){
-        printf("输入的课号不存在，请重新输入。\n");
+        printf("输入的课号或课名不存在/课号与课名不匹配，请重新输入。\n");
         return;
     }
 
@@ -245,12 +245,12 @@ void delete_score(char* id, char* idx){ //根据学生学号和课程课号删�
 }
 
 int main(){
-    char id[50], index[50];
+    char id[50], index[50], name[50];
     // gets(id);
     gets(index);
-    // delete_stu0(id);
+    delete_stu(id, name);
     // delete_score(id, index);
-    delete_course0(index);
+    delete_course(index, name);
 
     return 0;
 }

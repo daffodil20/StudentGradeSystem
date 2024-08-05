@@ -111,7 +111,7 @@ void stu_info(){
         if (courseCounter[i] != 0){
             printf("%s,%s,%d,%d\n", stuIds[i], stuNames[i], courseCounter[i], failCounter[i]); //显示课程信息及不及格人数
         }else{
-            printf("%s,%s,%d个课程\n", stuIds[i], stuNames[i], courseCounter[i]);
+            printf("%s,%s,%d\n", stuIds[i], stuNames[i], courseCounter[i]);
         }    
     }
 }
