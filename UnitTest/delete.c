@@ -40,6 +40,7 @@ void delete_stu(char* old_id, char* old_name){ //根据学生学号和姓名删�
                 else
                     last->next = new_node;//添加节点
                 last = new_node;
+                last->next = NULL;
             }
         }else{
             free(new_node);//释放多余内存
@@ -248,7 +249,9 @@ int main(){
     char id[50], index[50], name[50];
     // gets(id);
     gets(index);
-    delete_stu(id, name);
+    gets(name);
+    // gets(index);
+    // delete_stu(id, name);
     // delete_score(id, index);
     delete_course(index, name);
 

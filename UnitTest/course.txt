@@ -1,7 +1,8 @@
 index,course name,teacher
-S01,computer introduction,Zhang ying quan
 S02,data structure,Liu jin jun
 S03,operating system,Zhang jun
 P01,high level math,Li bai
 P02,probability theory,Su zhi peng
 P03,college English,Li hua
+P04,English,Zhangmeng
+S05,millitary_theory,Zhaoqiang
