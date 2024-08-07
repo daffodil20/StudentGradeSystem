@@ -6,3 +6,4 @@ P02,probability theory,Su zhi peng
 P03,college English,Li hua
 P04,English,Zhangmeng
 S05,millitary_theory,Zhaoqiang
+P05,computer_component,Lihua

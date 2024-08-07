@@ -224,6 +224,7 @@
 #include <string.h>
 #include "course.h"
 #include "score.h"  // 假设你有一个 "score.h" 头文件
+#include "account.h"
 
 #define MAX_LINE_LENGTH 256
 
@@ -454,13 +455,88 @@ void modify_course0(char* idx, char* new_info, int item) {
     }
 }
 
+int log_in(char *account_name, char *name, char *role, char *password){ //用户登录
+    struct Account account;
+    //判断密码是否存在
+    // if (strcmp(password, "12345") != 0){
+        //printf("password:%s",password);
+    //     return 1;
+    // }
+    //读文件，判断账号是否存在
+    char buffer[300];
+    int start = 0, end = 0, i, j = 0;
+    
+    //打开账号文件
+    FILE* fp;
+    fp = fopen("account_info.txt","r");
+    if (fp == NULL){
+        printf("文件打开失败\n");
+        return;
+        //exit();
+    }
+
+    fgets(buffer, sizeof(buffer), fp);
+    while (fgets(buffer, sizeof(buffer), fp) != NULL){
+        if (sscanf(buffer, "%49[^,],%49[^,],%49[^,],%49[^\n]", account.user, account.name, account.role, account.password) == 4){
+            if (strcmp(account_name, account.user) == 0){ //比较其他信息
+                if (strcmp(name, account.name) != 0 || strcmp(role, account.role) != 0 || strcmp(password, account.password) != 0){
+                    printf("信息错误!\n");
+                    break;
+                }else{
+                    printf("登录成功!\n");
+                    return 0;
+                } 
+            }
+        }
+
+        // for (i = 0; i < strlen(buffer); i ++){
+        //     //不相同字符：
+        //     if (buffer[i] != account_name[j] || account_name[j] == ','){
+        //         j = 0;//重新开始比较
+        //     }
+        //     //相同字符：
+        //     if (buffer[i] == account_name[j] && account_name[j] != ','){
+        //         // printf("buffer:%c,account:%c\n",buffer[i],account_name[j]);      
+        //         if (j == 0){
+        //             start = i; //record start position
+        //             // printf("start:%d\n",start);
+        //         }             
+        //         if (j == strlen(account_name)-1){
+        //             end = i; //record end position
+        //             // printf("end:%d\n",end);
+        //             break;
+        //         }
+        //         j ++;
+        //     }           
+        // }
+        // printf("start:%d,end:%d\n",start,end);
+        // if (end - start + 1 == strlen(account_name)){
+        //     return 0;//账号与密码都存在
+        // }
+        // j = 0;//重置j
+    }
+    
+    return 1;//账号与其他信息不匹配
+    //关闭文件
+    fclose(fp);
+
+    // account_idx ++;
+    // return account_idx;//返回账号序号
+}
+
 int main() {
     char idx[50], new_info[50];
+    char account[50], name[50], role[50], password[50];
     int item;
-    printf("请输入课程编号、新信息和要修改的项（1: 课号, 2: 名称，3：老师）：\n");
-    gets(idx);
-    gets(new_info);
-    scanf("%d", &item);
-    modify_course0(idx, new_info, item);
+    // printf("请输入课程编号、新信息和要修改的项（1: 课号, 2: 名称，3：老师）：\n");
+    // gets(idx);
+    // gets(new_info);
+    // scanf("%d", &item);
+    // modify_course0(idx, new_info, item);
+    gets(account);
+    gets(name);
+    gets(role);
+    gets(password);
+    log_in(account, name, role, password);
     return 0;
 }

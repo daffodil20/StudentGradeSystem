@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-
+#include "account.h"
 // TODO:新增,修改与删除账号
 void manager(int task_num){
     switch (task_num)
@@ -74,12 +74,13 @@ void student(int task_num){
     }
 }
 
-int log_in(char *account_name, char *password){ //用户登录
+int log_in(char *account_name, char *name, char *role, char *password){ //用户登录
+    struct Account account;
     //判断密码是否存在
-    if (strcmp(password, "12345") != 0){
+    // if (strcmp(password, "12345") != 0){
         //printf("password:%s",password);
-        return 1;
-    }
+    //     return 1;
+    // }
     //读文件，判断账号是否存在
     char buffer[300];
     int start = 0, end = 0, i, j = 0;
@@ -89,37 +90,52 @@ int log_in(char *account_name, char *password){ //用户登录
     fp = fopen("account_info.txt","r");
     if (fp == NULL){
         printf("文件打开失败\n");
+        return;
         //exit();
     }
+
+    fgets(buffer, sizeof(buffer), fp);
     while (fgets(buffer, sizeof(buffer), fp) != NULL){
-        for (i = 0; i < strlen(buffer); i ++){
-            //不相同字符：
-            if (buffer[i] != account_name[j] || account_name[j] == ','){
-                j = 0;//重新开始比较
-            }
-            //相同字符：
-            if (buffer[i] == account_name[j] && account_name[j] != ','){
-                // printf("buffer:%c,account:%c\n",buffer[i],account_name[j]);      
-                if (j == 0){
-                    start = i; //record start position
-                    // printf("start:%d\n",start);
-                }             
-                if (j == strlen(account_name)-1){
-                    end = i; //record end position
-                    // printf("end:%d\n",end);
+        if (sscanf(buffer, "%49[^,],%49[^,],%49[^,],%49[^\n]", account.user, account.name, account.role, account.password) == 4){
+            if (strcmp(account_name, account.user) == 0){ //比较其他信息
+                if (strcmp(name, account.name) != 0 || strcmp(role, account.role) != 0 || strcmp(password, account.password) != 0){
+                    // printf("信息错误!\n");
                     break;
-                }
-                j ++;
-            }           
+                }else{
+                    // printf("登录成功!\n");
+                    return 0;
+                } 
+            }
         }
+
+        // for (i = 0; i < strlen(buffer); i ++){
+        //     //不相同字符：
+        //     if (buffer[i] != account_name[j] || account_name[j] == ','){
+        //         j = 0;//重新开始比较
+        //     }
+        //     //相同字符：
+        //     if (buffer[i] == account_name[j] && account_name[j] != ','){
+        //         // printf("buffer:%c,account:%c\n",buffer[i],account_name[j]);      
+        //         if (j == 0){
+        //             start = i; //record start position
+        //             // printf("start:%d\n",start);
+        //         }             
+        //         if (j == strlen(account_name)-1){
+        //             end = i; //record end position
+        //             // printf("end:%d\n",end);
+        //             break;
+        //         }
+        //         j ++;
+        //     }           
+        // }
         // printf("start:%d,end:%d\n",start,end);
-        if (end - start + 1 == strlen(account_name)){
-            return 0;//账号与密码都存在
-        }
-        j = 0;//重置j
+        // if (end - start + 1 == strlen(account_name)){
+        //     return 0;//账号与密码都存在
+        // }
+        // j = 0;//重置j
     }
     
-    return 2;//账号错误
+    return 1;//账号与其他信息不匹配
     //关闭文件
     fclose(fp);
 
@@ -136,13 +152,13 @@ int main(){
     printf("你好，请输入账号和密码：\n");
     scanf("%s",AccountName);
     scanf("%s",PassWord);
-    result = log_in(AccountName, PassWord);
+    result = log_in(AccountName, PassWord, role, PassWord);
     if (result == 0)
         printf("恭喜，登录成功!\n");
     if (result == 1)
-        printf("密码错误，请重新输入(默认为12345)。\n");
-    if (result == 2)
-        printf("账号不存在，请重新输入。\n");
+        printf("姓名/角色/密码错误，请重新输入(默认为12345)。\n");
+    // if (result == 2)
+    //     printf("账号不存在，请重新输入。\n");
 
     //选择角色+任务
     scanf("%d",&role);

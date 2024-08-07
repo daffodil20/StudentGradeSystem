@@ -82,7 +82,7 @@ void student(){
 
         // 检查学号是否重复
         fgets(buffer, sizeof(buffer), fptr); //跳过表头
-        while (fgets(buffer, sizeof(buffer), fptr)) {
+        while (fgets(buffer, sizeof(buffer), fptr)){
             if (sscanf(buffer, "%49[^,],%49[^,],%49[^,],%49[^,],%49[^\n]", temp.ID, temp.name, temp.gender, temp.age, temp.profession) == 5) {
                 if (strcmp(stu.ID, temp.ID) == 0) {
                     sameID = 1;

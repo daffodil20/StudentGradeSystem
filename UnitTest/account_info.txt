@@ -1,3 +1,4 @@
-01,100254864,12345
-02,2991Afb0E,12345
-03,2385a02ffs,12345
+username,name,role,password(hashed)
+23552,Xiao hong,teacher,35524
+23520,Li hua,teacher,422578
+135245,Zhang san,student,23465
