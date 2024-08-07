@@ -97,7 +97,7 @@ void modify_password(char* username, char* name, char* new_password){
 }
 
 int main(){
-    char userName[50], name[50], role[50], newPassword[50];
+    char userName[50], name[50], role[50], newPassword[50], temp_new[50];
     int total; //记录添加信息的条数
     // gets(userName); //老师的用户名为工号，学生的为学号
     // gets(name);
@@ -114,8 +114,25 @@ int main(){
         // add_info(userName, name, role);
         gets(userName); //老师的用户名为工号，学生的为学号
         gets(name);
-        gets(newPassword);
-        modify_password(userName, name, newPassword);
+        gets(newPassword);//第一次输入新密码
+        for (int j = 0; j < strlen(newPassword); j ++){
+            if ((newPassword[j] >= 'a' && newPassword[j] <= 'z') || (newPassword[j] >= '0' && newPassword[j] <= '9')){ //密码符合条件
+                continue;
+            }else{
+                printf("密码不符合条件，密码不能含有特殊符号或大写字母。\n");
+                return;
+            }
+        }
+        
+        modify_password(userName, name, newPassword); //寻找对应的账号
+        strcpy(temp_new, newPassword);
+        gets(newPassword);//再次输入新密码
+        if (strcmp(newPassword, temp_new) == 0)
+            printf("修改密码成功！\n");
+        else{
+            printf("第二次输入错误！\n");
+            return;
+        }   
     }
     
     return 0;

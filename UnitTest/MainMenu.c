@@ -2,6 +2,8 @@
 #include <string.h>
 #include "account.h"
 // TODO:新增,修改与删除账号
+// TODO:录入信息的函数需要加上参数，把scanf放到main里，多次调用
+//管理员可以添加其他人的信息，老师可以修改成绩，所有人都可以修改密码
 void manager(int task_num){
     switch (task_num)
     {
