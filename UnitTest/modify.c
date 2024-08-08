@@ -6,11 +6,13 @@
 #include "course.h"
 #include "score.h"
 #include <stdlib.h>
+#include "modify.h"
+#include "account.h"
 
 // TODO: 根据姓名与课名修改
 // TODO: (possible)变量全局化
 
-#define MAX_LINE_LENGTH 256
+// #define MAX_LINE_LENGTH 256
 
 void modify_stu(char* id, char* name, char* new_info, int item) { //根据学号与姓名修改
     FILE *fp;
@@ -180,7 +182,7 @@ double calculate_score(char* idx, double score0, double score1){ //计算综合�
 }
 
 //修改成绩信息
-void modify_score0(char* PassWord, char* id, char* idx, double new_grade){//是哪个成绩到gui再做，查找需要id和idx
+void modify_score0(char* accountName, char* PassWord, char* id, char* idx, double new_grade){//是哪个成绩到gui再做，查找需要id和idx
     //定义变量
     FILE *fp;
     int modified = 0;
@@ -189,14 +191,15 @@ void modify_score0(char* PassWord, char* id, char* idx, double new_grade){//是�
     struct ScoreNode *head = NULL, *last = NULL;
 
     //验证密码准确性
-    char pass_word[50], num[50], account[50];
+    // char pass_word[50], num[50], account[50];
+    struct Account account;
     int passed = 0;
 
     fp = fopen("account_info.txt", "r");
 
     while (fgets(line, sizeof(line), fp)) { //逐行读取
-        if (sscanf(line, "%49[^,],%49[^,],%49[^\n]", num, account, pass_word) == 3) { //解析字符串
-            if (strcmp(pass_word, PassWord) == 0){
+        if (sscanf(line, "%49[^,],%49[^,],%49[^,],%49[^\n]", account.user, account.name, account.role, account.password) == 4) { //解析字符串
+            if (strcmp(account.password, PassWord) == 0 && strcmp(account.user, accountName) == 0){//密码与账号匹配
                 passed = 1;//密码正确
                 break;
             }
@@ -372,17 +375,17 @@ void modify_score1(char* PassWord, char* id, char* idx, double new_grade){//是�
     }
 }
 
-int main() {
-    char idx[50], new_info[50], index[50], password[50], id[50], name[50];
-    double NewGrade;//平时或卷面成绩
-    int item;
+// int main() {
+//     char idx[50], new_info[50], index[50], password[50], id[50], name[50];
+//     double NewGrade;//平时或卷面成绩
+//     int item;
 
-    // printf("请输入课程编号、新信息和要修改的项（1: 课号, 2: 名称，3：老师）：\n");
-    gets(idx);
-    gets(name);
-    gets(new_info);
-    scanf("%d", &item);
-    modify_course(idx, name, new_info, item);
+//     // printf("请输入课程编号、新信息和要修改的项（1: 课号, 2: 名称，3：老师）：\n");
+//     gets(idx);
+//     gets(name);
+//     gets(new_info);
+//     scanf("%d", &item);
+//     modify_course(idx, name, new_info, item);
     // gets(password);
     // gets(id);
     // gets(name);
@@ -394,5 +397,5 @@ int main() {
     // modify_score0(password, id, index, NewGrade);
     // modify_score1(password, id, index, NewGrade);
 
-    return 0;
-}
+//     return 0;
+// }

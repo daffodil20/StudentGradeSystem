@@ -1,0 +1,42 @@
+Date : 2024-08-07 20:57:57
+Directory : c:\code\StudentGradeSystem\UnitTest
+Total : 17 files,  1719 codes, 970 comments, 348 blanks, all 3037 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C        |         14 |      1,689 |        970 |        344 |      3,003 |
+| C++      |          3 |         30 |          0 |          4 |         34 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                   |         17 |      1,719 |        970 |        348 |      3,037 |
++-----------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                            | language | code       | comment    | blank      | total      |
++-----------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\code\StudentGradeSystem\UnitTest\MainMenu.c      | C        |        154 |         86 |         16 |        256 |
+| c:\code\StudentGradeSystem\UnitTest\ShowTxtFile.c   | C        |          8 |          0 |          3 |         11 |
+| c:\code\StudentGradeSystem\UnitTest\account.h       | C++      |         10 |          0 |          1 |         11 |
+| c:\code\StudentGradeSystem\UnitTest\course.h        | C++      |          9 |          0 |          1 |         10 |
+| c:\code\StudentGradeSystem\UnitTest\delete.c        | C        |        183 |         47 |         29 |        259 |
+| c:\code\StudentGradeSystem\UnitTest\display.c       | C        |         58 |         80 |         16 |        154 |
+| c:\code\StudentGradeSystem\UnitTest\example.c       | C        |         11 |         66 |         12 |         89 |
+| c:\code\StudentGradeSystem\UnitTest\manageAccount.c | C        |        101 |         30 |         18 |        149 |
+| c:\code\StudentGradeSystem\UnitTest\modify.c        | C        |        298 |         56 |         44 |        398 |
+| c:\code\StudentGradeSystem\UnitTest\score.c         | C        |         45 |         63 |         20 |        128 |
+| c:\code\StudentGradeSystem\UnitTest\score.h         | C++      |         11 |          0 |          2 |         13 |
+| c:\code\StudentGradeSystem\UnitTest\search.c        | C        |        197 |         22 |         29 |        248 |
+| c:\code\StudentGradeSystem\UnitTest\statistics.c    | C        |        319 |         28 |         44 |        391 |
+| c:\code\StudentGradeSystem\UnitTest\store_info.c    | C        |         92 |        116 |         27 |        235 |
+| c:\code\StudentGradeSystem\UnitTest\student.h       | C        |         11 |          0 |          3 |         14 |
+| c:\code\StudentGradeSystem\UnitTest\summary.c       | C        |        100 |          9 |         15 |        124 |
+| c:\code\StudentGradeSystem\UnitTest\testout.c       | C        |        112 |        367 |         68 |        547 |
+| Total                                               |          |      1,719 |        970 |        348 |      3,037 |
++-----------------------------------------------------+----------+------------+------------+------------+------------+

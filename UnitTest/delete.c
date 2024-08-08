@@ -245,15 +245,15 @@ void delete_score(char* id, char* idx){ //根据学生学号和课程课号删�
     fclose(fp);
 }
 
-int main(){
-    char id[50], index[50], name[50];
-    // gets(id);
-    gets(index);
-    gets(name);
-    // gets(index);
-    // delete_stu(id, name);
-    // delete_score(id, index);
-    delete_course(index, name);
+// int main(){
+//     char id[50], index[50], name[50];
+//     // gets(id);
+//     gets(index);
+//     gets(name);
+//     // gets(index);
+//     // delete_stu(id, name);
+//     // delete_score(id, index);
+//     delete_course(index, name);
 
-    return 0;
-}
+//     return 0;
+// }

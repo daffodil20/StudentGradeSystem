@@ -1,0 +1,17 @@
+"filename", "language", "C++", "C", "comment", "blank", "total"
+"c:\code\StudentGradeSystem\UnitTest\MainMenu.c", "C", 0, -6, 67, 5, 66
+"c:\code\StudentGradeSystem\UnitTest\account.h", "C++", 10, 0, 0, 1, 11
+"c:\code\StudentGradeSystem\UnitTest\course.h", "C++", 4, 0, 0, 1, 5
+"c:\code\StudentGradeSystem\UnitTest\delete.c", "C", 0, 136, 36, 22, 194
+"c:\code\StudentGradeSystem\UnitTest\display.c", "C", 0, 58, 80, 16, 154
+"c:\code\StudentGradeSystem\UnitTest\example.c", "C", 0, 11, 66, 12, 89
+"c:\code\StudentGradeSystem\UnitTest\manageAccount.c", "C", 0, 101, 30, 18, 149
+"c:\code\StudentGradeSystem\UnitTest\modify.c", "C", 0, 122, -123, -17, -18
+"c:\code\StudentGradeSystem\UnitTest\score.h", "C++", 4, 0, 0, 1, 5
+"c:\code\StudentGradeSystem\UnitTest\search.c", "C", 0, 197, 22, 29, 248
+"c:\code\StudentGradeSystem\UnitTest\statistics.c", "C", 0, 319, 28, 44, 391
+"c:\code\StudentGradeSystem\UnitTest\store_info.c", "C", 0, 3, 62, 9, 74
+"c:\code\StudentGradeSystem\UnitTest\student.h", "C", 0, 4, 0, 1, 5
+"c:\code\StudentGradeSystem\UnitTest\summary.c", "C", 0, 100, 9, 15, 124
+"c:\code\StudentGradeSystem\UnitTest\testout.c", "C", 0, 35, 166, 22, 223
+"Total", "-", 18, 1080, 443, 179, 1720

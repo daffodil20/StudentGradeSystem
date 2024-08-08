@@ -26,13 +26,13 @@ void add_info(char* username, char* name, char* role){ //用户名和姓名
 
 
 //修改管理员密码
-void modify_password(char* username, char* name, char* new_password){
+int modify_password(char* username, char* name, char* new_password){
 
     FILE *fp;
     fp = fopen("account_info.txt", "r");
     if (fp == NULL){
         printf("文件打开失败。\n");
-        return;
+        return 1;
     }
 
     //读取文件并创建链表
@@ -56,15 +56,17 @@ void modify_password(char* username, char* name, char* new_password){
 
             if (strcmp(username, new_node->account.user) == 0 && strcmp(name, new_node->account.name) == 0){ //用户名和姓名匹配
                 strcpy(new_node->account.password, new_password); //修改密码
-                modified = 1;//标记修改成功
+                // modified = 1;//标记修改成功
             }
             if (strcmp(username, new_node->account.user) != 0 && strcmp(name, new_node->account.name) == 0){
                 printf("输入的用户名与姓名不一致，请重新输入。\n");
-                break;
+                return 1;
+                // break;
             }
             if (strcmp(username, new_node->account.user) == 0 && strcmp(name, new_node->account.name) != 0){
                 printf("输入的用户名与姓名不一致，请重新输入。\n");
-                break;
+                return 1;
+                // break;
             }   
         }else{
             free(new_node);//释放多余内存
@@ -72,12 +74,17 @@ void modify_password(char* username, char* name, char* new_password){
         }
     }
     fclose(fp);
+
+    // if (!modified) {
+    //     printf("输入的用户名或姓名错误或用户名与姓名不匹配，请重新输入。\n");
+    //     return;
+    // }
     
     //重写文件
     fp = fopen("account_info.txt", "w");
     if (fp == NULL){
         printf("文件打开失败。\n");
-        return;
+        return 1;
     }
     struct AccountNode * current = head, * temp = NULL;
     fprintf(fp, "%s", first_line); //重写第一行
@@ -90,10 +97,8 @@ void modify_password(char* username, char* name, char* new_password){
     }
     fclose(fp);
 
-    if (!modified) {
-        printf("输入的用户名或姓名错误或用户名与姓名不匹配，请重新输入。\n");
-        return;
-    }
+    return 0;
+
 }
 
 int main(){
@@ -110,28 +115,33 @@ int main(){
     // printf("name:%s", name);
     // fgets(role, sizeof(role), stdin);
     // printf("role:%s", role);
-    for (int i = 0; i < 2; i ++){ //多次输入管理员信息
+    scanf("%d ", &total);
+    for (int i = 0; i < total; i ++){ //多次输入管理员信息
         // add_info(userName, name, role);
         gets(userName); //老师的用户名为工号，学生的为学号
         gets(name);
         gets(newPassword);//第一次输入新密码
+        //判断密码长度
         for (int j = 0; j < strlen(newPassword); j ++){
             if ((newPassword[j] >= 'a' && newPassword[j] <= 'z') || (newPassword[j] >= '0' && newPassword[j] <= '9')){ //密码符合条件
                 continue;
             }else{
-                printf("密码不符合条件，密码不能含有特殊符号或大写字母。\n");
-                return;
+                printf("密码不符合条件，密码不能含有特殊符号或大写字母。请重新输入信息：\n");
+                i --;
             }
         }
-        
-        modify_password(userName, name, newPassword); //寻找对应的账号
-        strcpy(temp_new, newPassword);
-        gets(newPassword);//再次输入新密码
-        if (strcmp(newPassword, temp_new) == 0)
-            printf("修改密码成功！\n");
-        else{
-            printf("第二次输入错误！\n");
-            return;
+
+        if (modify_password(userName, name, newPassword) == 0){ //寻找对应的账号
+            strcpy(temp_new, newPassword);
+            gets(newPassword);//再次输入新密码
+            if (strcmp(newPassword, temp_new) == 0)
+                printf("修改密码成功！\n");
+            else{
+                printf("第二次输入错误！请重新输入信息：\n");
+                i --;
+            }
+        }else{
+           i --; 
         }   
     }
     

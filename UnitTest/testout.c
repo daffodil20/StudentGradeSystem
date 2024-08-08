@@ -219,14 +219,14 @@
 
 //     return 0;
 // }
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "course.h"
-#include "score.h"  // 假设你有一个 "score.h" 头文件
-#include "account.h"
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
+// #include "course.h"
+// #include "score.h"  // 假设你有一个 "score.h" 头文件
+// #include "account.h"
 
-#define MAX_LINE_LENGTH 256
+// #define MAX_LINE_LENGTH 256
 
 // void modify_course0(char* idx, char* new_info, int item) {
 //     FILE *fp;
@@ -374,120 +374,120 @@
 // }
 
 // 修改课程数据的函数
-void modify_course0(char* idx, char* new_info, int item) {
-    FILE *fp;
-    struct CourseNode *head = NULL, *last = NULL;
-    int modified = 0;
+// void modify_course0(char* idx, char* new_info, int item) {
+//     FILE *fp;
+//     struct CourseNode *head = NULL, *last = NULL;
+//     int modified = 0;
 
-    // 读取文件内容到链表
-    fp = fopen("course.txt", "r");
-    if (fp == NULL) {
-        printf("文件打开失败\n");
-        return;
-    }
+//     // 读取文件内容到链表
+//     fp = fopen("course.txt", "r");
+//     if (fp == NULL) {
+//         printf("文件打开失败\n");
+//         return;
+//     }
 
-    // 跳过第一行
-    char first_line[MAX_LINE_LENGTH];
-    if (fgets(first_line, sizeof(first_line), fp) == NULL) {
-        printf("无法读取文件或文件为空\n");
-        fclose(fp);
-        return;
-    }
+//     // 跳过第一行
+//     char first_line[MAX_LINE_LENGTH];
+//     if (fgets(first_line, sizeof(first_line), fp) == NULL) {
+//         printf("无法读取文件或文件为空\n");
+//         fclose(fp);
+//         return;
+//     }
 
-    // 逐行读取文件并创建链表
-    char line[MAX_LINE_LENGTH];
-    while (fgets(line, sizeof(line), fp)) {
-        struct CourseNode *new_node = (struct CourseNode *)malloc(sizeof(struct CourseNode));
-        if (sscanf(line, "%49[^,],%49[^,],%49[^\n]", 
-                   new_node->course.index, 
-                   new_node->course.name, 
-                   new_node->course.teacher) == 3) {
-            new_node->next = NULL;
-            if (head == NULL) {
-                head = new_node;
-            } else {
-                last->next = new_node;
-            }
-            last = new_node;
-            printf("index:%s name:%s teacher:%s\n", new_node->course.index, 
-                   new_node->course.name, 
-                   new_node->course.teacher);
-            // 查找并修改数据
-            if (strcmp(new_node->course.index, idx) == 0) {
-                if (item == 1) strcpy(new_node->course.index, new_info);
-                else if (item == 2) strcpy(new_node->course.name, new_info);
-                else if (item == 3) strcpy(new_node->course.teacher, new_info);
-                else printf("修改项不存在\n");
-                modified = 1;
-            }
-        } else {
-            free(new_node); // 释放未用的内存
-            break; // 结束循环
-        }
-    }
-    fclose(fp);
+//     // 逐行读取文件并创建链表
+//     char line[MAX_LINE_LENGTH];
+//     while (fgets(line, sizeof(line), fp)) {
+//         struct CourseNode *new_node = (struct CourseNode *)malloc(sizeof(struct CourseNode));
+//         if (sscanf(line, "%49[^,],%49[^,],%49[^\n]", 
+//                    new_node->course.index, 
+//                    new_node->course.name, 
+//                    new_node->course.teacher) == 3) {
+//             new_node->next = NULL;
+//             if (head == NULL) {
+//                 head = new_node;
+//             } else {
+//                 last->next = new_node;
+//             }
+//             last = new_node;
+//             printf("index:%s name:%s teacher:%s\n", new_node->course.index, 
+//                    new_node->course.name, 
+//                    new_node->course.teacher);
+//             // 查找并修改数据
+//             if (strcmp(new_node->course.index, idx) == 0) {
+//                 if (item == 1) strcpy(new_node->course.index, new_info);
+//                 else if (item == 2) strcpy(new_node->course.name, new_info);
+//                 else if (item == 3) strcpy(new_node->course.teacher, new_info);
+//                 else printf("修改项不存在\n");
+//                 modified = 1;
+//             }
+//         } else {
+//             free(new_node); // 释放未用的内存
+//             break; // 结束循环
+//         }
+//     }
+//     fclose(fp);
 
-    // 写回文件
-    fp = fopen("course.txt", "w");
-    if (fp == NULL) {
-        printf("文件打开失败\n");
-        return;
-    }
+//     // 写回文件
+//     fp = fopen("course.txt", "w");
+//     if (fp == NULL) {
+//         printf("文件打开失败\n");
+//         return;
+//     }
 
-    // 重新写入第一行
-    fprintf(fp, "%s", first_line);
+//     // 重新写入第一行
+//     fprintf(fp, "%s", first_line);
 
-    struct CourseNode *current = head;
-    while (current != NULL) {
-        fprintf(fp, "%s,%s,%s\n", 
-                current->course.index, 
-                current->course.name, 
-                current->course.teacher);
-        struct CourseNode *temp = current;
-        current = current->next;
-        free(temp); // 释放节点内存
-        temp = NULL;
-    }
-    fclose(fp);
+//     struct CourseNode *current = head;
+//     while (current != NULL) {
+//         fprintf(fp, "%s,%s,%s\n", 
+//                 current->course.index, 
+//                 current->course.name, 
+//                 current->course.teacher);
+//         struct CourseNode *temp = current;
+//         current = current->next;
+//         free(temp); // 释放节点内存
+//         temp = NULL;
+//     }
+//     fclose(fp);
 
-    if (!modified) {
-        printf("输入的课号不存在，请重新输入。\n");
-    }
-}
+//     if (!modified) {
+//         printf("输入的课号不存在，请重新输入。\n");
+//     }
+// }
 
-int log_in(char *account_name, char *name, char *role, char *password){ //用户登录
-    struct Account account;
-    //判断密码是否存在
-    // if (strcmp(password, "12345") != 0){
-        //printf("password:%s",password);
-    //     return 1;
-    // }
-    //读文件，判断账号是否存在
-    char buffer[300];
-    int start = 0, end = 0, i, j = 0;
+// int log_in(char *account_name, char *name, char *role, char *password){ //用户登录
+//     struct Account account;
+//     //判断密码是否存在
+//     // if (strcmp(password, "12345") != 0){
+//         //printf("password:%s",password);
+//     //     return 1;
+//     // }
+//     //读文件，判断账号是否存在
+//     char buffer[300];
+//     int start = 0, end = 0, i, j = 0;
     
-    //打开账号文件
-    FILE* fp;
-    fp = fopen("account_info.txt","r");
-    if (fp == NULL){
-        printf("文件打开失败\n");
-        return;
-        //exit();
-    }
+//     //打开账号文件
+//     FILE* fp;
+//     fp = fopen("account_info.txt","r");
+//     if (fp == NULL){
+//         printf("文件打开失败\n");
+//         return;
+//         //exit();
+//     }
 
-    fgets(buffer, sizeof(buffer), fp);
-    while (fgets(buffer, sizeof(buffer), fp) != NULL){
-        if (sscanf(buffer, "%49[^,],%49[^,],%49[^,],%49[^\n]", account.user, account.name, account.role, account.password) == 4){
-            if (strcmp(account_name, account.user) == 0){ //比较其他信息
-                if (strcmp(name, account.name) != 0 || strcmp(role, account.role) != 0 || strcmp(password, account.password) != 0){
-                    printf("信息错误!\n");
-                    break;
-                }else{
-                    printf("登录成功!\n");
-                    return 0;
-                } 
-            }
-        }
+//     fgets(buffer, sizeof(buffer), fp);
+//     while (fgets(buffer, sizeof(buffer), fp) != NULL){
+//         if (sscanf(buffer, "%49[^,],%49[^,],%49[^,],%49[^\n]", account.user, account.name, account.role, account.password) == 4){
+//             if (strcmp(account_name, account.user) == 0){ //比较其他信息
+//                 if (strcmp(name, account.name) != 0 || strcmp(role, account.role) != 0 || strcmp(password, account.password) != 0){
+//                     printf("信息错误!\n");
+//                     break;
+//                 }else{
+//                     printf("登录成功!\n");
+//                     return 0;
+//                 } 
+//             }
+//         }
 
         // for (i = 0; i < strlen(buffer); i ++){
         //     //不相同字符：
@@ -514,29 +514,53 @@ int log_in(char *account_name, char *name, char *role, char *password){ //用户
         //     return 0;//账号与密码都存在
         // }
         // j = 0;//重置j
-    }
+    // }
     
-    return 1;//账号与其他信息不匹配
+    // return 1;//账号与其他信息不匹配
     //关闭文件
-    fclose(fp);
+    // fclose(fp);
 
     // account_idx ++;
     // return account_idx;//返回账号序号
-}
+// }
 
+
+#include <stdlib.h>
+#include <string.h>
+#include "course.h"
+#include "score.h"  // 假设你有一个 "score.h" 头文件
+#include "account.h"
+#include <stdio.h>
+#include "modify.h"
 int main() {
-    char idx[50], new_info[50];
+    char idx[50], new_info[50], id[50];
     char account[50], name[50], role[50], password[50];
+    // char space = ' ';
     int item;
+    double newGrade;
     // printf("请输入课程编号、新信息和要修改的项（1: 课号, 2: 名称，3：老师）：\n");
-    // gets(idx);
+    gets(account);
+    gets(password);
+    // scanf("%d ", &item);
+    gets(id);
+    gets(idx);
+    // gets(name);
     // gets(new_info);
+    scanf("%lf", &newGrade);
+    
     // scanf("%d", &item);
     // modify_course0(idx, new_info, item);
-    gets(account);
-    gets(name);
-    gets(role);
-    gets(password);
-    log_in(account, name, role, password);
+    // scanf("%d ", &item);
+    // gets(space);
+    // gets(account);
+    // printf("%d\n", item);
+    // printf("%s", account);
+    // modify_course(idx, name, new_info, item);
+    modify_score0(account, password, id, idx, newGrade);
+    // gets(name);
+    // gets(role);
+    // gets(password);
+    // log_in(account, name, role, password);
+    
     return 0;
 }
