@@ -1,6 +1,7 @@
 //添加管理员信息
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "account.h"
 #define MAX_LINE_LENGTH 256
 
@@ -27,6 +28,20 @@ void add_info(char* username, char* name, char* role){ //用户名和姓名
 
 //修改管理员密码
 int modify_password(char* username, char* name, char* new_password){
+    //判断密码是否符合要求
+    if (strlen(new_password) != 5){
+        printf("密码不符合要求，密码长度必须为5。请重新输入用户名、姓名和新密码：\n");
+        return 1;
+    }
+
+    for (int j = 0; j < strlen(new_password); j ++){
+        if ((new_password[j] >= 'a' && new_password[j] <= 'z') || (new_password[j] >= '0' && new_password[j] <= '9')){ //密码符合条件
+            continue;
+        }else{
+            printf("密码不符合要求，密码不能含有特殊符号或大写字母。请重新输入用户名、姓名和新密码：\n");
+            return 1;
+        }
+    }
 
     FILE *fp;
     fp = fopen("account_info.txt", "r");
@@ -41,7 +56,7 @@ int modify_password(char* username, char* name, char* new_password){
     char buffer[MAX_LINE_LENGTH], first_line[MAX_LINE_LENGTH];
     struct Account account;
     struct AccountNode *head = NULL, *last = NULL;
-
+    
     fgets(first_line, sizeof(first_line), fp);
     while (fgets(buffer, sizeof(buffer), fp)){
         struct AccountNode * new_node = (struct AccountNode *)malloc(sizeof(struct AccountNode)); //创建链表
@@ -59,12 +74,12 @@ int modify_password(char* username, char* name, char* new_password){
                 // modified = 1;//标记修改成功
             }
             if (strcmp(username, new_node->account.user) != 0 && strcmp(name, new_node->account.name) == 0){
-                printf("输入的用户名与姓名不一致，请重新输入。\n");
+                printf("输入的用户名与姓名不一致，请重新输入用户名、姓名和新密码。\n");
                 return 1;
                 // break;
             }
             if (strcmp(username, new_node->account.user) == 0 && strcmp(name, new_node->account.name) != 0){
-                printf("输入的用户名与姓名不一致，请重新输入。\n");
+                printf("输入的用户名与姓名不一致，请重新输入用户名、姓名和新密码。\n");
                 return 1;
                 // break;
             }   
@@ -96,14 +111,13 @@ int modify_password(char* username, char* name, char* new_password){
         temp = NULL;
     }
     fclose(fp);
-
     return 0;
-
 }
 
+//TODO:把修改密码时输入密码不符合条件写道函数里，不能在main里
 int main(){
     char userName[50], name[50], role[50], newPassword[50], temp_new[50];
-    int total; //记录添加信息的条数
+    int total, passLabel; //记录添加信息的条数和是否正确修改密码
     // gets(userName); //老师的用户名为工号，学生的为学号
     // gets(name);
     // gets(newPassword);
@@ -122,26 +136,28 @@ int main(){
         gets(name);
         gets(newPassword);//第一次输入新密码
         //判断密码长度
-        for (int j = 0; j < strlen(newPassword); j ++){
-            if ((newPassword[j] >= 'a' && newPassword[j] <= 'z') || (newPassword[j] >= '0' && newPassword[j] <= '9')){ //密码符合条件
-                continue;
-            }else{
-                printf("密码不符合条件，密码不能含有特殊符号或大写字母。请重新输入信息：\n");
-                i --;
-            }
-        }
-
-        if (modify_password(userName, name, newPassword) == 0){ //寻找对应的账号
+        // for (int j = 0; j < strlen(newPassword); j ++){
+        //     if ((newPassword[j] >= 'a' && newPassword[j] <= 'z') || (newPassword[j] >= '0' && newPassword[j] <= '9')){ //密码符合条件
+        //         continue;
+        //     }else{
+        //         printf("密码不符合条件，密码不能含有特殊符号或大写字母。请重新输入信息：\n");
+        //         i --;
+        //         break;
+        //     }
+        // }
+        passLabel = modify_password(userName, name, newPassword);
+        if (passLabel == 0){ //寻找对应的账号
             strcpy(temp_new, newPassword);
+            printf("请再次输入新密码以确认：\n");
             gets(newPassword);//再次输入新密码
             if (strcmp(newPassword, temp_new) == 0)
                 printf("修改密码成功！\n");
             else{
-                printf("第二次输入错误！请重新输入信息：\n");
+                printf("第二次输入错误！请重新输入用户名、姓名和新密码：\n");
                 i --;
             }
         }else{
-           i --; 
+           i --;
         }   
     }
     

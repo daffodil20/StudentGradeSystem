@@ -5,20 +5,24 @@
 // TODO:录入信息的函数需要加上参数，把scanf放到main里，多次调用
 //管理员可以添加其他人的信息，老师可以修改成绩，所有人都可以修改密码
 
-void enterBar(int taskLabel){ 
+void enterBar(int taskLabel){
+    
     switch (taskLabel)
     {
     case 1:
-        printf("这是录入学生基本信息的界面。");
+        // char inputID, inputName, inputGender, inputAge, inputProf;
+        // gets(inputID);
+        
+        printf("这是录入学生基本信息的界面。\n");
         break;
     case 2:
-        printf("这是录入课程基本信息的界面。");
+        printf("这是录入课程基本信息的界面。\n");
         break;
     case 3:
-        printf("这是录入学生成绩的界面。");
+        printf("这是录入学生成绩的界面。\n");
         break;   
     default:
-        printf("无效的任务编号");
+        printf("这是无效的任务编号，请重新输入。\n");
         break;
     }
 }
@@ -27,16 +31,18 @@ void modifyBar(int taskLabel){
     switch (taskLabel)
     {
     case 1:
-        printf("这是修改学生基本信息的界面。");
+        printf("这是修改学生基本信息的界面。\n");
+        // printf("你可以选择修改1-学号2-")
+        // printf("请依次输入学生学号、姓名和需要修改的信息")
         break;
     case 2:
-        printf("这是修改课程基本信息的界面。");
+        printf("这是修改课程基本信息的界面。\n");
         break;
     case 3:
-        printf("这是修改学生成绩的界面。");
+        printf("这是修改学生成绩的界面。\n");
         break;   
     default:
-        printf("无效的任务编号");
+        printf("这是无效的任务编号，请重新选择。\n");
         break;
     }
 }
@@ -45,16 +51,16 @@ void deleteBar(int taskLabel){
     switch (taskLabel)
     {
     case 1:
-        printf("这是删除学生基本信息的界面。");
+        printf("这是删除学生基本信息的界面。\n");
         break;
     case 2:
-        printf("这是删除课程基本信息的界面。");
+        printf("这是删除课程基本信息的界面。\n");
         break;
     case 3:
-        printf("这是删除学生成绩的界面。");
+        printf("这是删除学生成绩的界面。\n");
         break;   
     default:
-        printf("无效的任务编号");
+        printf("这是无效的任务编号，请重新输入。\n");
         break;
     }
 }
@@ -63,25 +69,25 @@ void searchBar(int taskLabel){
     switch (taskLabel)
     {
     case 1:
-        printf("这是查询学生基本信息的界面。");
+        printf("这是查询学生基本信息的界面。\n");
         break;
     case 2:
-        printf("这是查询课程基本信息的界面。");
+        printf("这是查询课程基本信息的界面。\n");
         break;
     case 3:
-        printf("这是按性别查询学生基本信息的界面。");
+        printf("这是按性别查询学生基本信息的界面。\n");
         break;
     case 4:
-        printf("这是按系查询学生基本信息的界面。");
+        printf("这是按系查询学生基本信息的界面。\n");
         break;
     case 5:
-        printf("这是查询学生所有课程成绩的界面。");
+        printf("这是查询学生所有课程成绩的界面。\n");
         break;
     case 6:
         printf("这是查询课程所有学生成绩的界面。");
         break;   
     default:
-        printf("无效的任务编号");
+        printf("这是无效的任务编号，请重新输入。\n");
         break;
     }
 }
@@ -90,25 +96,25 @@ void statBar(int taskLabel){ //统计成绩的选项
     switch (taskLabel)
     {
     case 1:
-        printf("这是查询课程卷面成绩的平均分的界面。");
+        printf("这是查询课程卷面成绩的平均分的界面。\n");
         break;
     case 2:
-        printf("这是查询课程综合成绩的平均分的界面。");
+        printf("这是查询课程综合成绩的平均分的界面。\n");
         break;
     case 3:
-        printf("这是查询课程卷面成绩的最高分的界面。");
+        printf("这是查询课程卷面成绩的最高分的界面。\n");
         break;
     case 4:
-        printf("这是查询课程综合成绩的最高分的界面。");
+        printf("这是查询课程综合成绩的最高分的界面。\n");
         break;
     case 5:
-        printf("这是查询课程卷面成绩的分数段的界面。");
+        printf("这是查询课程卷面成绩的分数段的界面。\n");
         break;
     case 6:
-        printf("这是查询课程综合成绩所的分数段的界面。");
+        printf("这是查询课程综合成绩所的分数段的界面。\n");
         break;   
     default:
-        printf("无效的任务编号");
+        printf("这是无效的任务编号，请重新输入。\n");
         break;
     }
 }
@@ -117,13 +123,13 @@ void sumBar(int taskLabel){
     switch (taskLabel)
     {
     case 1:
-        printf("这是显示课程及格情况的界面。");
+        printf("这是显示课程及格情况的界面。\n");
         break;
     case 2:
-        printf("这是显示学生成绩情况的界面。");
+        printf("这是显示学生成绩情况的界面。\n");
         break;
     default:
-        printf("无效的任务编号");
+        printf("这是无效的任务编号，请重新输入。\n");
         break;
     }
 }
@@ -183,12 +189,18 @@ void manager(int task_num){
         // return 9;
     case 10:
         printf("这是退出系统的界面。\n");
-        break;
+        return;//返回登录界面
         // return 10;
     default:
-        printf("无效的任务编号\n");
+        printf("这是无效的任务编号，请重新输入。\n");
         break;
     }
+    printf("请选择：\n1-添加用户信息\n2-修改密码\n3-录入学生信息\n4-修改学生信息\n5-删除学生信息\n6-查询学生信息\n7-显示学生信息\n8-统计学生成绩\n9-汇总报表\n10-退出系统\n"); //任务提示
+    printf("请输入任务编号：\n");
+    scanf("%d", &task_num);
+    // if (task_num != 10)
+    manager(task_num);
+    
 }
 
 void teacher(int task_num){
@@ -236,11 +248,15 @@ void teacher(int task_num){
     case 8:
         printf("这是退出系统的界面。\n");
         // return 8;
-        break;
+        return; //返回登录界面
     default:
-        printf("无效的任务编号\n");
+        printf("这是无效的任务编号，请重新输入。\n");
         break;
     }
+    printf("请选择：\n1-修改密码\n2-修改学生信息\n3-删除学生信息\n4-查询学生信息\n5-显示学生信息\n6-统计学生成绩\n7-汇总报表\n8-退出系统\n");
+    printf("请输入任务编号：\n");
+    scanf("%d", &task_num);
+    manager(task_num);
 }
 
 // void instructor(int task_num){
@@ -283,12 +299,17 @@ void student(int task_num){
         // return 3;
     case 4:
         printf("这是退出系统的界面。\n");
-        break;
+        return;
         // return 4;
     default:
-        printf("无效的任务编号\n");
+        printf("这是无效的任务编号，请重新输入。\n");
         break;
     }
+    //下一个任务
+    printf("请选择：\n1-修改密码\n2-查询学生信息\n3-显示学生信息\n4-统计学生成绩\n5-退出系统\n");
+    printf("请输入任务编号：\n");
+    scanf("%d", &task_num);
+    manager(task_num);
 }
 
 int log_in(char *account_name, char *name, char *role, char *password){ //用户登录
@@ -307,6 +328,7 @@ int log_in(char *account_name, char *name, char *role, char *password){ //用户
     fp = fopen("account_info.txt","r");
     if (fp == NULL){
         printf("文件打开失败\n");
+        return 1;
         // exit();
         //exit();
     }
@@ -368,8 +390,9 @@ int main(){
     char AccountName[50],PassWord[50], role[50], Name[50];
     int result;
     // int AccountIdx = 1;
-    //登录
-    printf("你好，请输入账号和密码：\n");
+    // while (1) //不关闭界面
+    //登录提示
+    printf("你好，请依次输入用户名、姓名、角色和密码（中间需要回车）：\n");
     // scanf("%s",AccountName);
     gets(AccountName);
     gets(Name);
@@ -377,17 +400,32 @@ int main(){
     gets(PassWord);
     // scanf("%s",PassWord);
     result = log_in(AccountName, Name, role, PassWord);
-    if (result == 0){
-        printf("恭喜，登录成功!\n");
-        if (strcmp(role, "manager") == 0)
-            role_num = 1;
-        else if (strcmp(role, "teacher") == 0)
-            role_num = 2;
-        else if (strcmp(role, "student") == 0)
-            role_num = 3;
+    // if (result == 0){
+    //     printf("恭喜，登录成功!\n");
+    //     if (strcmp(role, "manager") == 0)
+    //         role_num = 1;
+    //     else if (strcmp(role, "teacher") == 0)
+    //         role_num = 2;
+    //     else if (strcmp(role, "student") == 0)
+    //         role_num = 3;
+    // }
+
+    while (result == 1){ //登录失败
+        printf("姓名/角色/密码错误或文件打开失败，请重新输入(密码默认为12345)。\n");
+        gets(AccountName);
+        gets(Name);
+        gets(role);
+        gets(PassWord);
+        result = log_in(AccountName, Name, role, PassWord);
     }
-    if (result == 1)
-        printf("姓名/角色/密码错误，请重新输入(默认为12345)。\n");
+    //登录成功
+    printf("恭喜，登录成功!\n");
+    if (strcmp(role, "manager") == 0)
+        role_num = 1;
+    else if (strcmp(role, "teacher") == 0)
+        role_num = 2;
+    else if (strcmp(role, "student") == 0)
+        role_num = 3;
     // if (result == 2)
     //     printf("账号不存在，请重新输入。\n");
 
@@ -400,18 +438,18 @@ int main(){
     // role_num = ChooseRole(role);
     switch (role_num){
         case 1:
-            printf("你好，超级管理员\n");
+            printf("你好，超级管理员。\n");
             printf("请选择：\n1-添加用户信息\n2-修改密码\n3-录入学生信息\n4-修改学生信息\n5-删除学生信息\n6-查询学生信息\n7-显示学生信息\n8-统计学生成绩\n9-汇总报表\n10-退出系统\n");
             while (scanf("%d", &task), task != 1 && task != 2 && task != 3 && task != 4 && task != 5 && task != 6 && task != 7 && task != 8 && task != 9 && task != 10){
-                 printf("无效的任务编号，请重新选择：");
+                 printf("无效的任务编号，请重新选择：\n1-添加用户信息\n2-修改密码\n3-录入学生信息\n4-修改学生信息\n5-删除学生信息\n6-查询学生信息\n7-显示学生信息\n8-统计学生成绩\n9-汇总报表\n10-退出系统\n");
             }
             manager(task);
             break; 
         case 2:
-            printf("你好，老师\n");
+            printf("你好，老师。\n");
             printf("请选择：\n1-修改密码\n2-修改学生信息\n3-删除学生信息\n4-查询学生信息\n5-显示学生信息\n6-统计学生成绩\n7-汇总报表\n8-退出系统\n");      
             while (scanf("%d", &task), task != 1 && task != 2 && task != 3 && task != 4 && task != 5 && task != 6 && task != 7 && task != 8){
-                printf("无效的任务编号，请重新选择：");
+                printf("无效的任务编号，请重新选择：\n1-修改密码\n2-修改学生信息\n3-删除学生信息\n4-查询学生信息\n5-显示学生信息\n6-统计学生成绩\n7-汇总报表\n8-退出系统\n");
             }
             teacher(task);
             break;
@@ -424,14 +462,24 @@ int main(){
         //     instructor(task);
         //     break;
         case 3:
-            printf("你好，学生\n");
+            printf("你好，学生。\n");
             printf("请选择：\n1-修改密码\n2-查询学生信息\n3-显示学生信息\n4-统计学生成绩\n5-退出系统\n");
             while (scanf("%d", &task), task != 1 && task != 2 && task != 3 && task != 4 &&  task != 5){
-                printf("无效的任务编号，请重新选择：");
+                printf("无效的任务编号，请重新选择：\n1-修改密码\n2-查询学生信息\n3-显示学生信息\n4-统计学生成绩\n5-退出系统\n");
             }
             student(task);
             break;
     }
+    
+    //退出系统
+    // printf("你好，请输入账号和密码：\n");
+    // exit(0);
+    // gets(AccountName);
+    // gets(Name);
+    // gets(role);
+    // gets(PassWord);
+    // result = log_in(AccountName, Name, role, PassWord);
+
     // task = ChooseTask(role);
     return 0;
 }

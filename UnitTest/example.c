@@ -3,19 +3,70 @@
 #include <wchar.h>
 #include <locale.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>
 int main(){
+    system("chcp 65001 & cls");
     setlocale(LC_ALL, "zh_CN.UTF-8");
     // FILE *fp;
 //    wchar_t chStr0[8];
-    char chStr[24];
+    // char chStr[24];
     // short unsigned int  chStr1[15];
 //    char chStr1[8];
 
-//    wchar_t *wide_str = L"你好，世界！";
+//    wchar_t wide_str[12];
+//    fgetws(wide_str, 12, stdin);//你好同学
+//    printf("%s\n", wide_str[0]);
+//    fputws(wide_str, stdout);//空行
+//    printf("%s", wide_str[0]);
+ 
+//    char *ascii_ = "我爱学习";
+//    char *input;
+//    fgets(input, 12, stdin);
+//    scanf("%s", input);
+//    puts(input);
+//    printf("%s\n", *input);
+//    printf("ascii_: %s\n", ascii_);//显示正确
+   
+    // char *input = (char *)malloc(12 * sizeof(char));  // 为 input 分配内存
+    // if (input == NULL) {
+    //     printf("Memory allocation failed\n");
+    //     return 1;
+    // }
+    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleCP(CP_UTF8);
+    wchar_t input[12];
+    // scanf("%s", input);          // 或者使用 scanf 读取输入
+    fgetws(input, sizeof(input), stdin);
+    wprintf(L"%ls\n", input);       // 使用 printf 输出字符串
+    // 使用 fgets 读取输入，fgets 会保留空格，并读取整行
+    // if (fgets(input, 12, stdin) != NULL) {
+    //     // 去除输入中的换行符
+    //     input[strcspn(input, "\n")] = '\0'; 
+    //     printf("You entered: %s\n", input);
+    // } else {
+    //     printf("Failed to read input\n");
+    // }
+    // free(input);  // 使用完内存后，释放它
+
+
+//    wchar_t input[50];
     // wchar_t *wide_str;
+   
+//    wcscpy(wide_str, input);
 //    wprintf(L"%ls", wide_str);
-    scanf("%s", chStr);
-    printf("%s", chStr);
+
+//    wchar_t wide_str[12];
+//    fgetws(wide_str, 12, stdin);//你好同学
+// //    wchar_t input[50];
+//     // wchar_t *wide_str;
+   
+// //    wcscpy(wide_str, input);
+//    wprintf(L"%ls", wide_str);
+   
+   
+    // scanf("%s", chStr);
+    // printf("%s", chStr);
 //    printf("你好"); 
     // wscanf(L"%ls", chStr);
 //    fgetws(chStr0, 8, stdin);

@@ -1,3 +1,4 @@
 username,name,role,password(hashed)
 23552,Xiao hong,teacher,156nv
 23520,Li hua,teacher,2354l
+01679,Amy,manager,3gk10

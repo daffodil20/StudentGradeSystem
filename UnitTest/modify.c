@@ -279,7 +279,7 @@ void modify_score0(char* accountName, char* PassWord, char* id, char* idx, doubl
     }
 }
 
-void modify_score1(char* PassWord, char* id, char* idx, double new_grade){//是哪个成绩到gui再做，查找需要id和idx
+void modify_score1(char* accountName, char* PassWord, char* id, char* idx, double new_grade){//是哪个成绩到gui再做，查找需要id和idx
     //定义变量
     FILE *fp;
     int modified = 0;
@@ -288,14 +288,15 @@ void modify_score1(char* PassWord, char* id, char* idx, double new_grade){//是�
     struct ScoreNode *head = NULL, *last = NULL;
 
     //验证密码准确性
-    char pass_word[50], num[50], account[50];
+    // char pass_word[50], num[50], account[50];
+    struct Account account;
     int passed = 0;
 
     fp = fopen("account_info.txt", "r");
 
     while (fgets(line, sizeof(line), fp)) { //逐行读取
-        if (sscanf(line, "%49[^,],%49[^,],%49[^\n]", num, account, pass_word) == 3) { //解析字符串
-            if (strcmp(pass_word, PassWord) == 0){
+        if (sscanf(line, "%49[^,],%49[^,],%49[^,],%49[^\n]", account.user, account.name, account.role, account.password) == 4) { //解析字符串
+            if (strcmp(account.user, accountName) == 0 && strcmp(account.password, PassWord) == 0){
                 passed = 1;//密码正确
                 break;
             }
