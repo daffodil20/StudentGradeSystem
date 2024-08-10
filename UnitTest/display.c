@@ -28,6 +28,7 @@ void display(){
     struct Score score;
     struct Course course;
     char scoreLine[MaxLineLength], stuLine[MaxLineLength], courseLine[MaxLineLength];
+    int matched = 0;//记录学生是否有成绩
 
     // //跳过表头
     // fgets(scoreLine, sizeof(scoreLine), fp1);
@@ -75,7 +76,8 @@ void display(){
 
     while (fgets(stuLine, sizeof(stuLine), fp1)){ //逐行读student.txt
         if (sscanf(stuLine, "%49[^,],%49[^,],%49[^,],%49[^,],%49[^,],%49[^\n]", stu.ID, stu.name, stu.gender, stu.age, stu.profession) == 5){ //解析字符串
-            printf("\nstudent: %s,%s,%s,%s,%s", stu.ID, stu.name, stu.gender, stu.age, stu.profession);
+            printf("学生信息：学号、姓名、性别、年龄、所在系\n");
+            printf("%s,%s,%s,%s,%s\n", stu.ID, stu.name, stu.gender, stu.age, stu.profession);
             fp2 = fopen("score.txt", "r");
             if (fp2 == NULL){
                 printf("文件打开失败\n");
@@ -88,7 +90,7 @@ void display(){
                 if (sscanf(scoreLine, "%49[^,],%49[^,],%lf,%lf,%lf",score.ID, score.index, &(score.daily_grade), &(score.exam_grade), &(score.score)) == 5){
                     if (strcmp(stu.ID, score.ID) == 0){ //找到对应的成绩信息
                         // printf("\n\nstudent:%s,%s,%s,%s,%s\n", stu.ID, stu.name, stu.gender, stu.age, stu.profession);
-                        
+                        matched = 1;//学生有成绩
                         fp3 = fopen("course.txt", "r");
                         if (fp3 == NULL){
                             printf("文件打开失败\n");
@@ -100,8 +102,10 @@ void display(){
                         while (fgets(courseLine, sizeof(courseLine), fp3)){ //查找course.txt中的index
                             if (sscanf(courseLine, "%49[^,],%49[^,],%49[^\n]", course.index, course.name, course.teacher) == 3){
                                 if (strcmp(course.index, score.index) == 0){ //找到对应的课程信息
-                                    printf("course: %s,%s,%s\n", course.index, course.name, course.teacher);
-                                    printf("score: %d,%d,%.1f\n", (int)score.daily_grade, (int)score.exam_grade, (float)score.score);
+                                    printf("课程信息：课号、课名、任课老师\n");
+                                    printf("%s,%s,%s\n", course.index, course.name, course.teacher);
+                                    printf("成绩信息：学号、课号、平时成绩、卷面成绩\n");
+                                    printf("成绩: %d,%d,%.1f\n", (int)score.daily_grade, (int)score.exam_grade, (float)score.score);
                                     fclose(fp3);
                                     break;
                                     // fclose(fp3);
@@ -113,6 +117,10 @@ void display(){
                 }
             }
             fclose(fp2);
+            if (matched == 0){
+                printf("该学生没有选修课程。\n");
+            }
+            matched = 0;
         }
     }
     //                     fclose(fp2);
@@ -145,6 +153,7 @@ void display(){
     fclose(fp1);
     // fclose(fp2);
     // fclose(fp3);
+    
 }
 
 int main(){

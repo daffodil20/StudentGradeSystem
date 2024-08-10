@@ -532,6 +532,7 @@
 #include "account.h"
 #include <stdio.h>
 #include "modify.h"
+// #include "search.h"
 int main() {
     char idx[50], new_info[50], id[50];
     char account[50], name[50], role[50], password[50];
@@ -557,6 +558,7 @@ int main() {
     // printf("%s", account);
     // modify_course(idx, name, new_info, item);
     modify_score0(account, password, id, idx, newGrade);
+    // find_stu(id, name);
     // gets(name);
     // gets(role);
     // gets(password);

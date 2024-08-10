@@ -3,8 +3,9 @@
 #include "course.h"
 #include <stdio.h>
 #include <string.h>
+#include "search.h"
 
-#define MAX_LINE_LENGTH 256
+// #define MAX_LINE_LENGTH 256
 void find_stu(char* id, char* inputName){
     struct Student stu;
     FILE* fp;
@@ -229,20 +230,20 @@ void find_score1(char* idx, char* name){ //根据课号和课名查询成绩
     fclose(fp1);
 }
 
-int main(){
-    char sex[50], prof[50], id[50], stuName[50], courseName[50], index[50];
-    // gets(sex);
-    // gets(prof);
-    gets(id);
-    gets(stuName);
-    // gets(index);
-    // gets(courseName);
-    // find_gender(sex);
-    // find_profession(prof);
-    // find_stu(id, stuName);
-    // find_course(index, courseName);
-    find_score0(id, stuName);
-    // find_score1(index, courseName);
+// int main(){
+//     char sex[50], prof[50], id[50], stuName[50], courseName[50], index[50];
+//     // gets(sex);
+//     // gets(prof);
+//     gets(id);
+//     gets(stuName);
+//     // gets(index);
+//     // gets(courseName);
+//     // find_gender(sex);
+//     // find_profession(prof);
+//     // find_stu(id, stuName);
+//     // find_course(index, courseName);
+//     find_score0(id, stuName);
+//     // find_score1(index, courseName);
 
-    return 0;
-}
+//     return 0;
+// }

@@ -6,8 +6,11 @@
 #include <math.h>
 #include "course.h"
 #include "score.h"
+#include "store_info.h";
 
 // TODO: 增加序号
+
+// TODO::成绩保存后计算综合成绩
 void student(){
     FILE* fptr;
     // setlocale(LC_CTYPE,"it_IT.UTF-8");
@@ -93,9 +96,9 @@ void student(){
 
         if (sameID == 0) {
             fprintf(fptr, "%s,%s,%s,%s,%s\n", stu.ID, stu.name, stu.gender, stu.age, stu.profession);
-            printf("学生信息已录入\n");
+            printf("学生信息已录入。\n");
         } else {
-            printf("学号重复出现，请重新输入\n");
+            printf("学号重复出现，请重新输入。\n");
             i--; // 重新输入当前学生信息
         }
     }
@@ -180,6 +183,13 @@ void course(){
 
 }
 
+double calculate_score(char* idx, double score0, double score1){ //计算综合成绩
+    if (idx[0] == 'S')//专业课
+        return score0 * 0.4 + score1 * 0.6;
+    if (idx[0] == 'P')//公共课
+        return score0 * 0.3 + score1 * 0.7;
+}
+
 void score(){
     FILE* fptr;
     fptr = fopen("score.txt", "a");
@@ -187,20 +197,25 @@ void score(){
         printf("文件打开失败\n");
         return;
     }
-    // int total = 0;
-    // printf("请输入需要录入成绩的学生数量：");
-    // while (total < 1){
-    //     scanf("%d",&total);
-    // }
+    int total = 0;
+    printf("请输入需要录入成绩的学生数量：");
+    while (total < 1){
+        scanf("%d",&total);
+    }
 
-    // //录入学生成绩信息
-    // struct Score score;//定义结构体
-    // for (int i = 0; i < total; i ++){
-    //     scanf("%s %s %lf %lf", score.ID, score.index, &score.daily_grade, &score.exam_grade);
-    //     fprintf(fptr, "%s,%s,%d,%d\n", score.ID, score.index, (int)ceil(score.daily_grade), (int)ceil(score.exam_grade));
-    // }
-    // fclose(fptr);
-
+    //录入学生成绩信息
+    struct Score score;//定义结构体
+    int saveLabel;
+    for (int i = 0; i < total; i ++){
+        scanf("%s %s %lf %lf", score.ID, score.index, &score.daily_grade, &score.exam_grade);
+        printf("请选择是否保存学生成绩：0-是,1-否\n");
+        scanf("%d", &saveLabel); //选择是否保存成绩
+        if (saveLabel == 0){
+            score.score = calculate_score(score.index, score.daily_grade, score.exam_grade);//计算综合成绩
+            fprintf(fptr, "%s,%s,%d,%d,%.1f\n", score.ID, score.index, (int)ceil(score.daily_grade), (int)ceil(score.exam_grade), (float)score.score);
+        }
+    }
+    fclose(fptr);
     // //显示成绩信息
     // fptr = fopen("score.txt", "r");
     // if (fptr == NULL){
@@ -228,8 +243,8 @@ int main(){
     setlocale(LC_CTYPE,"it_IT.UTF-8");//区域设置
 
     // student();
-    course();
-    // score();
+    // course();
+    score();
 
     return 0;
 }

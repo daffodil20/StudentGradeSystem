@@ -3,6 +3,7 @@
 #include "student.h"
 #include "course.h"
 #include <string.h>
+#include "summary.h"
 
 #define MAX_LINE_LENGTH 256
 #define MAX_TOTAL_COURSE 100

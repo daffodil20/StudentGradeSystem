@@ -3,10 +3,11 @@
 #include "score.h"
 #include "course.h"
 #include <string.h>
+#include "statistics.h"
 
-#define MAX_LINE_LENGTH 256
-#define MAX_TOTAL_COURSE 100
-#define MAX_STU_PER_COURSE 50
+// #define MAX_LINE_LENGTH 256
+// #define MAX_TOTAL_COURSE 100
+// #define MAX_STU_PER_COURSE 50
 void average_score(){ //综合成绩平均分
     FILE *fp;
     struct Score score;

@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "account.h"
-#define MAX_LINE_LENGTH 256
+#include "manageAccount.h"
+// #define MAX_LINE_LENGTH 256
 
 void add_info(char* username, char* name, char* role){ //用户名和姓名
     // struct Account account;
@@ -19,12 +20,6 @@ void add_info(char* username, char* name, char* role){ //用户名和姓名
     fprintf(fp, "%s,%s,%s,%s\n", username, name, role, "12345");
     fclose(fp);
 }
-
- //添加学生信息
-// void add_stu_info(char* username, char* name){
-    
-// }
-
 
 //修改管理员密码
 int modify_password(char* username, char* name, char* new_password){

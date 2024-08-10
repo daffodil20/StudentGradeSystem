@@ -70,7 +70,7 @@
 
 #define MAX_LINE_LENGTH 256
 
-void calculate(){
+void calculate(){ //计算综合成绩
     FILE *fp;
     char buffer[MAX_LINE_LENGTH];
     char *lines[MAX_LINE_LENGTH];
