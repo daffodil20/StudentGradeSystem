@@ -533,6 +533,8 @@
 #include <stdio.h>
 #include "modify.h"
 #include "search.h"
+#include "delete.h"
+#include "summary.h"
 int main() {
     char idx[50], new_info[50], id[50], gender[50], profession[50];
     char account[50], name[50], role[50], password[50];
@@ -543,23 +545,26 @@ int main() {
     // gets(account);
     // gets(password);
     // scanf("%d ", &item);
-    gets(id);
     // gets(idx);
-    gets(name);
+    // gets(idx);
+    // gets(name);
     // gets(profession);
-    gets(new_info);
+    // gets(new_info);
     // scanf("%lf", &newGrade);
     
-    scanf("%d", &item);
+    // scanf("%d", &item);
     // modify_course0(idx, new_info, item);
     // scanf("%d ", &item);
     // gets(space);
     // gets(account);
     // printf("%d\n", item);
     // printf("%s", account);
-    modify_stu(id, name, new_info, item);
+    // modify_stu(id, name, new_info, item);
     // modify_course(idx, name, new_info, item);
     // modify_score0(account, password, id, idx, newGrade);
+    // delete_course(idx, name);
+    course_info();
+    stu_info();
     // find_stu(id, name);
     // find_course(idx, name);
     // find_gender(gender);

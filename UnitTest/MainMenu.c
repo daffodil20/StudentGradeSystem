@@ -2,6 +2,9 @@
 #include <string.h>
 #include "account.h"
 #include "search.h"
+#include "modify.h"
+#include "delete.h"
+#include "summary.h"
 
 // TODO:新增,修改与删除账号
 // TODO:录入信息的函数需要加上参数，把scanf放到main里，多次调用
@@ -30,18 +33,47 @@ void enterBar(int taskLabel){
 }
 
 void modifyBar(int taskLabel){
+    char id[50], name[50], newInfo[50], idx[50], userName[50], password[50];
+    double newGrade;
+    int item;
     switch (taskLabel)
     {
     case 1:
         printf("这是修改学生基本信息的界面。\n");
-        // printf("你可以选择修改1-学号2-")
-        // printf("请依次输入学生学号、姓名和需要修改的信息")
+        printf("你可以选择修改1-学号2-姓名3-性别4-年龄5-所在系。\n");
+        printf("请依次输入需要修改的信息项（1-5）、学号与姓名。\n");
+        gets(id);
+        gets(name);
+        scanf("%d ", &item);
+        gets(newInfo);
+        modify_stu(id, name, newInfo, item);
         break;
     case 2:
         printf("这是修改课程基本信息的界面。\n");
+        printf("你可以选择修改1-课号2-课名3-任课老师。\n");
+        printf("请依次输入需要修改的信息项（1-3）、课号与课名。\n");
+        gets(idx);
+        gets(name);
+        scanf("%d ", &item);
+        gets(newInfo);
         break;
     case 3:
         printf("这是修改学生成绩的界面。\n");
+        printf("你可以选择修改1-学号2-姓名3-性别4-年龄5-所在系。\n");
+        printf("修改成绩需要输入你的用户名和密码。\n");
+        printf("请依次输入用户名、密码、需要修改的信息项（1-2）、学号与课号。\n");
+        gets(userName);
+        gets(password);
+        scanf("%d ", &item);
+        gets(id);
+        gets(idx);
+        scanf("%lf", &newGrade);
+        if (item == 1)
+            modify_score0(userName, password, id, idx, newGrade);
+        else if (item == 2)
+            modify_score1(userName, password, id, idx, newGrade);
+        else
+            printf("修改信息项不存在。\n");
         break;   
     default:
         printf("这是无效的任务编号，请重新选择。\n");
@@ -50,16 +82,29 @@ void modifyBar(int taskLabel){
 }
 
 void deleteBar(int taskLabel){
+    char id[50], name[50], idx[50];
     switch (taskLabel)
     {
     case 1:
         printf("这是删除学生基本信息的界面。\n");
+        printf("请依次输入需要删除信息的学号与姓名。\n");
+        gets(id);
+        gets(name);
+        delete_stu(id, name);
         break;
     case 2:
         printf("这是删除课程基本信息的界面。\n");
+        printf("请依次输入需要删除信息的课号与课名。\n");
+        gets(idx);
+        gets(name);
+        delete_course(idx, name);
         break;
     case 3:
         printf("这是删除学生成绩的界面。\n");
+        printf("请依次输入需要删除信息的学号与课号。\n");
+        gets(id);
+        gets(idx);
+        delete_score(id, idx);
         break;   
     default:
         printf("这是无效的任务编号，请重新输入。\n");
@@ -149,9 +194,11 @@ void sumBar(int taskLabel){
     {
     case 1:
         printf("这是显示课程及格情况的界面。\n");
+        course_info();
         break;
     case 2:
-        printf("这是显示学生成绩情况的界面。\n");
+        printf("这是显示学生成绩及格情况的界面。\n");
+        stu_info();
         break;
     default:
         printf("这是无效的任务编号，请重新输入。\n");

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "delete.h"
 
 void delete_stu(char* old_id, char* old_name){ //根据学生学号和姓名删除学生信息
     #define MAX_LINE_LENGTH 256
@@ -90,6 +91,7 @@ void delete_stu(char* old_id, char* old_name){ //根据学生学号和姓名删�
         printf("输入的学号不存在，请重新输入。\n");
         return;
     }
+    printf("删除该学生基本信息成功！\n");
 
     fclose(fp);
 }
@@ -180,6 +182,7 @@ void delete_course(char *idx, char *name){ //根据课程课号删除课程信�
         printf("输入的课号或课名不存在/课号与课名不匹配，请重新输入。\n");
         return;
     }
+    printf("删除该课程基本信息成功！\n");
 
     fclose(fp);
 }
@@ -277,6 +280,7 @@ void delete_score(char* id, char* idx){ //根据学生学号和课程课号删�
         printf("输入的课号或学号不存在，请重新输入。\n");
         return;
     }
+    printf("删除该条成绩信息成功！\n");//成功提示
 
     fclose(fp);
 }

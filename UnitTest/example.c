@@ -1,11 +1,11 @@
 //中文化测试
-#include <string.h>
-#include <wchar.h>
-#include <locale.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <windows.h>
-int main(){
+// #include <string.h>
+// #include <wchar.h>
+// #include <locale.h>
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <windows.h>
+// int main(){
     // system("chcp 65001 & cls");
     // setlocale(LC_ALL, "zh_CN.UTF-8");
     // setlocale(LC_ALL, "");
@@ -19,10 +19,10 @@ int main(){
     // short unsigned int  chStr1[15];
 //    char chStr1[8];
    
-   wchar_t wide_str[16], input[16];
-//    strcpy(wide_str, "你好同学");
-   fgetws(wide_str, 12, stdin);//你好同学
-   wprintf(L"%ls\n", wide_str);//你好同学可以正确显示
+//    wchar_t wide_str[16], input[16];
+// //    strcpy(wide_str, "你好同学");
+//    fgetws(wide_str, 12, stdin);//你好同学
+//    wprintf(L"%ls\n", wide_str);//你好同学可以正确显示
 
 
 //     char wide_str[16], input[16];
@@ -228,5 +228,19 @@ int main(){
     // printf("%c", ch);
     // fflush(stdout);
 
-    return 0;
+//     return 0;
+// }
+
+
+#include <stdio.h>
+#include <stdint.h>
+#include <wchar.h>
+
+int main() {
+    unsigned char utf8_val[100];
+
+    scanf("%ls", utf8_val);
+    // printf("A: %x\n", *utf8_val);
+    // printf("B: %c\n", *utf8_val);
+    wprintf(L"%ls\n", (wchar_t *)utf8_val);
 }
