@@ -10,6 +10,24 @@ void delete_stu(char* old_id, char* old_name){ //根据学生学号和姓名删�
     FILE *fp;
     char first_line[MAX_LINE_LENGTH];
     char line[MAX_LINE_LENGTH];
+    struct Score score;
+
+    //判断该项是否能删除
+    fp = fopen("score.txt", "r");
+    if (fp == NULL) {
+        printf("文件打开失败\n");
+        return;
+    }
+    fgets(line, sizeof(line), fp);
+    while (fgets(line, sizeof(line), fp)){
+        if (sscanf(line, "%49[^,],%49[^,],%d,%d,%lf", score.ID, score.index, &score.daily_grade, &score.exam_grade, &score.score) == 5){
+            if (strcmp(score.ID, old_id) == 0){
+                printf("该学生已经有课程成绩，信息不能删除。\n");
+                return;
+            }
+        }
+    }
+    fclose(fp);
 
     // 读取文件内容到内存
     fp = fopen("student.txt", "r");
@@ -81,6 +99,24 @@ void delete_course(char *idx, char *name){ //根据课程课号删除课程信�
     FILE *fp;
     char first_line[MAX_LINE_LENGTH];
     char line[MAX_LINE_LENGTH];
+    struct Score score;
+
+    //判断该项是否能删除
+    fp = fopen("score.txt", "r");
+    if (fp == NULL) {
+        printf("文件打开失败\n");
+        return;
+    }
+    fgets(line, sizeof(line), fp);
+    while (fgets(line, sizeof(line), fp)){
+        if (sscanf(line, "%49[^,],%49[^,],%d,%d,%lf", score.ID, score.index, &score.daily_grade, &score.exam_grade, &score.score) == 5){
+            if (strcmp(score.index, idx) == 0){
+                printf("该课程已经有学生成绩，信息不能删除。\n");
+                return;
+            }
+        }
+    }
+    fclose(fp);
 
     // 读取文件内容到内存
     fp = fopen("course.txt", "r");

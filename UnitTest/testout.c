@@ -543,20 +543,21 @@ int main() {
     // gets(account);
     // gets(password);
     // scanf("%d ", &item);
-    // gets(id);
-    gets(idx);
+    gets(id);
+    // gets(idx);
     gets(name);
     // gets(profession);
-    // gets(new_info);
+    gets(new_info);
     // scanf("%lf", &newGrade);
     
-    // scanf("%d", &item);
+    scanf("%d", &item);
     // modify_course0(idx, new_info, item);
     // scanf("%d ", &item);
     // gets(space);
     // gets(account);
     // printf("%d\n", item);
     // printf("%s", account);
+    modify_stu(id, name, new_info, item);
     // modify_course(idx, name, new_info, item);
     // modify_score0(account, password, id, idx, newGrade);
     // find_stu(id, name);
@@ -564,7 +565,7 @@ int main() {
     // find_gender(gender);
     // find_profession(profession);
     // find_score0(id, name);
-    find_score1(idx, name);
+    // find_score1(idx, name);
     // gets(name);
     // gets(role);
     // gets(password);

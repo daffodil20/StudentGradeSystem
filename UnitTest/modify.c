@@ -169,7 +169,6 @@ void modify_course(char* idx, char* name, char* new_info, int item) { //根据�
     }
 
     // 逐行读取文件并创建链表
-    char line[MAX_LINE_LENGTH];
     while (fgets(line, sizeof(line), fp)) {
         struct CourseNode *new_node = (struct CourseNode *)malloc(sizeof(struct CourseNode));
         if (sscanf(line, "%49[^,],%49[^,],%49[^\n]", 
