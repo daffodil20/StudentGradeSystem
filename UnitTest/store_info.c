@@ -11,6 +11,7 @@
 // TODO: 增加序号
 
 // TODO::成绩保存后计算综合成绩
+
 void student(){
     FILE* fptr;
     // setlocale(LC_CTYPE,"it_IT.UTF-8");

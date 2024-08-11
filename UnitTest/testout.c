@@ -532,22 +532,23 @@
 #include "account.h"
 #include <stdio.h>
 #include "modify.h"
-// #include "search.h"
+#include "search.h"
 int main() {
-    char idx[50], new_info[50], id[50];
+    char idx[50], new_info[50], id[50], gender[50], profession[50];
     char account[50], name[50], role[50], password[50];
     // char space = ' ';
     int item;
     double newGrade;
     // printf("请输入课程编号、新信息和要修改的项（1: 课号, 2: 名称，3：老师）：\n");
-    gets(account);
-    gets(password);
+    // gets(account);
+    // gets(password);
     // scanf("%d ", &item);
-    gets(id);
+    // gets(id);
     gets(idx);
-    // gets(name);
+    gets(name);
+    // gets(profession);
     // gets(new_info);
-    scanf("%lf", &newGrade);
+    // scanf("%lf", &newGrade);
     
     // scanf("%d", &item);
     // modify_course0(idx, new_info, item);
@@ -557,8 +558,13 @@ int main() {
     // printf("%d\n", item);
     // printf("%s", account);
     // modify_course(idx, name, new_info, item);
-    modify_score0(account, password, id, idx, newGrade);
+    // modify_score0(account, password, id, idx, newGrade);
     // find_stu(id, name);
+    // find_course(idx, name);
+    // find_gender(gender);
+    // find_profession(profession);
+    // find_score0(id, name);
+    find_score1(idx, name);
     // gets(name);
     // gets(role);
     // gets(password);

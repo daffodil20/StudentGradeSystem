@@ -12,12 +12,40 @@
 // TODO: 根据姓名与课名修改
 // TODO: (possible)变量全局化
 
+// TODO: 如果课程与学生已经有成绩录入，则课号与学号不能修改、删除，只能修改课名、姓名、性别、年龄
 // #define MAX_LINE_LENGTH 256
 
 void modify_stu(char* id, char* name, char* new_info, int item) { //根据学号与姓名修改
     FILE *fp;
     struct StudentNode *head = NULL, *last = NULL;
     int modified = 0;
+    struct Score score;
+    char line[MAX_LINE_LENGTH];
+
+    //读取score.txt以判断学号是否能修改
+    if (item == 1){
+        fp = fopen("score.txt", "r");
+        if (fp == NULL) {
+            printf("文件打开失败\n");
+            return;
+        }
+        fgets(line, sizeof(line), fp);
+        while (fgets(line, sizeof(line), fp)) {
+            if (sscanf(line, "%49[^,],%49[^,],%d,%d,%lf", score.ID, score.index, &score.daily_grade, &score.exam_grade, &score.score) == 5){
+                if (strcmp(score.ID, id) == 0){
+                    printf("该学生已经有课程成绩，学号不能修改，可以修改其他项。\n");
+                    return;
+                }
+            }
+        }
+    }
+    fclose(fp);
+
+    //修改项不存在
+    if (item != 1 && item != 2 && item != 3 && item != 4 && item != 5){
+        printf("修改项不存在。\n");
+        return;
+    }
 
     // 读取文件内容到链表
     fp = fopen("student.txt", "r");
@@ -35,7 +63,7 @@ void modify_stu(char* id, char* name, char* new_info, int item) { //根据学号
     }
 
     // 逐行读取文件并创建链表
-    char line[MAX_LINE_LENGTH];
+    
     while (fgets(line, sizeof(line), fp)) {
         struct StudentNode *new_node = (struct StudentNode *)malloc(sizeof(struct StudentNode));
         if (sscanf(line, "%49[^,],%49[^,],%49[^,],%49[^,],%49[^\n]", new_node->student.ID, new_node->student.name, new_node->student.gender, new_node->student.age, new_node->student.profession) == 5) {
@@ -57,7 +85,7 @@ void modify_stu(char* id, char* name, char* new_info, int item) { //根据学号
                 else if (item == 3) strcpy(new_node->student.gender, new_info);
                 else if (item == 4) strcpy(new_node->student.age, new_info);
                 else if (item == 5) strcpy(new_node->student.profession, new_info);
-                else printf("修改项不存在\n");
+                // else printf("修改项不存在\n");
                 modified = 1;//修改标记
             }
         } else {
@@ -96,7 +124,34 @@ void modify_stu(char* id, char* name, char* new_info, int item) { //根据学号
 void modify_course(char* idx, char* name, char* new_info, int item) { //根据课号与课名修改
     FILE *fp;
     struct CourseNode *head = NULL, *last = NULL;
+    struct Score score;
     int modified = 0;
+    char line[MAX_LINE_LENGTH];
+
+    //读取score.txt以判断课号是否能修改
+    if (item == 1){
+        fp = fopen("score.txt", "r");
+        if (fp == NULL) {
+            printf("文件打开失败\n");
+            return;
+        }
+        fgets(line, sizeof(line), fp);
+        while (fgets(line, sizeof(line), fp)) {
+            if (sscanf(line, "%49[^,],%49[^,],%d,%d,%lf", score.ID, score.index, &score.daily_grade, &score.exam_grade, &score.score) == 5){
+                if (strcmp(score.index, idx) == 0){
+                    printf("该课程已经有学生成绩，课号不能修改，可以修改其他项。\n");
+                    return;
+                }
+            }
+        }
+    }
+    fclose(fp);
+
+    //修改项不存在
+    if (item != 1 && item != 2 && item != 3){
+        printf("修改项不存在。\n");
+        return;
+    }
 
     // 读取文件内容到链表
     fp = fopen("course.txt", "r");
@@ -136,7 +191,7 @@ void modify_course(char* idx, char* name, char* new_info, int item) { //根据�
                 if (item == 1) strcpy(new_node->course.index, new_info);
                 else if (item == 2) strcpy(new_node->course.name, new_info);
                 else if (item == 3) strcpy(new_node->course.teacher, new_info);
-                else printf("修改项不存在\n");
+                // else printf("修改项不存在\n");
                 modified = 1;
             }
         } else {

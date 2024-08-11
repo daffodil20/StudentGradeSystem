@@ -18,7 +18,9 @@ void find_stu(char* id, char* inputName){
         if (sscanf(line, "%49[^,],%49[^,],%49[^,],%49[^,],%49[^\n]", stu.ID, stu.name, stu.gender, stu.age, stu.profession) == 5){
             if (strcmp(stu.name, inputName) == 0 && strcmp(stu.ID, id) == 0){ //匹配成功
                 searched = 1; //搜索成功
+                printf("学号 姓名 性别 年龄 所在系\n");
                 printf("%s,%s,%s,%s,%s\n", stu.ID, stu.name, stu.gender, stu.age, stu.profession); //显示学生基本信息
+                break;
             }
         }
     }
@@ -42,7 +44,9 @@ void find_course(char* idx, char* courseName){ //根据课名与课号查找课�
         if (sscanf(line, "%49[^,],%49[^,],%49[^\n]",course.index, course.name, course.teacher) == 3){
             if (strcmp(course.name, courseName) == 0 && strcmp(course.index, idx) == 0){ //匹配成功
                 searched = 1; //搜索成功
+                printf("课号 课名 任课老师\n");
                 printf("%s,%s,%s\n", course.index, course.name, course.teacher); //显示课程基本信息
+                break;
             }
         }
     }
@@ -142,7 +146,7 @@ void find_score0(char* id, char* name){ //根据学号和姓名查询成绩
                     while (fgets(courseLine, sizeof(courseLine), fp3)){
                         if (sscanf(courseLine, "%49[^,],%49[^,],%49[^\n]", course.index, course.name, course.teacher) == 3){
                             if (strcmp(score.index, course.index) == 0){ //课号相同
-                                printf("course and score: %s,%s,%d,%d,%.1f\n", score.index, course.name, (int)score.daily_grade, (int)score.exam_grade, (float)score.score);
+                                printf("%s,%s,%d,%d,%.1f\n", score.index, course.name, (int)score.daily_grade, (int)score.exam_grade, (float)score.score);
                                 fclose(fp3);
                                 break;//停止查找
                             }
@@ -211,7 +215,7 @@ void find_score1(char* idx, char* name){ //根据课号和课名查询成绩
                     while (fgets(stuLine, sizeof(stuLine), fp3)){
                         if (sscanf(stuLine, "%49[^,],%49[^,],%49[^,],%49[^,],%49[^\n],", stu.ID, stu.name, stu.gender, stu.age, stu.profession) == 5){
                             if (strcmp(score.ID, stu.ID) == 0){ //学号匹配
-                                printf("student and score: %s,%s,%d,%d,%.1f\n", stu.ID, stu.name, (int)score.daily_grade, (int)score.exam_grade, (float)score.score);
+                                printf("%s,%s,%d,%d,%.1f\n", stu.ID, stu.name, (int)score.daily_grade, (int)score.exam_grade, (float)score.score);
                                 fclose(fp3);
                                 break;//停止查找
                             }
