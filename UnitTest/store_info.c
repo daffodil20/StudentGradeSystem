@@ -1,16 +1,21 @@
 #include <stdio.h>
+#include <stdint.h>
+#include <wchar.h>
+#include <fcntl.h>
+#include <stdlib.h>
 #include "student.h"
 #include <locale.h>
-//#include <wchar.h>
 #include <string.h>
 #include <math.h>
 #include "course.h"
 #include "score.h"
-#include "store_info.h";
+// #include "store_info.h"
 
 // TODO: 增加序号
 
 // TODO::成绩保存后计算综合成绩
+// setlocale(LC_ALL, "");
+// _setmode( _fileno( stdin ), _O_WTEXT );
 
 void student(){
     FILE* fptr;
@@ -21,10 +26,12 @@ void student(){
     if (fptr == NULL)
         printf("文件打开错误\n");
     int total = 0;
-    printf("请输入需要录入信息的学生数量:");
-    while (total < 1){
-        scanf("%d",&total);
-    }
+    printf("请输入需要录入信息的学生数量:\n");
+    // while (total < 1){
+    wscanf(L"%d",&total);
+    getwchar();
+        // scanf("%d ",&total);
+    // }
     // //录入学生基本信息
     //TODO:相同学号则不能保存信息
     struct Student stu, temp;
@@ -74,12 +81,30 @@ void student(){
     //         printf("学号重复出现，请重新输入\n");
     // }
     // fclose(fptr);
-    
+    if (total > 0)
+        printf("请输入学生信息 (ID, 姓名, 性别, 年龄, 专业): \n");
+    else{
+        printf("录入学生数量错误。\n");
+        return;
+    }
+    wchar_t wbuffer[500];//定义宽字符数组
     for (int i = 0; i < total; i++) {
-        sameID = 0;
+        sameID = 0;//重置sameID
+        fgetws(stu.ID, sizeof(stu.ID), stdin);
+        stu.ID[wcslen(stu.ID) - 1] = L'\0';//手动读取换行符
 
-        printf("请输入学生信息 (ID, 姓名, 性别, 年龄, 专业): ");
-        scanf("%s %s %s %s %s", stu.ID, stu.name, stu.gender, stu.age, stu.profession);
+        fgetws(stu.name, sizeof(stu.name), stdin);
+        stu.name[wcslen(stu.name) - 1] = L'\0';
+
+        fgetws(stu.gender, sizeof(stu.gender), stdin);
+        stu.gender[wcslen(stu.gender) - 1] = L'\0';
+
+        fgetws(stu.age, sizeof(stu.age), stdin);
+        stu.age[wcslen(stu.age) - 1] = L'\0';
+
+        fgetws(stu.profession, sizeof(stu.profession), stdin);
+        stu.profession[wcslen(stu.profession) - 1] = L'\0';
+        // wscanf(L"%ls %ls %ls %ls %ls", stu.ID, stu.name, stu.gender, stu.age, stu.profession);
 
         // 将文件指针移到开头，排除相同学号的情况
         fseek(fptr, 0, SEEK_SET);
@@ -87,8 +112,11 @@ void student(){
         // 检查学号是否重复
         fgets(buffer, sizeof(buffer), fptr); //跳过表头
         while (fgets(buffer, sizeof(buffer), fptr)){
-            if (sscanf(buffer, "%49[^,],%49[^,],%49[^,],%49[^,],%49[^\n]", temp.ID, temp.name, temp.gender, temp.age, temp.profession) == 5) {
-                if (strcmp(stu.ID, temp.ID) == 0) {
+            //char->wchar_t
+            mbstowcs(wbuffer, buffer, sizeof(wbuffer) / sizeof(wchar_t));
+            if (swscanf(wbuffer, L"%49[^,],%49[^,],%49[^,],%49[^,],%49[^\n]", temp.ID, temp.name, temp.gender, temp.age, temp.profession) == 5) {//解析宽字符数组
+                // wprintf(L"%ls %ls %ls %ls %ls", temp.ID, temp.name, temp.gender, temp.age, temp.profession);
+                if (wcscmp(stu.ID, temp.ID) == 0) {
                     sameID = 1;
                     break;
                 }
@@ -96,7 +124,7 @@ void student(){
         }
 
         if (sameID == 0) {
-            fprintf(fptr, "%s,%s,%s,%s,%s\n", stu.ID, stu.name, stu.gender, stu.age, stu.profession);
+            fwprintf(fptr, L"%ls,%ls,%ls,%ls,%ls\n", stu.ID, stu.name, stu.gender, stu.age, stu.profession);
             printf("学生信息已录入。\n");
         } else {
             printf("学号重复出现，请重新输入。\n");
@@ -241,11 +269,12 @@ void score(){
 }
 
 int main(){
-    setlocale(LC_CTYPE,"it_IT.UTF-8");//区域设置
-
-    // student();
+    // setlocale(LC_CTYPE,"it_IT.UTF-8");//区域设置
+    setlocale(LC_ALL, "");
+    _setmode( _fileno( stdin ), _O_WTEXT );
+    student();
     // course();
-    score();
+    // score();
 
     return 0;
 }

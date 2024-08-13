@@ -1,6 +1,6 @@
 struct Score{
-    char ID[50];
-    char index[50];
+    wchar_t ID[50];
+    wchar_t index[50];
     double daily_grade;
     double exam_grade;
     double score;

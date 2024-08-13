@@ -4,6 +4,8 @@
         "typeinfo": "c",
         "student.h": "c",
         "string.h": "c",
-        "cmath": "c"
+        "cmath": "c",
+        "summary.h": "c",
+        "locale.h": "c"
     }
 }

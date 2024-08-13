@@ -232,15 +232,109 @@
 // }
 
 
+// #include <stdio.h>
+// #include <stdint.h>
+// #include <wchar.h>
+
+// int main() {
+//     unsigned char utf8_val[100];
+
+//     scanf("%ls", utf8_val);
+//     // printf("A: %x\n", *utf8_val);
+//     // printf("B: %c\n", *utf8_val);
+//     wprintf(L"%ls\n", (wchar_t *)utf8_val);
+// }
+
+
 #include <stdio.h>
 #include <stdint.h>
 #include <wchar.h>
+#include <locale.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <string.h>
 
 int main() {
-    unsigned char utf8_val[100];
+    setlocale(LC_ALL, "");
+    // unsigned char utf8_val[60];
+    // uint32_t utf8_val[100];
+    // uint32_t utf8_val[100];
 
-    scanf("%ls", utf8_val);
-    // printf("A: %x\n", *utf8_val);
-    // printf("B: %c\n", *utf8_val);
-    wprintf(L"%ls\n", (wchar_t *)utf8_val);
+    unsigned char utf8_val[256];
+    char id[50], name[50], gender[50], age[50], prof[50];
+    // printf("wchar_t: %lu", sizeof(wchar_t));
+    _setmode( _fileno( stdin ), _O_WTEXT );
+    // _setmode( _fileno( stdout ), _O_WTEXT );
+    // _set_fmode(_O_WTEXT);
+    // _set_fmode(_O_BINARY);
+    // _setmode( _fileno( stdin ), _O_WTEXT );
+    // _setmode( _fileno( stdout ), _O_WTEXT );
+    // wscanf(L"%ls", utf8_val);
+    // fgetws(utf8_val, sizeof(utf8_val), stdin);
+    // wscanf(L"%ls", utf8_val); 
+    FILE *fp;
+    fp = fopen("student.txt", "r");
+    // FILE *fp = _wfopen(L"student.txt", L"r, ccS=UTF-8"); // 打开宽字符文件
+    // _setmode( _fileno( fp ), _O_WTEXT );
+    // fgetws(utf8_val, sizeof(utf8_val), stdin);
+    // fwprintf(fp, L"%ls", utf8_val);
+    // fgets(utf8_val, sizeof(utf8_val), fp);
+    // // // sscanf(utf8_val, "%49[^,],%49[^,],%49[^,],%49[^,],%49[^\n]", id, name, gender, age, prof);
+    // // // fwscanf(fp, L"%ls", utf8_val);
+    // printf("第一行：%s", utf8_val);
+    // printf("第一行：%x", utf8_val[0]);
+    // // printf("结果：%s %s %s %s %s", id, name, gender, age, prof);
+    // fgets(utf8_val, sizeof(utf8_val), fp);
+    // sscanf(utf8_val, "%49[^,],%49[^,],%49[^,],%49[^,],%49[^\n]", id, name, gender, age, prof);
+    // printf("结果：%s %c %s %s %s", id, name[0], gender, age, prof);
+    // printf("名字：%ls ", (wchar_t *)name);
+    // printf("第二行：%s\n", utf8_val);
+
+    // _setmode( _fileno( stdin ), _O_WTEXT );
+    // wchar_t input[50];
+    // fgetws(input, sizeof(input), stdin);
+    // printf("比较编码：%x,%x\n", input[0], name[0]);
+    // if (strcmp(name, (char)input) == 0){
+    //     printf("字符相同\n");
+    // }
+    // for (i = 0; i < strlen(name); i ++){
+    //     if (strcmp(name, (char)utf8_val) == 0){
+
+    //     }
+    // }
+    //尝试用fgetws读文件
+    char output[256], input[256];
+    wchar_t buffer[256];
+    // fgetws(input, sizeof(input), stdin);
+    // fwprintf(fp, L"%ls", input);
+    // fgets(output, sizeof(output), fp);
+    
+    fgets(output, sizeof(output), fp);
+    mbstowcs(buffer,output,sizeof(buffer)/sizeof(wchar_t));
+    wprintf(L"result:%ls", buffer);
+    // printf("第一行：%x", output[0]);
+    
+    fclose(fp);
+    // char input[50];
+    // fgets(input, sizeof(input), stdin);
+    // printf("%s")
+    // printf("A0: %x\n", utf8_val[0]); 
+    // printf("A1: %x\n", utf8_val[1]); 
+    // printf("A2: %x\n", utf8_val[2]); 
+    // printf("A3: %x\n", utf8_val[3]); 
+    // printf("A4: %x\n", utf8_val[4]); 
+    // printf("A5: %x\n", utf8_val[5]); 
+    // printf("A6: %x\n", utf8_val[6]); 
+    // printf("A7: %x\n", utf8_val[7]); 
+    // printf("A8: %x\n", utf8_val[8]); 
+    // printf("A9: %x\n", utf8_val[9]); 
+    // printf("A10: %x\n", utf8_val[10]); 
+    // printf("A11: %x\n", utf8_val[11]); 
+    // printf("A12: %x\n", utf8_val[12]); 
+    // printf("A13: %x\n", utf8_val[13]); 
+    // printf("B0: %c\n", utf8_val[0]);
+    // printf("B1: %ls\n", utf8_val);
+
+    // wprintf(L"C: %ls\n", utf8_val);
+    // wprintf(L"C: %ls\n", utf8_val[0]);
 }

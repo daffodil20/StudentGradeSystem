@@ -1,7 +1,8 @@
-ID,name,gender,age,profession
-01,Liqiang,male,19,computer
-06,Wangxiaoke,male,20,computer
-07,Zhanghuan,male,20,electronic
-03,Lili,female,18,electronic
-08,Lisi,male,18,math
-05,Heqing,female,19,telecommunication
+学号,姓名,性别,年龄,所在系
+01,李强,男,19,计算机
+02,王松,男,20,通信工程
+03,李丽,女,18,电子
+04,张平,女,21,计算机
+05,何晴,女,19,通信工程
+06,王小可,男,20,计算机
+07,张欢,男,20,电子

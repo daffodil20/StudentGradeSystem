@@ -430,7 +430,7 @@ void modify_score1(char* accountName, char* PassWord, char* id, char* idx, doubl
     }
 }
 
-// int main() {
+int main() {
 //     char idx[50], new_info[50], index[50], password[50], id[50], name[50];
 //     double NewGrade;//平时或卷面成绩
 //     int item;
@@ -452,5 +452,5 @@ void modify_score1(char* accountName, char* PassWord, char* id, char* idx, doubl
     // modify_score0(password, id, index, NewGrade);
     // modify_score1(password, id, index, NewGrade);
 
-//     return 0;
-// }
+    return 0;
+}

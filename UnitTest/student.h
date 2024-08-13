@@ -1,9 +1,9 @@
 struct Student{
-    char ID[50];
-    char name[50];//13
-    char gender[50];
-    char age[50];
-    char profession[50];
+    wchar_t ID[50];
+    wchar_t name[50];//13
+    wchar_t gender[50];
+    wchar_t age[50];
+    wchar_t profession[50];
 };
 
 struct StudentNode{

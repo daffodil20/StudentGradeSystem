@@ -529,18 +529,146 @@
 #include <string.h>
 #include "course.h"
 #include "score.h"  // 假设你有一个 "score.h" 头文件
+#include "student.h"
 #include "account.h"
 #include <stdio.h>
-#include "modify.h"
-#include "search.h"
-#include "delete.h"
-#include "summary.h"
+#include <fcntl.h>
+#include <stdint.h>
+#include <locale.h>
+#include <errno.h>
+#define INITIAL_BUFFER_SIZE 256
+// #include "modify.h"
+// #include "search.h"
+// #include "delete.h"
+// #include "summary.h"
+#include <wchar.h>
+#define MAX_LINE_LENGTH 256
+void modify_stu(wchar_t* id, wchar_t* name, wchar_t* new_info, int item) { //根据学号与姓名修改
+    FILE *fp;
+    struct StudentNode *head = NULL, *last = NULL;
+    int modified = 0;
+    struct Score score;
+    wchar_t line[MAX_LINE_LENGTH];
+
+    //读取score.txt以判断学号是否能修改
+    if (item == 1){
+        fp = fopen("score.txt", "r");
+        if (fp == NULL) {
+            printf("文件打开失败\n");
+            return;
+        }
+        fgetws(line, sizeof(line), fp);
+        while (fgetws(line, sizeof(line), fp)) {
+            if (swscanf(line, L"%49[^,],%49[^,],%d,%d,%lf", score.ID, score.index, &score.daily_grade, &score.exam_grade, &score.score) == 5){
+                if (wcscmp(score.ID, id) == 0){
+                    printf("该学生已经有课程成绩，学号不能修改，可以修改其他项。\n");
+                    return;
+                }
+            }
+        }
+        fclose(fp);
+    }
+    
+
+    //修改项不存在
+    if (item != 1 && item != 2 && item != 3 && item != 4 && item != 5){
+        printf("修改项不存在。\n");
+        return;
+    }
+
+    // 读取文件内容到链表
+    fp = fopen("student.txt", "r");
+    printf("helloHELLO\n");
+    if (fp == NULL) {
+        printf("文件打开失败\n");
+        return;
+    }
+    // fseek(fp, 0L, SEEK_SET);
+    printf("hAAAA\n");
+    // 跳过第一行
+    // wchar_t first_line[MAX_LINE_LENGTH];
+    // fgetws(first_line, MAX_LINE_LENGTH, fp);
+    // wprintf(L"%ls", first_line);
+    // if (fgetws(first_line, sizeof(first_line), fp) == NULL) {
+    //     long position = ftell(fp);
+    //     printf("文件指针当前位置: %ld\n", position);  // 应该是 0
+    //     printf("无法读取文件或文件为空\n");
+    //     fclose(fp);
+    //     return;
+    // }
+
+    // 逐行读取文件并创建链表
+    
+    while (fgetws(line, MAX_LINE_LENGTH, fp)) {
+        struct StudentNode *new_node = (struct StudentNode *)malloc(sizeof(struct StudentNode));
+        if (swscanf(line, L"%49[^,],%49[^,],%49[^,],%49[^,],%49[^\n]", new_node->student.ID, new_node->student.name, new_node->student.gender, new_node->student.age, new_node->student.profession) == 5) {
+            wprintf(L"%ls,%ls,%ls,%ls,%ls\n", new_node->student.ID, new_node->student.name, new_node->student.gender, new_node->student.age, new_node->student.profession);
+            new_node->next = NULL;
+            if (head == NULL) {
+                head = new_node;
+            } else {
+                last->next = new_node;
+            }
+            last = new_node;
+            last->next = NULL;
+            // printf("index:%s name:%s teacher:%s\n", new_node->course.index, 
+                //    new_node->course.name,
+                //    new_node->course.teacher);
+            // 查找并修改数据
+            wprintf(L"不相同：%ls,%ls;%ls,%ls\n", new_node->student.ID, id, new_node->student.name, name);
+            if (wcscmp(new_node->student.ID, id) == 0 && wcscmp(new_node->student.name, name) == 0) { //学号与姓名都匹配
+                wprintf(L"%ls,%ls;%ls,%ls\n", new_node->student.ID, id, new_node->student.name, name);
+                if (item == 1) wcscpy(new_node->student.ID, new_info);
+                else if (item == 2) wcscpy(new_node->student.name, new_info);
+                else if (item == 3) wcscpy(new_node->student.gender, new_info);
+                else if (item == 4) wcscpy(new_node->student.age, new_info);
+                else if (item == 5) wcscpy(new_node->student.profession, new_info);
+                // else printf("修改项不存在\n");
+                modified = 1;//修改标记
+            }
+        } else {
+            free(new_node); // 释放未用的内存
+            break; // 结束循环
+        }
+    }
+    fclose(fp);
+
+    // 写回文件
+    fp = fopen("student.txt", "w");
+    if (fp == NULL) {
+        printf("文件打开失败\n");
+        return;
+    }
+
+    // 重新写入第一行
+    // fwprintf(fp, L"%ls", first_line);
+
+    struct StudentNode *current = head;
+    while (current != NULL) {
+        fwprintf(fp, L"%ls,%ls,%ls,%ls,%ls\n", current->student.ID, current->student.name, current->student.gender, current->student.age, current->student.profession);
+        struct StudentNode *temp = current;
+        current = current->next;
+        free(temp); // 释放节点内存
+        temp = NULL;
+    }
+    fclose(fp);
+
+    if (!modified) {
+        printf("输入的学号或姓名不存在/学号和姓名不匹配，请重新输入。\n");
+    }
+}
+
+
 int main() {
-    char idx[50], new_info[50], id[50], gender[50], profession[50];
-    char account[50], name[50], role[50], password[50];
+    wchar_t idx[50], new_info[50], id[50], gender[50], profession[50];
+    wchar_t account[50], name[50], role[50], password[50];
     // char space = ' ';
     int item;
     double newGrade;
+    setlocale(LC_ALL, "");
+    _setmode( _fileno( stdin ), _O_WTEXT );
+    
+    
     // printf("请输入课程编号、新信息和要修改的项（1: 课号, 2: 名称，3：老师）：\n");
     // gets(account);
     // gets(password);
@@ -563,8 +691,62 @@ int main() {
     // modify_course(idx, name, new_info, item);
     // modify_score0(account, password, id, idx, newGrade);
     // delete_course(idx, name);
-    course_info();
-    stu_info();
+    // course_info();
+    // stu_info();
+    
+    // wscanf(L"%d ", &item);
+    // fgetws(id, sizeof(id), stdin);
+    // fgetws(name, sizeof(name), stdin);
+    // fgetws(new_info, sizeof(new_info), stdin);
+    // int ch;
+    // while ((ch = getchar()) != EOF && ch != '\n');
+    // scanf("%d", &item);
+
+    // modify_stu(id, name, new_info, item);
+
+    FILE *fp;
+    fp = fopen("student.txt", "r");
+    //printf("helloHELLO\n");
+    if (fp == NULL) {
+        printf("文件打开失败\n");
+        return 0;
+    }
+    _setmode( _fileno(fp), _O_WTEXT );
+
+    // wchar_t first_line[1024], line[1024];
+    // fgetws(first_line, 1024, fp);
+    // // printf("111%s\n", first_line);
+    // wprintf(L"第一行：%ls\n", first_line);
+    // fgetws(first_line, 1024, fp);
+    // wprintf(L"第二行：%ls\n", first_line);
+    // // printf("222%s\n", first_line);
+    // fgetws(first_line, 1024, fp);
+    // wprintf(L"第三行：%ls\n", first_line);
+    // fgetws(first_line, 2048, fp);
+    // wprintf(L"第三行：%ls\n", first_line);
+    // fscanf(fp, 
+    // wchar_t *line = NULL;
+    // size_t len = INITIAL_BUFFER_SIZE;
+    // ssize_t read;
+
+    // while ((read = getwline(&line, &len, fp)) != -1) {
+    //     wprintf(L"读取的行: %ls", line);
+    // }
+
+    // if (line) {
+    //     free(line);
+    // }
+
+    wchar_t buffer[INITIAL_BUFFER_SIZE];
+    while (fgetws(buffer, INITIAL_BUFFER_SIZE, fp)) {
+        wprintf(L"读取的行: %ls", buffer);
+    }
+
+    
+    
+    // fgetws(line, MAX_LINE_LENGTH, fp);
+    // wprintf(L"第二行：%ls\n", line);
+    fclose(fp);
     // find_stu(id, name);
     // find_course(idx, name);
     // find_gender(gender);
