@@ -705,14 +705,15 @@ int main() {
     // modify_stu(id, name, new_info, item);
 
     FILE *fp;
-    fp = fopen("student.txt", "r");
+    fp = fopen("score.txt", "a");
     //printf("helloHELLO\n");
     if (fp == NULL) {
         printf("文件打开失败\n");
         return 0;
     }
-    _setmode( _fileno(fp), _O_WTEXT );
-
+    // _setmode( _fileno(fp), _O_WTEXT );
+    fwprintf(fp, L"学号,课号,平时成绩,卷面成绩,综合成绩\n");
+    
     // wchar_t first_line[1024], line[1024];
     // fgetws(first_line, 1024, fp);
     // // printf("111%s\n", first_line);
@@ -737,10 +738,10 @@ int main() {
     //     free(line);
     // }
 
-    wchar_t buffer[INITIAL_BUFFER_SIZE];
-    while (fgetws(buffer, INITIAL_BUFFER_SIZE, fp)) {
-        wprintf(L"读取的行: %ls", buffer);
-    }
+    // wchar_t buffer[INITIAL_BUFFER_SIZE];
+    // while (fgetws(buffer, INITIAL_BUFFER_SIZE, fp)) {
+    //     wprintf(L"读取的行: %ls", buffer);
+    // }
 
     
     

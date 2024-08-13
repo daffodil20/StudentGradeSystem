@@ -128,7 +128,7 @@ void student(){
         if (sameID == 0) {
             fwprintf(fptr, L"%ls,%ls,%ls,%ls,%ls\n", stu.ID, stu.name, stu.gender, stu.age, stu.profession);
             wprintf(L"录入信息：%ls,%ls,%ls,%ls,%ls\n", stu.ID, stu.name, stu.gender, stu.age, stu.profession);//显示录入信息
-            printf("学生信息已录入。\n");
+            printf("学生信息已录入！\n");
         } else {
             printf("学号重复出现，请重新输入。\n");
             i--; // 重新输入当前学生信息
@@ -215,9 +215,9 @@ void course(){
         if (sameIdx == 0) {
             fwprintf(fptr, L"%ls,%ls,%ls\n", course.index, course.name, course.teacher);
             wprintf(L"录入信息：%ls,%ls,%ls\n", course.index, course.name, course.teacher);//显示录入信息
-            printf("课程信息已录入\n");
+            printf("课程信息已录入！\n");
         } else {
-            printf("课号重复出现，请重新输入\n");
+            printf("课号重复出现，请重新输入。\n");
             i--; // 重新输入当前课程信息
         }
     }
@@ -232,10 +232,10 @@ void course(){
 
 }
 
-double calculate_score(char* idx, double score0, double score1){ //计算综合成绩
-    if (idx[0] == 'S')//专业课
+double calculate_score(wchar_t* idx, double score0, double score1){ //计算综合成绩
+    if (idx[0] == L'S')//专业课
         return score0 * 0.4 + score1 * 0.6;
-    if (idx[0] == 'P')//公共课
+    if (idx[0] == L'P')//公共课
         return score0 * 0.3 + score1 * 0.7;
 }
 
@@ -247,21 +247,35 @@ void score(){
         return;
     }
     int total = 0;
-    printf("请输入需要录入成绩的学生数量：");
-    while (total < 1){
-        scanf("%d",&total);
-    }
+    printf("请输入需要录入成绩的数量：\n");
+    wscanf(L"%d",&total);
+    getwchar();
 
     //录入学生成绩信息
     struct Score score;//定义结构体
     int saveLabel;
+    printf("请输入需要录入的成绩信息：\n");
     for (int i = 0; i < total; i ++){
-        scanf("%s %s %lf %lf", score.ID, score.index, &score.daily_grade, &score.exam_grade);
+        // scanf("%s %s %lf %lf", score.ID, score.index, &score.daily_grade, &score.exam_grade);
+        fgetws(score.ID, sizeof(score.ID), stdin);
+        score.ID[wcslen(score.ID) - 1] = L'\0';
+        fgetws(score.index, sizeof(score.index), stdin);
+        score.index[wcslen(score.index) - 1] = L'\0';
+
+        wscanf(L"%lf", &score.daily_grade);
+        wprintf(L"平时：%lf\n", score.daily_grade);
+        getwchar();
+        wscanf(L"%lf", &score.exam_grade);
+        wprintf(L"卷面：%lf\n", score.exam_grade);
+        getwchar();
         printf("请选择是否保存学生成绩：0-是,1-否\n");
-        scanf("%d", &saveLabel); //选择是否保存成绩
+        
+        wscanf(L"%d", &saveLabel); //选择是否保存成绩
+        getwchar();
         if (saveLabel == 0){
             score.score = calculate_score(score.index, score.daily_grade, score.exam_grade);//计算综合成绩
-            fprintf(fptr, "%s,%s,%d,%d,%.1f\n", score.ID, score.index, (int)ceil(score.daily_grade), (int)ceil(score.exam_grade), (float)score.score);
+            fwprintf(fptr, L"%ls,%ls,%d,%d,%.1f\n", score.ID, score.index, (int)ceil(score.daily_grade), (int)ceil(score.exam_grade), (float)score.score);
+            printf("成绩信息已录入！\n");
         }
     }
     fclose(fptr);
@@ -293,8 +307,8 @@ int main(){
     setlocale(LC_ALL, "");
     _setmode( _fileno( stdin ), _O_WTEXT );
     // student();
-    course();
-    // score();
+    // course();
+    score();
 
     return 0;
 }
