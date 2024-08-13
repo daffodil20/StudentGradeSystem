@@ -1,7 +1,7 @@
 struct Course{
-    char index[50];
-    char name[50];
-    char teacher[50];
+    wchar_t index[50];
+    wchar_t name[50];
+    wchar_t teacher[50];
 };
 
 struct CourseNode{

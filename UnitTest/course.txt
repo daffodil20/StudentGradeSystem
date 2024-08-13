@@ -1,9 +1,7 @@
-index,course name,teacher
-S02,data structure,Liu jin jun
-S03,operating system,Zhang jun
-P01,high level math,Li bai
-P02,probability theory,Su zhi peng
-P03,college English,Li hua
-P04,English,Zhangmeng
-S05,millitary_theory,Zhaoqiang
-P05,computer_component,Lihua
+课号,课名,任课老师
+S01,计算机导论,张英全
+S02,数据结构,刘进军
+S03,操作系统,吴明
+P01,高等数学,李白
+P02,概率论,苏志朋
+P03,大学英语,李华

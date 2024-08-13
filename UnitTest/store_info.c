@@ -22,14 +22,16 @@ void student(){
     // setlocale(LC_CTYPE,"it_IT.UTF-8");
     // setlocale(LC_ALL, "en_US.utf8");
     // fptr = fopen("student.txt", "a+");fopen('test.txt','w','n','UTF-8')
-    fptr = fopen("student.txt", "a+");
-    if (fptr == NULL)
+    fptr = fopen("student.txt", "a+");//追加与读取同时进行
+    if (fptr == NULL){
         printf("文件打开错误\n");
+        return;
+    }
     int total = 0;
     printf("请输入需要录入信息的学生数量:\n");
     // while (total < 1){
     wscanf(L"%d",&total);
-    getwchar();
+    getwchar();//吃掉换行符
         // scanf("%d ",&total);
     // }
     // //录入学生基本信息
@@ -82,7 +84,7 @@ void student(){
     // }
     // fclose(fptr);
     if (total > 0)
-        printf("请输入学生信息 (ID, 姓名, 性别, 年龄, 专业): \n");
+        printf("请输入学生信息 (依次为ID, 姓名, 性别, 年龄和专业，中间使用回车键): \n");
     else{
         printf("录入学生数量错误。\n");
         return;
@@ -125,13 +127,14 @@ void student(){
 
         if (sameID == 0) {
             fwprintf(fptr, L"%ls,%ls,%ls,%ls,%ls\n", stu.ID, stu.name, stu.gender, stu.age, stu.profession);
+            wprintf(L"录入信息：%ls,%ls,%ls,%ls,%ls\n", stu.ID, stu.name, stu.gender, stu.age, stu.profession);//显示录入信息
             printf("学生信息已录入。\n");
         } else {
             printf("学号重复出现，请重新输入。\n");
             i--; // 重新输入当前学生信息
         }
     }
-    
+    fclose(fptr);
 
     // fptr = fopen("student.txt", "r");
     // 刷新缓冲区
@@ -162,22 +165,37 @@ void student(){
 void course(){
     FILE* fptr;
     fptr = fopen("course.txt", "a+"); //追加与读取同时进行
-    if (fptr == NULL)
+    if (fptr == NULL){
         printf("文件打开错误\n");
-    int total = 0;
-    printf("请输入需要录入信息的课程数量：");
-    while (total < 1){
-        scanf("%d",&total);
+        return;
     }
-
+    int total = 0;
+    printf("请输入需要录入信息的课程数量：\n");
+    wscanf(L"%d",&total);
+    getwchar();//吃掉换行符
     //录入课程基本信息
     //TODO:不同课程号码相同，不能保存
     struct Course course, temp;
     int sameIdx = 0;
     char buffer[500];//定义缓冲区
+    wchar_t wbuffer[500];//宽字符
+    if (total > 0)
+        printf("请输入需要录入的课程信息（依次为课号、课名和任课老师，中间按回车键）：\n");
+    else{
+        printf("录入课程数量错误。\n");
+        return;
+    }
     for (int i = 0; i < total; i ++){
         sameIdx = 0;//重置sameIdx
-        scanf("%s %s %s", course.index, course.name, course.teacher);
+        fgetws(course.index, sizeof(course.index), stdin);
+        course.index[wcslen(course.index) - 1] = L'\0';//手动读取换行符
+
+        fgetws(course.name, sizeof(course.name), stdin);
+        course.name[wcslen(course.name) - 1] = L'\0';//手动读取换行符
+
+        fgetws(course.teacher, sizeof(course.teacher), stdin);
+        course.teacher[wcslen(course.teacher) - 1] = L'\0';//手动读取换行符
+        // wscanf(L"%ls %ls %ls", course.index, course.name, course.teacher);
         // fprintf(fptr, "%s,%s,%s\n", course.index, course.name, course.teacher);
         // 将文件指针移到开头，排除相同课号的情况
         fseek(fptr, 0, SEEK_SET);
@@ -185,8 +203,9 @@ void course(){
         // 检查学号是否重复
         fgets(buffer, sizeof(buffer), fptr); //跳过表头
         while (fgets(buffer, sizeof(buffer), fptr)) {
-            if (sscanf(buffer, "%49[^,],%49[^,],%49[^\n]", temp.index, temp.name, temp.teacher) == 3) {
-                if (strcmp(course.index, temp.index) == 0) {
+            mbstowcs(wbuffer, buffer, sizeof(wbuffer) / sizeof(wchar_t));//char->wchar_t
+            if (swscanf(wbuffer, L"%49[^,],%49[^,],%49[^\n]", temp.index, temp.name, temp.teacher) == 3) {
+                if (wcscmp(course.index, temp.index) == 0) {
                     sameIdx = 1;
                     break;
                 }
@@ -194,7 +213,8 @@ void course(){
         }
 
         if (sameIdx == 0) {
-            fprintf(fptr, "%s,%s,%s\n", course.index, course.name, course.teacher);
+            fwprintf(fptr, L"%ls,%ls,%ls\n", course.index, course.name, course.teacher);
+            wprintf(L"录入信息：%ls,%ls,%ls\n", course.index, course.name, course.teacher);//显示录入信息
             printf("课程信息已录入\n");
         } else {
             printf("课号重复出现，请重新输入\n");
@@ -272,8 +292,8 @@ int main(){
     // setlocale(LC_CTYPE,"it_IT.UTF-8");//区域设置
     setlocale(LC_ALL, "");
     _setmode( _fileno( stdin ), _O_WTEXT );
-    student();
-    // course();
+    // student();
+    course();
     // score();
 
     return 0;
