@@ -9,14 +9,14 @@
 #include <stdint.h>
 #include <wchar.h>
 #include <fcntl.h>
-// #include "modify.h"
+#include "modify.h"
 #include "account.h"
 
 // TODO: 根据姓名与课名修改
 // TODO: (possible)变量全局化
 
 // TODO: 如果课程与学生已经有成绩录入，则课号与学号不能修改、删除，只能修改课名、姓名、性别、年龄
-#define MAX_LINE_LENGTH 256
+// #define MAX_LINE_LENGTH 256
 
 void modify_stu(wchar_t* id, wchar_t* name, wchar_t* new_info, int item) { //根据学号与姓名修改
     FILE *fp;
@@ -249,12 +249,12 @@ double calculate_score(wchar_t* idx, double score0, double score1){ //计算综�
 }
 
 //修改成绩信息
-void modify_score0(char* accountName, char* PassWord, char* id, char* idx, double new_grade){//是哪个成绩到gui再做，查找需要id和idx
+void modify_score0(wchar_t* accountName, wchar_t* PassWord, wchar_t* id, wchar_t* idx, double new_grade){//是哪个成绩到gui再做，查找需要id和idx
     //定义变量
     FILE *fp;
     int modified = 0;
-    char first_line[MAX_LINE_LENGTH];
-    char line[MAX_LINE_LENGTH];
+    char first_line[MAX_LINE_LENGTH], buffer[MAX_LINE_LENGTH];
+    wchar_t wbuffer[MAX_LINE_LENGTH];
     struct ScoreNode *head = NULL, *last = NULL;
 
     //验证密码准确性
@@ -264,9 +264,10 @@ void modify_score0(char* accountName, char* PassWord, char* id, char* idx, doubl
 
     fp = fopen("account_info.txt", "r");
 
-    while (fgets(line, sizeof(line), fp)) { //逐行读取
-        if (sscanf(line, "%49[^,],%49[^,],%49[^,],%49[^\n]", account.user, account.name, account.role, account.password) == 4) { //解析字符串
-            if (strcmp(account.password, PassWord) == 0 && strcmp(account.user, accountName) == 0){//密码与账号匹配
+    while (fgets(buffer, sizeof(buffer), fp)) { //逐行读取
+        mbstowcs(wbuffer, buffer, sizeof(wbuffer) / sizeof(wchar_t));//char->wchar_t
+        if (swscanf(wbuffer, L"%49[^,],%49[^,],%49[^,],%49[^\n]", account.user, account.name, account.role, account.password) == 4) { //解析字符串
+            if (wcscmp(account.password, PassWord) == 0 && wcscmp(account.user, accountName) == 0){//密码与账号匹配
                 passed = 1;//密码正确
                 break;
             }
@@ -293,10 +294,12 @@ void modify_score0(char* accountName, char* PassWord, char* id, char* idx, doubl
     }
 
     char score_line[MAX_LINE_LENGTH];
+    wchar_t wScoreLine[MAX_LINE_LENGTH];
     // 逐行读取文件并创建链表
     while (fgets(score_line, sizeof(score_line), fp)) {
         struct ScoreNode *new_node = (struct ScoreNode *)malloc(sizeof(struct ScoreNode));
-        if (sscanf(score_line, "%49[^,],%49[^,],%lf,%lf,%lf", new_node->score.ID, new_node->score.index, &new_node->score.daily_grade, &new_node->score.exam_grade, &new_node->score.score) == 5) {
+        mbstowcs(wScoreLine, score_line, sizeof(wScoreLine) / sizeof(wchar_t));//char->wchar_t
+        if (swscanf(wScoreLine, L"%49[^,],%49[^,],%lf,%lf,%lf", new_node->score.ID, new_node->score.index, &new_node->score.daily_grade, &new_node->score.exam_grade, &new_node->score.score) == 5) {
             // printf("asssseAfzsdreWef\n");
             // printf("WQedd:id:%s,index:%s,daily grade:%lf,exam grade:%lf,score:%lf\n", new_node->score.ID, new_node->score.index, new_node->score.daily_grade, new_node->score.exam_grade, new_node->score.score);
             new_node->next = NULL;
@@ -308,10 +311,11 @@ void modify_score0(char* accountName, char* PassWord, char* id, char* idx, doubl
             last = new_node;
             // printf("id:%s,index:%s,daily grade:%lf,exam grade:%lf,score:%lf\n", new_node->score.ID, new_node->score.index, new_node->score.daily_grade, new_node->score.exam_grade, new_node->score.score);
             // 查找并修改数据
-            if (strcmp(new_node->score.ID, id) == 0 && strcmp(new_node->score.index, idx) == 0) {//学号与课号都相同
+            if (wcscmp(new_node->score.ID, id) == 0 && wcscmp(new_node->score.index, idx) == 0) {//学号与课号都相同
                 new_node->score.daily_grade = new_grade;//平时成绩修改
                 new_node->score.score = calculate_score(idx, new_grade, new_node->score.exam_grade);//调用计算综合成绩的函数
                 modified = 1;
+                printf("修改该条成绩信息成功！\n");
             }
         } else {
             free(new_node); // 释放未用的内存
@@ -328,11 +332,12 @@ void modify_score0(char* accountName, char* PassWord, char* id, char* idx, doubl
     }
 
     // 重新写入第一行
-    fprintf(fp, "%s", first_line);
+    // fprintf(fp, "%s", first_line);
+    fwprintf(fp, L"学号,课号,平时成绩,卷面成绩,综合成绩\n");
 
     struct ScoreNode *current = head;
     while (current != NULL) {
-        fprintf(fp, "%s,%s,%d,%d,%.1f\n", current->score.ID, current->score.index, (int)current->score.daily_grade, (int)current->score.exam_grade, (float)current->score.score);//.1f控制小数部分为1位
+        fwprintf(fp, L"%ls,%ls,%d,%d,%.1f\n", current->score.ID, current->score.index, (int)current->score.daily_grade, (int)current->score.exam_grade, (float)current->score.score);//.1f控制小数部分为1位
         struct ScoreNode *temp = current;
         current = current->next;
         free(temp); // 释放节点内存
@@ -346,12 +351,12 @@ void modify_score0(char* accountName, char* PassWord, char* id, char* idx, doubl
     }
 }
 
-void modify_score1(char* accountName, char* PassWord, char* id, char* idx, double new_grade){//是哪个成绩到gui再做，查找需要id和idx
+void modify_score1(wchar_t* accountName, wchar_t* PassWord, wchar_t* id, wchar_t* idx, double new_grade){//是哪个成绩到gui再做，查找需要id和idx
     //定义变量
     FILE *fp;
     int modified = 0;
-    char first_line[MAX_LINE_LENGTH];
-    char line[MAX_LINE_LENGTH];//存储account.txt
+    char first_line[MAX_LINE_LENGTH], buffer[MAX_LINE_LENGTH];//存储account.txt
+    wchar_t wbuffer[MAX_LINE_LENGTH];
     struct ScoreNode *head = NULL, *last = NULL;
 
     //验证密码准确性
@@ -361,9 +366,10 @@ void modify_score1(char* accountName, char* PassWord, char* id, char* idx, doubl
 
     fp = fopen("account_info.txt", "r");
 
-    while (fgets(line, sizeof(line), fp)) { //逐行读取
-        if (sscanf(line, "%49[^,],%49[^,],%49[^,],%49[^\n]", account.user, account.name, account.role, account.password) == 4) { //解析字符串
-            if (strcmp(account.user, accountName) == 0 && strcmp(account.password, PassWord) == 0){
+    while (fgets(buffer, sizeof(buffer), fp)) { //逐行读取
+        mbstowcs(wbuffer, buffer, sizeof(wbuffer) / sizeof(wchar_t));//char->wchar_t
+        if (swscanf(wbuffer, L"%49[^,],%49[^,],%49[^,],%49[^\n]", account.user, account.name, account.role, account.password) == 4) { //解析字符串
+            if (wcscmp(account.user, accountName) == 0 && wcscmp(account.password, PassWord) == 0){
                 passed = 1;//密码正确
                 break;
             }
@@ -390,10 +396,13 @@ void modify_score1(char* accountName, char* PassWord, char* id, char* idx, doubl
     }
 
     char score_line[MAX_LINE_LENGTH];//存储score.txt
+    wchar_t wScoreLine[MAX_LINE_LENGTH];
     // 逐行读取文件并创建链表
     while (fgets(score_line, sizeof(score_line), fp)) {
         struct ScoreNode *new_node = (struct ScoreNode *)malloc(sizeof(struct ScoreNode));
-        if (sscanf(score_line, "%49[^,],%49[^,],%lf,%lf,%lf", new_node->score.ID, new_node->score.index, &new_node->score.daily_grade, &new_node->score.exam_grade, &new_node->score.score) == 5) {
+        mbstowcs(wScoreLine, score_line, sizeof(wScoreLine) / sizeof(wchar_t));//char->wchar_t
+        if (swscanf(wScoreLine, L"%49[^,],%49[^,],%lf,%lf,%lf", new_node->score.ID, new_node->score.index, &new_node->score.daily_grade, &new_node->score.exam_grade, &new_node->score.score) == 5) {
+            // wprintf(L"aaa:%ls,%ls,%lf,%lf,%lf\n", new_node->score.ID, new_node->score.index, new_node->score.daily_grade, new_node->score.exam_grade, new_node->score.score);
             // printf("asssseAfzsdreWef\n");
             // printf("WQedd:id:%s,index:%s,daily grade:%lf,exam grade:%lf,score:%lf\n", new_node->score.ID, new_node->score.index, new_node->score.daily_grade, new_node->score.exam_grade, new_node->score.score);
             new_node->next = NULL;
@@ -405,10 +414,12 @@ void modify_score1(char* accountName, char* PassWord, char* id, char* idx, doubl
             last = new_node;
             // printf("id:%s,index:%s,daily grade:%lf,exam grade:%lf,score:%lf\n", new_node->score.ID, new_node->score.index, new_node->score.daily_grade, new_node->score.exam_grade, new_node->score.score);
             // 查找并修改数据
-            if (strcmp(new_node->score.ID, id) == 0 && strcmp(new_node->score.index, idx) == 0) {//学号与课号都相同
+            if (wcscmp(new_node->score.ID, id) == 0 && wcscmp(new_node->score.index, idx) == 0) {//学号与课号都相同
+                // wprintf(L"BBB:%ls,%ls:%ls,%ls\n", new_node->score.ID, id, new_node->score.index, idx);
                 new_node->score.exam_grade = new_grade;//卷面成绩修改
                 new_node->score.score = calculate_score(idx, new_node->score.daily_grade, new_grade);//调用计算综合成绩的函数
                 modified = 1;
+                printf("修改该条成绩信息成功！\n");
             }
         } else {
             free(new_node); // 释放未用的内存
@@ -425,11 +436,12 @@ void modify_score1(char* accountName, char* PassWord, char* id, char* idx, doubl
     }
 
     // 重新写入第一行
-    fprintf(fp, "%s", first_line);
+    // fprintf(fp, "%s", first_line);
+    fwprintf(fp, L"学号,课号,平时成绩,卷面成绩,综合成绩\n");
 
     struct ScoreNode *current = head;
     while (current != NULL) {
-        fprintf(fp, "%s,%s,%d,%d,%.1f\n", current->score.ID, current->score.index, (int)current->score.daily_grade, (int)current->score.exam_grade, (float)current->score.score);//.1f控制小数部分为1位
+        fwprintf(fp, L"%ls,%ls,%d,%d,%.1f\n", current->score.ID, current->score.index, (int)current->score.daily_grade, (int)current->score.exam_grade, (float)current->score.score);//.1f控制小数部分为1位
         struct ScoreNode *temp = current;
         current = current->next;
         free(temp); // 释放节点内存
@@ -443,39 +455,51 @@ void modify_score1(char* accountName, char* PassWord, char* id, char* idx, doubl
     }
 }
 
-int main() {
-    setlocale(LC_ALL, "");
-    _setmode( _fileno( stdin ), _O_WTEXT );
-    wchar_t idx[50], new_info[50], index[50], password[50], id[50], name[50];
+// int main() {
+//     setlocale(LC_ALL, "");
+//     _setmode( _fileno( stdin ), _O_WTEXT );
+//     wchar_t idx[50], new_info[50], password[50], id[50], name[50], acc[50];
 //     double NewGrade;//平时或卷面成绩
-    int item;
+//     int item;
 
-//     // printf("请输入课程编号、新信息和要修改的项（1: 课号, 2: 名称，3：老师）：\n");
-//     gets(idx);
-//     gets(name);
-//     gets(new_info);
-//     scanf("%d", &item);
-//     modify_course(idx, name, new_info, item);
-    // gets(password);
-    // fgetws(id, sizeof(id), stdin);
-    // id[wcslen(id) - 1] = L'\0';
+// //     // printf("请输入课程编号、新信息和要修改的项（1: 课号, 2: 名称，3：老师）：\n");
+// //     gets(idx);
+// //     gets(name);
+// //     gets(new_info);
+// //     scanf("%d", &item);
+// //     modify_course(idx, name, new_info, item);
+//     // gets(password);
+//     // fgetws(id, sizeof(id), stdin);
+//     // id[wcslen(id) - 1] = L'\0';
+//     fgetws(acc, sizeof(acc), stdin);
+//     acc[wcslen(acc) - 1] = L'\0';
 
-    fgetws(idx, sizeof(idx), stdin);
-    idx[wcslen(idx) - 1] = L'\0';
-
-    fgetws(name, sizeof(name), stdin);
-    name[wcslen(name) - 1] = L'\0';
+//     fgetws(password, sizeof(password), stdin);
+//     password[wcslen(password) - 1] = L'\0';
     
-    fgetws(new_info, sizeof(new_info), stdin);
-    new_info[wcslen(new_info) - 1] = L'\0';
-    
-    wscanf(L"%d", &item);
-    // gets(index);
-    // scanf("%lf", &NewGrade);
-    // modify_stu(id, name, new_info, item);
-    modify_course(idx, name, new_info, item);
-    // modify_score0(password, id, index, NewGrade);
-    // modify_score1(password, id, index, NewGrade);
+//     fgetws(id, sizeof(id), stdin);
+//     id[wcslen(id) - 1] = L'\0';
 
-    return 0;
-}
+//     fgetws(idx, sizeof(idx), stdin);
+//     idx[wcslen(idx) - 1] = L'\0';
+
+//     // fgetws(name, sizeof(name), stdin);
+//     // name[wcslen(name) - 1] = L'\0';
+
+    
+//     // fgetws(new_info, sizeof(new_info), stdin);
+//     // new_info[wcslen(new_info) - 1] = L'\0';
+//     // fgetws(index, sizeof(index), stdin);
+//     // index[wcslen(new_info) - 1] = L'\0';
+    
+//     // wscanf(L"%d", &item);
+//     wscanf(L"%lf", &NewGrade);
+//     // gets(index);
+//     // scanf("%lf", &NewGrade);
+//     // modify_stu(id, name, new_info, item);
+//     // modify_course(idx, name, new_info, item);
+//     // modify_score0(acc, password, id, idx, NewGrade);
+//     modify_score1(acc, password, id, idx, NewGrade);
+
+//     return 0;
+// }

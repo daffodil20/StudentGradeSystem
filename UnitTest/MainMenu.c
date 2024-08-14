@@ -1,5 +1,10 @@
 #include <stdio.h>
 #include <string.h>
+#include <wchar.h>
+#include <locale.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <stdint.h>
 #include "account.h"
 #include "search.h"
 #include "modify.h"
@@ -41,32 +46,50 @@ void modifyBar(int taskLabel){
     case 1:
         printf("这是修改学生基本信息的界面。\n");
         printf("你可以选择修改1-学号2-姓名3-性别4-年龄5-所在系。\n");
-        printf("请依次输入需要修改的信息项（1-5）、学号与姓名。\n");
+        printf("请依次输入需要修改的学生信息的学号与姓名。\n");
+
         fgetws(id, sizeof(id), stdin);
+        id[wcslen(id)-1] = L'\0';
         fgetws(name, sizeof(name), stdin);
+        name[wcslen(name)-1] = L'\0';
         fgetws(newInfo, sizeof(newInfo), stdin);
+        newInfo[wcslen(newInfo)-1] = L'\0';
+
         wscanf(L"%d", &item);
         modify_stu(id, name, newInfo, item);
         break;
     case 2:
         printf("这是修改课程基本信息的界面。\n");
         printf("你可以选择修改1-课号2-课名3-任课老师。\n");
-        printf("请依次输入需要修改的信息项（1-3）、课号与课名。\n");
-        fgetws(id, sizeof(id), stdin);
+        printf("请依次输入需要修改的课号、课名、新信息与修改项。\n");
+
+        fgetws(idx, sizeof(idx), stdin);
+        idx[wcslen(idx)-1] = L'\0';
         fgetws(name, sizeof(name), stdin);
+        name[wcslen(name)-1] = L'\0';
+        fgetws(newInfo, sizeof(newInfo), stdin);
+        name[wcslen(newInfo)-1] = L'\0';
+
         wscanf(L"%d", &item);
+        modify_course(idx, name, newInfo, item);
         break;
     case 3:
         printf("这是修改学生成绩的界面。\n");
         printf("你可以选择修改1-学号2-姓名3-性别4-年龄5-所在系。\n");
         printf("修改成绩需要输入你的用户名和密码。\n");
-        printf("请依次输入用户名、密码、需要修改的信息项（1-2）、学号与课号。\n");
+        printf("请依次输入用户名、密码、学号、课号、修改项（1-平时成绩，2-卷面成绩）与新成绩。\n");
+
         fgetws(userName, sizeof(userName), stdin);
+        userName[wcslen(userName)-1] = L'\0';
         fgetws(password, sizeof(password), stdin);
-        scanf("%d ", &item);
-        gets(id);
-        gets(idx);
-        scanf("%lf", &newGrade);
+        password[wcslen(password)-1] = L'\0';
+        fgetws(id, sizeof(id), stdin);
+        id[wcslen(id)-1] = L'\0';
+        fgetws(idx, sizeof(idx), stdin);
+        idx[wcslen(idx)-1] = L'\0';
+
+        wscanf(L"%d", &item);
+        wscanf(L"%lf", &newGrade);
         if (item == 1)
             modify_score0(userName, password, id, idx, newGrade);
         else if (item == 2)
@@ -458,6 +481,9 @@ int log_in(wchar_t *account_name, wchar_t *name, wchar_t *role, wchar_t *passwor
 
 
 int main(){
+    setlocale(LC_ALL, "");
+    _setmode( _fileno( stdin ), _O_WTEXT );
+
     int choice_num, role_num, task;
     char AccountName[50], PassWord[50], role[50], Name[50];
     int result;

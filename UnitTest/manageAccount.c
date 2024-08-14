@@ -106,7 +106,7 @@ int modify_password(wchar_t* username, wchar_t* name, wchar_t* new_password){
         return 1;
     }
     struct AccountNode * current = head, * temp = NULL;
-    fwprintf(fp, L"用户名,姓名,角色,密码\n"); //重写第一行
+    fwprintf(fp, L"用户名,姓名,角色,密码\n"); //重写表头
     while (current != NULL){
         fwprintf(fp, L"%ls,%ls,%ls,%ls\n", current->account.user, current->account.name, current->account.role, current->account.password); //写文件
         struct AccountNode * temp = current;
@@ -142,15 +142,18 @@ int main(){
     fgetws(name, sizeof(name), stdin);
     name[wcslen(name) - 1] = L'\0';
     // fgetws(, sizeof(userName), stdin);
-    fgetws(role, sizeof(role), stdin);
-    role[wcslen(role) - 1] = L'\0';
+    // fgetws(role, sizeof(role), stdin);
+    // role[wcslen(role) - 1] = L'\0';
+    fgetws(newPassword, sizeof(newPassword), stdin);
+    newPassword[wcslen(newPassword) - 1] = L'\0';
 
-    FILE *fp;
-    fp = fopen("account_info.txt", "a");
+    // FILE *fp;
+    // fp = fopen("account_info.txt", "a");
     
     // fwprintf(fp, L"用户名,姓名,角色,密码\n");
-    add_info(userName, name, role);
-    fclose(fp);
+    // add_info(userName, name, role);
+    modify_password(userName, name, newPassword);
+    // fclose(fp);
     // for (int i = 0; i < total; i ++){ //多次输入管理员信息
     //     // add_info(userName, name, role);
     //     gets(userName); //老师的用户名为工号，学生的为学号
