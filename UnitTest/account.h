@@ -1,8 +1,8 @@
 struct Account{
-    char user[50];
-    char name[50];
-    char role[50];
-    char password[50];
+    wchar_t user[50];
+    wchar_t name[50];
+    wchar_t role[50];
+    wchar_t password[50];
 };
 
 struct AccountNode{

@@ -6,6 +6,7 @@
         "string.h": "c",
         "cmath": "c",
         "summary.h": "c",
-        "locale.h": "c"
+        "locale.h": "c",
+        "modify.h": "c"
     }
 }

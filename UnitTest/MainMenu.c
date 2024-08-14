@@ -33,7 +33,7 @@ void enterBar(int taskLabel){
 }
 
 void modifyBar(int taskLabel){
-    char id[50], name[50], newInfo[50], idx[50], userName[50], password[50];
+    wchar_t id[50], name[50], newInfo[50], idx[50], userName[50], password[50];
     double newGrade;
     int item;
     switch (taskLabel)
@@ -42,28 +42,27 @@ void modifyBar(int taskLabel){
         printf("这是修改学生基本信息的界面。\n");
         printf("你可以选择修改1-学号2-姓名3-性别4-年龄5-所在系。\n");
         printf("请依次输入需要修改的信息项（1-5）、学号与姓名。\n");
-        gets(id);
-        gets(name);
-        scanf("%d ", &item);
-        gets(newInfo);
+        fgetws(id, sizeof(id), stdin);
+        fgetws(name, sizeof(name), stdin);
+        fgetws(newInfo, sizeof(newInfo), stdin);
+        wscanf(L"%d", &item);
         modify_stu(id, name, newInfo, item);
         break;
     case 2:
         printf("这是修改课程基本信息的界面。\n");
         printf("你可以选择修改1-课号2-课名3-任课老师。\n");
         printf("请依次输入需要修改的信息项（1-3）、课号与课名。\n");
-        gets(idx);
-        gets(name);
-        scanf("%d ", &item);
-        gets(newInfo);
+        fgetws(id, sizeof(id), stdin);
+        fgetws(name, sizeof(name), stdin);
+        wscanf(L"%d", &item);
         break;
     case 3:
         printf("这是修改学生成绩的界面。\n");
         printf("你可以选择修改1-学号2-姓名3-性别4-年龄5-所在系。\n");
         printf("修改成绩需要输入你的用户名和密码。\n");
         printf("请依次输入用户名、密码、需要修改的信息项（1-2）、学号与课号。\n");
-        gets(userName);
-        gets(password);
+        fgetws(userName, sizeof(userName), stdin);
+        fgetws(password, sizeof(password), stdin);
         scanf("%d ", &item);
         gets(id);
         gets(idx);
@@ -383,7 +382,7 @@ void student(int task_num){
     manager(task_num);
 }
 
-int log_in(char *account_name, char *name, char *role, char *password){ //用户登录
+int log_in(wchar_t *account_name, wchar_t *name, wchar_t *role, wchar_t *password){ //用户登录
     struct Account account;
     //判断密码是否存在
     // if (strcmp(password, "12345") != 0){
@@ -392,6 +391,7 @@ int log_in(char *account_name, char *name, char *role, char *password){ //用户
     // }
     //读文件，判断账号是否存在
     char buffer[300];
+    wchar_t wbuffer[300];
     int start = 0, end = 0, i, j = 0;
     
     //打开账号文件
@@ -406,9 +406,10 @@ int log_in(char *account_name, char *name, char *role, char *password){ //用户
 
     fgets(buffer, sizeof(buffer), fp);
     while (fgets(buffer, sizeof(buffer), fp) != NULL){
-        if (sscanf(buffer, "%49[^,],%49[^,],%49[^,],%49[^\n]", account.user, account.name, account.role, account.password) == 4){
-            if (strcmp(account_name, account.user) == 0){ //比较其他信息
-                if (strcmp(name, account.name) != 0 || strcmp(role, account.role) != 0 || strcmp(password, account.password) != 0){
+        mbstowcs(wbuffer, buffer, sizeof(wbuffer) / sizeof(wchar_t));
+        if (swscanf(wbuffer, L"%49[^,],%49[^,],%49[^,],%49[^\n]", account.user, account.name, account.role, account.password) == 4){
+            if (wcscmp(account_name, account.user) == 0){ //比较其他信息
+                if (wcscmp(name, account.name) != 0 || wcscmp(role, account.role) != 0 || wcscmp(password, account.password) != 0){
                     // printf("信息错误!\n");
                     break;
                 }else{

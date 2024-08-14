@@ -1,4 +1,2 @@
-username,name,role,password(hashed)
-23552,Xiao hong,teacher,156nv
-23520,Li hua,teacher,2354l
-01679,Amy,manager,3gk10
+用户名,姓名,角色,密码
+10024,孟雨琢,管理员,12345
