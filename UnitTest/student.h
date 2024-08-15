@@ -1,3 +1,4 @@
+#include <wchar.h>
 struct Student{
     wchar_t ID[50];
     wchar_t name[50];//13

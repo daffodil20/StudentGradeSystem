@@ -7,7 +7,6 @@
 #include "score.h"
 #include <stdlib.h>
 #include <stdint.h>
-#include <wchar.h>
 #include <fcntl.h>
 #include "modify.h"
 #include "account.h"

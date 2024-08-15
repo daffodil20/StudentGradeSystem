@@ -1,3 +1,4 @@
+#include <wchar.h>
 struct Course{
     wchar_t index[50];
     wchar_t name[50];

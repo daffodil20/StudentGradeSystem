@@ -104,28 +104,40 @@ void modifyBar(int taskLabel){
 }
 
 void deleteBar(int taskLabel){
-    char id[50], name[50], idx[50];
+    wchar_t id[50], name[50], idx[50];
     switch (taskLabel)
     {
     case 1:
         printf("这是删除学生基本信息的界面。\n");
         printf("请依次输入需要删除信息的学号与姓名。\n");
-        gets(id);
-        gets(name);
+
+        fgetws(id, sizeof(id), stdin);
+        id[wcslen(id)-1] = L'\0';
+        fgetws(name, sizeof(name), stdin);
+        name[wcslen(name)-1] = L'\0';
+
         delete_stu(id, name);
         break;
     case 2:
         printf("这是删除课程基本信息的界面。\n");
         printf("请依次输入需要删除信息的课号与课名。\n");
-        gets(idx);
-        gets(name);
+
+        fgetws(idx, sizeof(idx), stdin);
+        idx[wcslen(idx)-1] = L'\0';
+        fgetws(name, sizeof(name), stdin);
+        name[wcslen(name)-1] = L'\0';
+
         delete_course(idx, name);
         break;
     case 3:
         printf("这是删除学生成绩的界面。\n");
         printf("请依次输入需要删除信息的学号与课号。\n");
-        gets(id);
-        gets(idx);
+        
+        fgetws(id, sizeof(id), stdin);
+        id[wcslen(id)-1] = L'\0';
+        fgetws(idx, sizeof(idx), stdin);
+        idx[wcslen(idx)-1] = L'\0';
+
         delete_score(id, idx);
         break;   
     default:

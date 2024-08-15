@@ -306,9 +306,9 @@ int main(){
     // setlocale(LC_CTYPE,"it_IT.UTF-8");//区域设置
     setlocale(LC_ALL, "");
     _setmode( _fileno( stdin ), _O_WTEXT );
-    // student();
+    student();
     // course();
-    score();
+    // score();
 
     return 0;
 }
