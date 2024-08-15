@@ -9,6 +9,7 @@
 #include "search.h"
 #include "modify.h"
 #include "delete.h"
+#include "statistics.h"
 #include "summary.h"
 
 // TODO:新增,修改与删除账号
@@ -201,21 +202,27 @@ void statBar(int taskLabel){ //统计成绩的选项
     {
     case 1:
         printf("这是查询课程卷面成绩的平均分的界面。\n");
+        average_exam_grade();
         break;
     case 2:
         printf("这是查询课程综合成绩的平均分的界面。\n");
+        average_score();
         break;
     case 3:
         printf("这是查询课程卷面成绩的最高分的界面。\n");
+        max_exam_grade();
         break;
     case 4:
         printf("这是查询课程综合成绩的最高分的界面。\n");
+        max_score();
         break;
     case 5:
         printf("这是查询课程卷面成绩的分数段的界面。\n");
+        exam_statistics();
         break;
     case 6:
         printf("这是查询课程综合成绩所的分数段的界面。\n");
+        score_statistics();
         break;   
     default:
         printf("这是无效的任务编号，请重新输入。\n");

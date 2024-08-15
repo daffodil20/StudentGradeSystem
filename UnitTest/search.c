@@ -9,9 +9,9 @@
 #include <stdint.h>
 #include <fcntl.h>
 #include <wctype.h>
-// #include "search.h"
+#include "search.h"
 
-#define MAX_LINE_LENGTH 256
+// #define MAX_LINE_LENGTH 256
 int calculate_display_width(const wchar_t* str) { //根据是否是汉字技术字符串实际宽度（英文宽字符是1）
     int width = 0;
     while (*str) {
@@ -307,38 +307,38 @@ void find_score1(wchar_t* idx, wchar_t* name){ //根据课号和课名查询成�
     fclose(fp1);
 }
 
-int main(){
-    setlocale(LC_ALL, "");
-    _setmode( _fileno( stdin ), _O_WTEXT );
-    wchar_t sex[50], prof[50], id[50], stuName[50], courseName[50], index[50];
-//     // gets(sex);
-//     // gets(prof);
-    // fgetws(id, sizeof(id), stdin);
-    // id[wcslen(id)-1] = L'\0';
-    // fgetws(stuName, sizeof(stuName), stdin);
-    // stuName[wcslen(stuName)-1] = L'\0';
+// int main(){
+//     setlocale(LC_ALL, "");
+//     _setmode( _fileno( stdin ), _O_WTEXT );
+//     wchar_t sex[50], prof[50], id[50], stuName[50], courseName[50], index[50];
+// //     // gets(sex);
+// //     // gets(prof);
+//     // fgetws(id, sizeof(id), stdin);
+//     // id[wcslen(id)-1] = L'\0';
+//     // fgetws(stuName, sizeof(stuName), stdin);
+//     // stuName[wcslen(stuName)-1] = L'\0';
 
-    fgetws(index, sizeof(index), stdin);
-    index[wcslen(index)-1] = L'\0';
-    fgetws(courseName, sizeof(courseName), stdin);
-    courseName[wcslen(courseName)-1] = L'\0';
+//     fgetws(index, sizeof(index), stdin);
+//     index[wcslen(index)-1] = L'\0';
+//     fgetws(courseName, sizeof(courseName), stdin);
+//     courseName[wcslen(courseName)-1] = L'\0';
 
-    // fgetws(sex, sizeof(sex), stdin);
-    // sex[wcslen(sex)-1] = L'\0';
+//     // fgetws(sex, sizeof(sex), stdin);
+//     // sex[wcslen(sex)-1] = L'\0';
 
-    // fgetws(prof, sizeof(prof), stdin);
-    // prof[wcslen(prof)-1] = L'\0';
-//     // gets(index);
-//     // gets(courseName);
-    // find_gender(sex);
-    // find_profession(prof);
-    // find_stu(id, stuName);
-    // find_course(index, courseName);
-    // find_score0(id, stuName);
-    find_score1(index, courseName);
+//     // fgetws(prof, sizeof(prof), stdin);
+//     // prof[wcslen(prof)-1] = L'\0';
+// //     // gets(index);
+// //     // gets(courseName);
+//     // find_gender(sex);
+//     // find_profession(prof);
+//     // find_stu(id, stuName);
+//     // find_course(index, courseName);
+//     // find_score0(id, stuName);
+//     find_score1(index, courseName);
 
-    return 0;
-}
+//     return 0;
+// }
 
 // 07   张欢                  20   电子
 // 05   王小可                 20   计算机
