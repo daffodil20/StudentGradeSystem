@@ -8,14 +8,14 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <fcntl.h>
-#include "modify.h"
+// #include "modify.h"
 #include "account.h"
 
 // TODO: 根据姓名与课名修改
 // TODO: (possible)变量全局化
 
 // TODO: 如果课程与学生已经有成绩录入，则课号与学号不能修改、删除，只能修改课名、姓名、性别、年龄
-// #define MAX_LINE_LENGTH 256
+#define MAX_LINE_LENGTH 256
 
 void modify_stu(wchar_t* id, wchar_t* name, wchar_t* new_info, int item) { //根据学号与姓名修改
     FILE *fp;
@@ -34,7 +34,7 @@ void modify_stu(wchar_t* id, wchar_t* name, wchar_t* new_info, int item) { //根
         }
         fgets(buffer, sizeof(buffer), fp);
         while (fgets(buffer, sizeof(buffer), fp)) {
-            mbstowcs(wbuffer, buffer, sizeof(buffer) / sizeof(wchar_t)); //char->wcjar_t
+            mbstowcs(wbuffer, buffer, sizeof(wbuffer) / sizeof(wchar_t)); //char->wcjar_t
             if (swscanf(wbuffer, L"%49[^,],%49[^,],%d,%d,%lf", score.ID, score.index, &score.daily_grade, &score.exam_grade, &score.score) == 5){ //解析宽字符数组
                 if (wcscmp(score.ID, id) == 0){
                     printf("该学生已经有课程成绩，学号不能修改，可以修改其他项。\n");
@@ -71,7 +71,7 @@ void modify_stu(wchar_t* id, wchar_t* name, wchar_t* new_info, int item) { //根
     
     while (fgets(buffer, sizeof(buffer), fp)) {
         struct StudentNode *new_node = (struct StudentNode *)malloc(sizeof(struct StudentNode));
-        mbstowcs(wbuffer, buffer, sizeof(buffer) / sizeof(wchar_t)); //char->wcjar_t
+        mbstowcs(wbuffer, buffer, sizeof(wbuffer) / sizeof(wchar_t)); //char->wcjar_t
         if (swscanf(wbuffer, L"%49[^,],%49[^,],%49[^,],%49[^,],%49[^\n]", new_node->student.ID, new_node->student.name, new_node->student.gender, new_node->student.age, new_node->student.profession) == 5) {
             new_node->next = NULL;
             if (head == NULL) {
@@ -454,12 +454,12 @@ void modify_score1(wchar_t* accountName, wchar_t* PassWord, wchar_t* id, wchar_t
     }
 }
 
-// int main() {
-//     setlocale(LC_ALL, "");
-//     _setmode( _fileno( stdin ), _O_WTEXT );
-//     wchar_t idx[50], new_info[50], password[50], id[50], name[50], acc[50];
-//     double NewGrade;//平时或卷面成绩
-//     int item;
+int main() {
+    setlocale(LC_ALL, "");
+    _setmode( _fileno( stdin ), _O_WTEXT );
+    wchar_t idx[50], new_info[50], password[50], id[50], name[50], acc[50];
+    double NewGrade;//平时或卷面成绩
+    int item;
 
 // //     // printf("请输入课程编号、新信息和要修改的项（1: 课号, 2: 名称，3：老师）：\n");
 // //     gets(idx);
@@ -476,29 +476,29 @@ void modify_score1(wchar_t* accountName, wchar_t* PassWord, wchar_t* id, wchar_t
 //     fgetws(password, sizeof(password), stdin);
 //     password[wcslen(password) - 1] = L'\0';
     
-//     fgetws(id, sizeof(id), stdin);
-//     id[wcslen(id) - 1] = L'\0';
+    fgetws(id, sizeof(id), stdin);
+    id[wcslen(id) - 1] = L'\0';
 
-//     fgetws(idx, sizeof(idx), stdin);
-//     idx[wcslen(idx) - 1] = L'\0';
+    // fgetws(idx, sizeof(idx), stdin);
+    // idx[wcslen(idx) - 1] = L'\0';
 
-//     // fgetws(name, sizeof(name), stdin);
-//     // name[wcslen(name) - 1] = L'\0';
+    fgetws(name, sizeof(name), stdin);
+    name[wcslen(name) - 1] = L'\0';
 
     
-//     // fgetws(new_info, sizeof(new_info), stdin);
-//     // new_info[wcslen(new_info) - 1] = L'\0';
-//     // fgetws(index, sizeof(index), stdin);
-//     // index[wcslen(new_info) - 1] = L'\0';
-    
-//     // wscanf(L"%d", &item);
+    fgetws(new_info, sizeof(new_info), stdin);
+    new_info[wcslen(new_info) - 1] = L'\0';
+    // fgetws(index, sizeof(index), stdin);
+    // index[wcslen(new_info) - 1] = L'\0';
+    // 
+    wscanf(L"%d", &item);
 //     wscanf(L"%lf", &NewGrade);
 //     // gets(index);
 //     // scanf("%lf", &NewGrade);
-//     // modify_stu(id, name, new_info, item);
+    modify_stu(id, name, new_info, item);
 //     // modify_course(idx, name, new_info, item);
 //     // modify_score0(acc, password, id, idx, NewGrade);
 //     modify_score1(acc, password, id, idx, NewGrade);
 
-//     return 0;
-// }
+    return 0;
+}

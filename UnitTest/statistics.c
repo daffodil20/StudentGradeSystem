@@ -10,11 +10,11 @@
 #include <fcntl.h>
 #include "print_format.h"
 // #include <wctype.h>
-// #include "statistics.h"
+#include "statistics.h"
 
-#define MAX_LINE_LENGTH 256
-#define MAX_TOTAL_COURSE 100
-#define MAX_STU_PER_COURSE 50
+// #define MAX_LINE_LENGTH 256
+// #define MAX_TOTAL_COURSE 100
+// #define MAX_STU_PER_COURSE 50
 // int calculate_display_width(const wchar_t* str) { //根据是否是汉字技术字符串实际宽度（英文宽字符是1）
 //     int width = 0;
 //     while (*str) {
@@ -461,16 +461,16 @@ void score_statistics(){ //综合分数分数段人数统计
     }
 }
 
-int main(){
-    setlocale(LC_ALL, "");
-    _setmode( _fileno( stdin ), _O_WTEXT );
+// int main(){
+//     setlocale(LC_ALL, "");
+//     _setmode( _fileno( stdin ), _O_WTEXT );
 
-    // average_score();
-    // average_exam_grade();
-    // max_exam_grade();
-    // max_score();
-    // exam_statistics();
-    score_statistics();
+//     // average_score();
+//     // average_exam_grade();
+//     // max_exam_grade();
+//     // max_score();
+//     // exam_statistics();
+//     score_statistics();
 
-    return 0;
-}
+//     return 0;
+// }
