@@ -11,6 +11,7 @@
 #include "delete.h"
 #include "statistics.h"
 #include "summary.h"
+#include "display.h"
 
 // TODO:新增,修改与删除账号
 // TODO:录入信息的函数需要加上参数，把scanf放到main里，多次调用
@@ -41,63 +42,81 @@ void enterBar(int taskLabel){
 void modifyBar(int taskLabel){
     wchar_t id[50], name[50], newInfo[50], idx[50], userName[50], password[50];
     double newGrade;
-    int item;
+    int item, counter;
     switch (taskLabel)
     {
     case 1:
         printf("这是修改学生基本信息的界面。\n");
+        printf("请输入修改学生基本信息的次数：\n");
         printf("你可以选择修改1-学号2-姓名3-性别4-年龄5-所在系。\n");
-        printf("请依次输入需要修改的学生信息的学号与姓名。\n");
+        scanf("%d", &counter);
+        if (counter > 0 && counter < 11){
+            for (int i = 0; i < counter ; i ++){
+                printf("这是第%d次修改。\n", counter+1);
+                printf("请依次输入需要修改的学生信息的学号、姓名、新信息与修改项。\n");
+                fgetws(id, sizeof(id), stdin);
+                id[wcslen(id)-1] = L'\0';
+                fgetws(name, sizeof(name), stdin);
+                name[wcslen(name)-1] = L'\0';
+                fgetws(newInfo, sizeof(newInfo), stdin);
+                newInfo[wcslen(newInfo)-1] = L'\0';
 
-        fgetws(id, sizeof(id), stdin);
-        id[wcslen(id)-1] = L'\0';
-        fgetws(name, sizeof(name), stdin);
-        name[wcslen(name)-1] = L'\0';
-        fgetws(newInfo, sizeof(newInfo), stdin);
-        newInfo[wcslen(newInfo)-1] = L'\0';
-
-        wscanf(L"%d", &item);
-        modify_stu(id, name, newInfo, item);
+                wscanf(L"%d", &item);
+                modify_stu(id, name, newInfo, item);
+            }
+        }else
+            printf("修改次数不在1-10的范围内。\n");
         break;
     case 2:
         printf("这是修改课程基本信息的界面。\n");
         printf("你可以选择修改1-课号2-课名3-任课老师。\n");
-        printf("请依次输入需要修改的课号、课名、新信息与修改项。\n");
+        scanf("%d", &counter);
+        if (counter > 0 && counter < 11){
+            for (int i = 0; i < counter ; i ++){
+                printf("请依次输入需要修改的课号、课名、新信息与修改项。\n");
+                fgetws(idx, sizeof(idx), stdin);  
+                idx[wcslen(idx)-1] = L'\0';
+                fgetws(name, sizeof(name), stdin);
+                name[wcslen(name)-1] = L'\0';
+                fgetws(newInfo, sizeof(newInfo), stdin);
+                name[wcslen(newInfo)-1] = L'\0';
 
-        fgetws(idx, sizeof(idx), stdin);
-        idx[wcslen(idx)-1] = L'\0';
-        fgetws(name, sizeof(name), stdin);
-        name[wcslen(name)-1] = L'\0';
-        fgetws(newInfo, sizeof(newInfo), stdin);
-        name[wcslen(newInfo)-1] = L'\0';
-
-        wscanf(L"%d", &item);
-        modify_course(idx, name, newInfo, item);
+                wscanf(L"%d", &item);
+                modify_course(idx, name, newInfo, item);
+            }
+        }else
+            printf("修改次数不在1-10的范围内。\n");
         break;
     case 3:
         printf("这是修改学生成绩的界面。\n");
         printf("你可以选择修改1-学号2-姓名3-性别4-年龄5-所在系。\n");
-        printf("修改成绩需要输入你的用户名和密码。\n");
-        printf("请依次输入用户名、密码、学号、课号、修改项（1-平时成绩，2-卷面成绩）与新成绩。\n");
+        
+        scanf("%d", &counter);
+        if (counter > 0 && counter < 11){
+            for (int i = 0; i < counter ; i ++){
+                printf("修改成绩需要输入你的用户名和密码。\n");
+                printf("请依次输入用户名、密码、学号、课号、修改项（1-平时成绩，2-卷面成绩）与新成绩。\n");
+                fgetws(userName, sizeof(userName), stdin);
+                userName[wcslen(userName)-1] = L'\0';
+                fgetws(password, sizeof(password), stdin);
+                password[wcslen(password)-1] = L'\0';
+                fgetws(id, sizeof(id), stdin);
+                id[wcslen(id)-1] = L'\0';
+                fgetws(idx, sizeof(idx), stdin);
+                idx[wcslen(idx)-1] = L'\0';
 
-        fgetws(userName, sizeof(userName), stdin);
-        userName[wcslen(userName)-1] = L'\0';
-        fgetws(password, sizeof(password), stdin);
-        password[wcslen(password)-1] = L'\0';
-        fgetws(id, sizeof(id), stdin);
-        id[wcslen(id)-1] = L'\0';
-        fgetws(idx, sizeof(idx), stdin);
-        idx[wcslen(idx)-1] = L'\0';
-
-        wscanf(L"%d", &item);
-        wscanf(L"%lf", &newGrade);
-        if (item == 1)
-            modify_score0(userName, password, id, idx, newGrade);
-        else if (item == 2)
-            modify_score1(userName, password, id, idx, newGrade);
-        else
-            printf("修改信息项不存在。\n");
-        break;   
+                wscanf(L"%d", &item);
+                wscanf(L"%lf", &newGrade);
+                if (item == 1)
+                    modify_score0(userName, password, id, idx, newGrade);
+                else if (item == 2)
+                    modify_score1(userName, password, id, idx, newGrade);
+                else
+                    printf("修改信息项不存在。\n");
+            }
+        }else
+            printf("修改次数不在1-10的范围内。\n");
+            break;   
     default:
         printf("这是无效的任务编号，请重新选择。\n");
         break;
@@ -285,6 +304,7 @@ void manager(int task_num){
         // return 6;
     case 7:
         printf("这是显示全部学生信息的界面.\n");
+        display();
         break;
         // return 7;
     case 8:
@@ -337,6 +357,7 @@ void teacher(int task_num){
         // return 3;
     case 4:
         printf("这是显示全部学生信息的界面.\n");
+        display();
         break;
         // return 4;    
     case 5:
@@ -394,7 +415,8 @@ void student(int task_num){
     switch (task_num)
     {
     case 1:
-        printf("这是显示本班学生信息的界面.\n");
+        printf("这是显示学生信息的界面.\n");
+        display();
         break;
         // return 1;
     case 2:
