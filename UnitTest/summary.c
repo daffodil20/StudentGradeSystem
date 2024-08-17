@@ -3,18 +3,17 @@
 #include "student.h"
 #include "course.h"
 #include <string.h>
-// #include "summary.h"
+#include "summary.h"
 #include <locale.h>
 #include <wchar.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <fcntl.h>
 #include "print_format.h"
-
-#define MAX_LINE_LENGTH 256
-#define MAX_TOTAL_COURSE 100
-#define MAX_STU_PER_COURSE 50
-#define MAX_STU_TOTAL 300
+// #define MAX_LINE_LENGTH 256
+// #define MAX_TOTAL_COURSE 100
+// #define MAX_STU_PER_COURSE 50
+// #define MAX_STU_TOTAL 300
 void course_info(){ //显示每门课程的情况：课号、课名、总人数、不及格人数、不及格百分比
     FILE *fp;
     struct Score score;
@@ -139,12 +138,12 @@ void stu_info(){
     }
 }
 
-int main(){
-    setlocale(LC_ALL, "");
-    _setmode( _fileno( stdin ), _O_WTEXT );
+// int main(){
+//     setlocale(LC_ALL, "");
+//     _setmode( _fileno( stdin ), _O_WTEXT );
 
-    course_info();
-    // stu_info();
+//     course_info();
+//     // stu_info();
 
-    return 0;
-}
+//     return 0;
+// }

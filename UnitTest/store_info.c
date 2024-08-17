@@ -9,7 +9,8 @@
 #include <math.h>
 #include "course.h"
 #include "score.h"
-// #include "store_info.h"
+#include "store_info.h"
+#include "calculateScore.h"
 
 // TODO: 增加序号
 
@@ -17,7 +18,7 @@
 // setlocale(LC_ALL, "");
 // _setmode( _fileno( stdin ), _O_WTEXT );
 
-void student(){
+void enterStu() {
     FILE* fptr;
     // setlocale(LC_CTYPE,"it_IT.UTF-8");
     // setlocale(LC_ALL, "en_US.utf8");
@@ -135,7 +136,6 @@ void student(){
         }
     }
     fclose(fptr);
-
     // fptr = fopen("student.txt", "r");
     // 刷新缓冲区
     //fflush(fptr);
@@ -162,7 +162,7 @@ void student(){
     // fclose(fptr);
 }
 
-void course(){
+void enterCourse(){
     FILE* fptr;
     fptr = fopen("course.txt", "a+"); //追加与读取同时进行
     if (fptr == NULL){
@@ -232,14 +232,14 @@ void course(){
 
 }
 
-double calculate_score(wchar_t* idx, double score0, double score1){ //计算综合成绩
-    if (idx[0] == L'S')//专业课
-        return score0 * 0.4 + score1 * 0.6;
-    if (idx[0] == L'P')//公共课
-        return score0 * 0.3 + score1 * 0.7;
-}
+// double calculate_score(wchar_t* idx, double score0, double score1){ //计算综合成绩
+//     if (idx[0] == L'S')//专业课
+//         return score0 * 0.4 + score1 * 0.6;
+//     if (idx[0] == L'P')//公共课
+//         return score0 * 0.3 + score1 * 0.7;
+// }
 
-void score(){
+void enterScore(){
     FILE* fptr;
     fptr = fopen("score.txt", "a");
     if (fptr == NULL){
@@ -254,7 +254,7 @@ void score(){
     //录入学生成绩信息
     struct Score score;//定义结构体
     int saveLabel;
-    printf("请输入需要录入的成绩信息：\n");
+    printf("请输入需要录入的成绩信息，依次为学号、课号、平时成绩和卷面成绩，中间使用回车键：\n");
     for (int i = 0; i < total; i ++){
         // scanf("%s %s %lf %lf", score.ID, score.index, &score.daily_grade, &score.exam_grade);
         fgetws(score.ID, sizeof(score.ID), stdin);
@@ -302,13 +302,13 @@ void score(){
 
 }
 
-int main(){
-    // setlocale(LC_CTYPE,"it_IT.UTF-8");//区域设置
-    setlocale(LC_ALL, "");
-    _setmode( _fileno( stdin ), _O_WTEXT );
-    // student();
-    // course();
-    score();
+// int main(){
+//     // setlocale(LC_CTYPE,"it_IT.UTF-8");//区域设置
+//     setlocale(LC_ALL, "");
+//     _setmode( _fileno( stdin ), _O_WTEXT );
+//     enterStu();
+// //     // course();
+// //     score();
 
-    return 0;
-}
+// //     return 0;
+// }

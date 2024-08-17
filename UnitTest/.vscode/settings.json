@@ -10,6 +10,11 @@
         "modify.h": "c",
         "search.h": "c",
         "wchar.h": "c",
-        "statistics.h": "c"
+        "statistics.h": "c",
+        "system_error": "c",
+        "xlocale": "c",
+        "account.h": "c",
+        "math.h": "c",
+        "fcntl.h": "c"
     }
 }

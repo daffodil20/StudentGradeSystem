@@ -1,3 +1,3 @@
-void student();
-void course();
-void score();
+void enterStu();
+void enterCourse();
+void enterScore();

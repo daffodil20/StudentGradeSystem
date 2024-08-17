@@ -8,8 +8,8 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <stdint.h>
-// #include "delete.h"
-#define MAX_LINE_LENGTH 256
+#include "delete.h"
+// #define MAX_LINE_LENGTH 256
 void delete_stu(wchar_t* old_id, wchar_t* old_name){ //根据学生学号和姓名删除学生信息
     FILE *fp;
     char first_line[MAX_LINE_LENGTH], buffer[MAX_LINE_LENGTH];
@@ -293,23 +293,23 @@ void delete_score(wchar_t* id, wchar_t* idx){ //根据学生学号和课程课�
     fclose(fp);
 }
 
-int main(){
-    setlocale(LC_ALL, "");
-    _setmode( _fileno( stdin ), _O_WTEXT );
+// int main(){
+//     setlocale(LC_ALL, "");
+//     _setmode( _fileno( stdin ), _O_WTEXT );
 
-    wchar_t id[50], index[50], name[50];
-    fgetws(id, sizeof(id), stdin);
-    id[wcslen(id)-1] = L'\0';
+//     wchar_t id[50], index[50], name[50];
+//     fgetws(id, sizeof(id), stdin);
+//     id[wcslen(id)-1] = L'\0';
 
-    fgetws(index, sizeof(index), stdin);
-    index[wcslen(index)-1] = L'\0';
-    // gets(index);
-    // fgetws(name, sizeof(name), stdin);
-    // name[wcslen(name)-1] = L'\0';
-    // gets(index);
-    // delete_stu(id, name);
-    delete_score(id, index);
-    // delete_course(index, name);
+//     fgetws(index, sizeof(index), stdin);
+//     index[wcslen(index)-1] = L'\0';
+//     // gets(index);
+//     // fgetws(name, sizeof(name), stdin);
+//     // name[wcslen(name)-1] = L'\0';
+//     // gets(index);
+//     // delete_stu(id, name);
+//     delete_score(id, index);
+//     // delete_course(index, name);
 
-    return 0;
-}
+//     return 0;
+// }

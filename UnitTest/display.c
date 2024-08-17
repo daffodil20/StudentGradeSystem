@@ -1,8 +1,7 @@
-
-
 #include "student.h"
 #include "score.h"
 #include "course.h"
+#include "display.h"
 #include <stdio.h>
 #include <string.h>
 #include <locale.h>
@@ -18,7 +17,7 @@
 //显示信息
 // 格式:学生 ID,name,gender,age,profession
 //      课程及成绩 course name,s1,s2,s
-#define MAX_LINE_LENGTH 256
+// #define MAX_LINE_LENGTH 256
 void display(){
     FILE *fp1, *fp2, *fp3;
     
@@ -171,10 +170,10 @@ void display(){
     
 }
 
-int main(){
-    setlocale(LC_ALL, "");
-    _setmode( _fileno( stdin ), _O_WTEXT );
-    display();
+// int main(){
+//     setlocale(LC_ALL, "");
+//     _setmode( _fileno( stdin ), _O_WTEXT );
+//     display();
 
-    return 0;
-}
+//     return 0;
+// }

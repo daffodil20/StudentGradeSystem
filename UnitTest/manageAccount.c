@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "account.h"
-// #include "manageAccount.h"
+#include "manageAccount.h"
 #include "student.h"
 #include <locale.h>
 #include <wchar.h>
@@ -11,11 +11,15 @@
 #include "course.h"
 #include "score.h"
 #include <fcntl.h>
-#define MAX_LINE_LENGTH 256
+// #define MAX_LINE_LENGTH 256
 
 void add_info(wchar_t* username, wchar_t* name, wchar_t* role){ //用户名和姓名
     // struct Account account;
-
+    //保证角色正确
+    if (wcscmp(role, L"管理员") != 0 && wcscmp(role, L"教师") != 0 && wcscmp(role, L"学生") != 0){ //角色输入错误
+        printf("创建的用户角色错误！\n");
+        return;
+    }
     //以追加模式打开文件
     FILE *fp;
     fp = fopen("account_info.txt", "a");
@@ -25,10 +29,11 @@ void add_info(wchar_t* username, wchar_t* name, wchar_t* role){ //用户名和�
     }
 
     fwprintf(fp, L"%ls,%ls,%ls,%ls\n", username, name, role, L"12345");
+    printf("添加用户信息成功！\n");
     fclose(fp);
 }
 
-//修改管理员密码
+//修改密码
 int modify_password(wchar_t* username, wchar_t* name, wchar_t* new_password){
     //判断密码是否符合要求
     if (wcslen(new_password) != 5){
@@ -75,6 +80,7 @@ int modify_password(wchar_t* username, wchar_t* name, wchar_t* new_password){
 
             if (wcscmp(username, new_node->account.user) == 0 && wcscmp(name, new_node->account.name) == 0){ //用户名和姓名匹配
                 wcscpy(new_node->account.password, new_password); //修改密码
+                printf("修改密码成功！\n");
                 // modified = 1;//标记修改成功
             }
             if (wcscmp(username, new_node->account.user) != 0 && wcscmp(name, new_node->account.name) == 0){
@@ -119,71 +125,71 @@ int modify_password(wchar_t* username, wchar_t* name, wchar_t* new_password){
 }
 
 //TODO:把修改密码时输入密码不符合条件写道函数里，不能在main里
-int main(){
-    wchar_t userName[50], name[50], role[50], newPassword[50], temp_new[50];
-    int total, passLabel; //记录添加信息的条数和是否正确修改密码
-    setlocale(LC_ALL, "");
-    _setmode( _fileno( stdin ), _O_WTEXT );
-    // gets(userName); //老师的用户名为工号，学生的为学号
-    // gets(name);
-    // gets(newPassword);
-    // // gets(role);
-    // scanf("%d", &total);
-    // fgets(userName, sizeof(userName), stdin);
-    // printf("username:%s", userName);
-    // fgets(name, sizeof(name), stdin);
-    // printf("name:%s", name);
-    // fgets(role, sizeof(role), stdin);
-    // printf("role:%s", role);
-    // scanf("%d ", &total);
-    // wscanf(L"用户名,姓名,角色,密码\n");
-    fgetws(userName, sizeof(userName), stdin);
-    userName[wcslen(userName) - 1] = L'\0';
-    fgetws(name, sizeof(name), stdin);
-    name[wcslen(name) - 1] = L'\0';
-    // fgetws(, sizeof(userName), stdin);
-    // fgetws(role, sizeof(role), stdin);
-    // role[wcslen(role) - 1] = L'\0';
-    fgetws(newPassword, sizeof(newPassword), stdin);
-    newPassword[wcslen(newPassword) - 1] = L'\0';
+// int main(){
+//     wchar_t userName[50], name[50], role[50], newPassword[50], temp_new[50];
+//     int total, passLabel; //记录添加信息的条数和是否正确修改密码
+//     setlocale(LC_ALL, "");
+//     _setmode( _fileno( stdin ), _O_WTEXT );
+//     // gets(userName); //老师的用户名为工号，学生的为学号
+//     // gets(name);
+//     // gets(newPassword);
+//     // // gets(role);
+//     // scanf("%d", &total);
+//     // fgets(userName, sizeof(userName), stdin);
+//     // printf("username:%s", userName);
+//     // fgets(name, sizeof(name), stdin);
+//     // printf("name:%s", name);
+//     // fgets(role, sizeof(role), stdin);
+//     // printf("role:%s", role);
+//     // scanf("%d ", &total);
+//     // wscanf(L"用户名,姓名,角色,密码\n");
+//     fgetws(userName, sizeof(userName), stdin);
+//     userName[wcslen(userName) - 1] = L'\0';
+//     fgetws(name, sizeof(name), stdin);
+//     name[wcslen(name) - 1] = L'\0';
+//     // fgetws(, sizeof(userName), stdin);
+//     // fgetws(role, sizeof(role), stdin);
+//     // role[wcslen(role) - 1] = L'\0';
+//     fgetws(newPassword, sizeof(newPassword), stdin);
+//     newPassword[wcslen(newPassword) - 1] = L'\0';
 
-    // FILE *fp;
-    // fp = fopen("account_info.txt", "a");
+//     // FILE *fp;
+//     // fp = fopen("account_info.txt", "a");
     
-    // fwprintf(fp, L"用户名,姓名,角色,密码\n");
-    // add_info(userName, name, role);
-    modify_password(userName, name, newPassword);
-    // fclose(fp);
-    // for (int i = 0; i < total; i ++){ //多次输入管理员信息
-    //     // add_info(userName, name, role);
-    //     gets(userName); //老师的用户名为工号，学生的为学号
-    //     gets(name);
-    //     gets(newPassword);//第一次输入新密码
-    //     //判断密码长度
-    //     // for (int j = 0; j < strlen(newPassword); j ++){
-    //     //     if ((newPassword[j] >= 'a' && newPassword[j] <= 'z') || (newPassword[j] >= '0' && newPassword[j] <= '9')){ //密码符合条件
-    //     //         continue;
-    //     //     }else{
-    //     //         printf("密码不符合条件，密码不能含有特殊符号或大写字母。请重新输入信息：\n");
-    //     //         i --;
-    //     //         break;
-    //     //     }
-    //     // }
-    //     passLabel = modify_password(userName, name, newPassword);
-    //     if (passLabel == 0){ //寻找对应的账号
-    //         strcpy(temp_new, newPassword);
-    //         printf("请再次输入新密码以确认：\n");
-    //         gets(newPassword);//再次输入新密码
-    //         if (strcmp(newPassword, temp_new) == 0)
-    //             printf("修改密码成功！\n");
-    //         else{
-    //             printf("第二次输入错误！请重新输入用户名、姓名和新密码：\n");
-    //             i --;
-    //         }
-    //     }else{
-    //        i --;
-    //     }   
-    // }
+//     // fwprintf(fp, L"用户名,姓名,角色,密码\n");
+//     // add_info(userName, name, role);
+//     modify_password(userName, name, newPassword);
+//     // fclose(fp);
+//     // for (int i = 0; i < total; i ++){ //多次输入管理员信息
+//     //     // add_info(userName, name, role);
+//     //     gets(userName); //老师的用户名为工号，学生的为学号
+//     //     gets(name);
+//     //     gets(newPassword);//第一次输入新密码
+//     //     //判断密码长度
+//     //     // for (int j = 0; j < strlen(newPassword); j ++){
+//     //     //     if ((newPassword[j] >= 'a' && newPassword[j] <= 'z') || (newPassword[j] >= '0' && newPassword[j] <= '9')){ //密码符合条件
+//     //     //         continue;
+//     //     //     }else{
+//     //     //         printf("密码不符合条件，密码不能含有特殊符号或大写字母。请重新输入信息：\n");
+//     //     //         i --;
+//     //     //         break;
+//     //     //     }
+//     //     // }
+//     //     passLabel = modify_password(userName, name, newPassword);
+//     //     if (passLabel == 0){ //寻找对应的账号
+//     //         strcpy(temp_new, newPassword);
+//     //         printf("请再次输入新密码以确认：\n");
+//     //         gets(newPassword);//再次输入新密码
+//     //         if (strcmp(newPassword, temp_new) == 0)
+//     //             printf("修改密码成功！\n");
+//     //         else{
+//     //             printf("第二次输入错误！请重新输入用户名、姓名和新密码：\n");
+//     //             i --;
+//     //         }
+//     //     }else{
+//     //        i --;
+//     //     }   
+//     // }
     
-    return 0;
-}
+//     return 0;
+// }

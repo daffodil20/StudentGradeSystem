@@ -1,0 +1,51 @@
+Date : 2024-08-17 16:10:35
+Directory : c:\code\StudentGradeSystem\UnitTest
+Total : 26 files,  751 codes, 654 comments, 158 blanks, all 1563 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C        |         18 |        735 |        654 |        157 |      1,546 |
+| C++      |          8 |         16 |          0 |          1 |         17 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                 | files      | code       | comment    | blank      | total      |
++------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                    |         26 |        751 |        654 |        158 |      1,563 |
++------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                             | language | code       | comment    | blank      | total      |
++------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\code\StudentGradeSystem\UnitTest\MainMenu.c       | C        |        388 |         62 |         54 |        504 |
+| c:\code\StudentGradeSystem\UnitTest\calculateScore.c | C        |          7 |          1 |          0 |          8 |
+| c:\code\StudentGradeSystem\UnitTest\calculateScore.h | C++      |          1 |          0 |          1 |          2 |
+| c:\code\StudentGradeSystem\UnitTest\course.h         | C++      |          1 |          0 |          0 |          1 |
+| c:\code\StudentGradeSystem\UnitTest\delete.c         | C        |         36 |         17 |          3 |         56 |
+| c:\code\StudentGradeSystem\UnitTest\delete.h         | C++      |          4 |          0 |          0 |          4 |
+| c:\code\StudentGradeSystem\UnitTest\display.c        | C        |         19 |          7 |         -1 |         25 |
+| c:\code\StudentGradeSystem\UnitTest\display.h        | C++      |          2 |          0 |          0 |          2 |
+| c:\code\StudentGradeSystem\UnitTest\example.c        | C        |         10 |        189 |         52 |        251 |
+| c:\code\StudentGradeSystem\UnitTest\manageAccount.c  | C        |         -3 |         53 |         -4 |         46 |
+| c:\code\StudentGradeSystem\UnitTest\manageAccount.h  | C++      |          3 |          0 |          0 |          3 |
+| c:\code\StudentGradeSystem\UnitTest\modify.c         | C        |         48 |         48 |         11 |        107 |
+| c:\code\StudentGradeSystem\UnitTest\modify.h         | C        |          5 |          0 |          1 |          6 |
+| c:\code\StudentGradeSystem\UnitTest\print_format.c   | C        |         15 |          0 |          0 |         15 |
+| c:\code\StudentGradeSystem\UnitTest\print_format.h   | C++      |          1 |          0 |          0 |          1 |
+| c:\code\StudentGradeSystem\UnitTest\score.h          | C++      |          1 |          0 |          0 |          1 |
+| c:\code\StudentGradeSystem\UnitTest\search.c         | C        |         57 |         35 |          5 |         97 |
+| c:\code\StudentGradeSystem\UnitTest\search.h         | C        |          7 |          0 |          1 |          8 |
+| c:\code\StudentGradeSystem\UnitTest\statistics.c     | C        |         61 |         22 |          2 |         85 |
+| c:\code\StudentGradeSystem\UnitTest\statistics.h     | C        |          9 |          0 |          1 |         10 |
+| c:\code\StudentGradeSystem\UnitTest\store_info.c     | C        |         63 |         12 |          4 |         79 |
+| c:\code\StudentGradeSystem\UnitTest\store_info.h     | C++      |          3 |          0 |          0 |          3 |
+| c:\code\StudentGradeSystem\UnitTest\student.h        | C        |          1 |          0 |          0 |          1 |
+| c:\code\StudentGradeSystem\UnitTest\summary.c        | C        |          7 |         18 |          0 |         25 |
+| c:\code\StudentGradeSystem\UnitTest\summary.h        | C        |          6 |          0 |          1 |          7 |
+| c:\code\StudentGradeSystem\UnitTest\testout.c        | C        |         -1 |        190 |         27 |        216 |
+| Total                                                |          |        751 |        654 |        158 |      1,563 |
++------------------------------------------------------+----------+------------+------------+------------+------------+

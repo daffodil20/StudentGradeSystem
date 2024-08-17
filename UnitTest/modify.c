@@ -8,14 +8,15 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <fcntl.h>
-// #include "modify.h"
+#include "modify.h"
 #include "account.h"
+#include "calculateScore.h"
 
 // TODO: 根据姓名与课名修改
 // TODO: (possible)变量全局化
 
 // TODO: 如果课程与学生已经有成绩录入，则课号与学号不能修改、删除，只能修改课名、姓名、性别、年龄
-#define MAX_LINE_LENGTH 256
+// #define MAX_LINE_LENGTH 256
 
 void modify_stu(wchar_t* id, wchar_t* name, wchar_t* new_info, int item) { //根据学号与姓名修改
     FILE *fp;
@@ -240,12 +241,12 @@ void modify_course(wchar_t* idx, wchar_t* name, wchar_t* new_info, int item) { /
     }
 }
 
-double calculate_score(wchar_t* idx, double score0, double score1){ //计算综合成绩
-    if (idx[0] == L'S')//专业课
-        return score0 * 0.4 + score1 * 0.6;
-    if (idx[0] == L'P')//公共课
-        return score0 * 0.3 + score1 * 0.7;
-}
+// double calculate_score(wchar_t* idx, double score0, double score1){ //计算综合成绩
+//     if (idx[0] == L'S')//专业课
+//         return score0 * 0.4 + score1 * 0.6;
+//     if (idx[0] == L'P')//公共课
+//         return score0 * 0.3 + score1 * 0.7;
+// }
 
 //修改成绩信息
 void modify_score0(wchar_t* accountName, wchar_t* PassWord, wchar_t* id, wchar_t* idx, double new_grade){//是哪个成绩到gui再做，查找需要id和idx
@@ -454,51 +455,51 @@ void modify_score1(wchar_t* accountName, wchar_t* PassWord, wchar_t* id, wchar_t
     }
 }
 
-int main() {
-    setlocale(LC_ALL, "");
-    _setmode( _fileno( stdin ), _O_WTEXT );
-    wchar_t idx[50], new_info[50], password[50], id[50], name[50], acc[50];
-    double NewGrade;//平时或卷面成绩
-    int item;
+// int main() {
+//     setlocale(LC_ALL, "");
+//     _setmode( _fileno( stdin ), _O_WTEXT );
+//     wchar_t idx[50], new_info[50], password[50], id[50], name[50], acc[50];
+//     double NewGrade;//平时或卷面成绩
+//     int item;
 
-// //     // printf("请输入课程编号、新信息和要修改的项（1: 课号, 2: 名称，3：老师）：\n");
-// //     gets(idx);
-// //     gets(name);
-// //     gets(new_info);
-// //     scanf("%d", &item);
-// //     modify_course(idx, name, new_info, item);
-//     // gets(password);
-//     // fgetws(id, sizeof(id), stdin);
-//     // id[wcslen(id) - 1] = L'\0';
-//     fgetws(acc, sizeof(acc), stdin);
-//     acc[wcslen(acc) - 1] = L'\0';
+// // //     // printf("请输入课程编号、新信息和要修改的项（1: 课号, 2: 名称，3：老师）：\n");
+// // //     gets(idx);
+// // //     gets(name);
+// // //     gets(new_info);
+// // //     scanf("%d", &item);
+// // //     modify_course(idx, name, new_info, item);
+// //     // gets(password);
+    // fgetws(id, sizeof(id), stdin);
+// //     // id[wcslen(id) - 1] = L'\0';
+    // fgetws(acc, sizeof(acc), stdin);
+    // // acc[wcslen(acc) - 1] = L'\0';
 
-//     fgetws(password, sizeof(password), stdin);
-//     password[wcslen(password) - 1] = L'\0';
+    // fgetws(password, sizeof(password), stdin);
+    // // password[wcslen(password) - 1] = L'\0';
     
-    fgetws(id, sizeof(id), stdin);
-    id[wcslen(id) - 1] = L'\0';
+    // fgetws(id, sizeof(id), stdin);
+    // // id[wcslen(id) - 1] = L'\0';
 
     // fgetws(idx, sizeof(idx), stdin);
     // idx[wcslen(idx) - 1] = L'\0';
 
-    fgetws(name, sizeof(name), stdin);
-    name[wcslen(name) - 1] = L'\0';
+//     fgetws(name, sizeof(name), stdin);
+//     name[wcslen(name) - 1] = L'\0';
 
     
-    fgetws(new_info, sizeof(new_info), stdin);
-    new_info[wcslen(new_info) - 1] = L'\0';
-    // fgetws(index, sizeof(index), stdin);
-    // index[wcslen(new_info) - 1] = L'\0';
-    // 
-    wscanf(L"%d", &item);
+    // fgetws(new_info, sizeof(new_info), stdin);
+    // new_info[wcslen(new_info) - 1] = L'\0';
+//     // fgetws(index, sizeof(index), stdin);
+//     // index[wcslen(new_info) - 1] = L'\0';
+//     // 
+    // wscanf(L"%d", &item);
 //     wscanf(L"%lf", &NewGrade);
-//     // gets(index);
-//     // scanf("%lf", &NewGrade);
-    modify_stu(id, name, new_info, item);
-//     // modify_course(idx, name, new_info, item);
-//     // modify_score0(acc, password, id, idx, NewGrade);
+// // // //     // gets(index);
+// // // //     // scanf("%lf", &NewGrade);
+// // //     modify_stu(id, name, new_info, item);
+// // // //     // modify_course(idx, name, new_info, item);
+// // // //     // modify_score0(acc, password, id, idx, NewGrade);
 //     modify_score1(acc, password, id, idx, NewGrade);
 
-    return 0;
-}
+//     return 0;
+// }
