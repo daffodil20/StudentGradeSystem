@@ -128,7 +128,7 @@ void enterStu() {
 
         if (sameID == 0) {
             fwprintf(fptr, L"%ls,%ls,%ls,%ls,%ls\n", stu.ID, stu.name, stu.gender, stu.age, stu.profession);
-            wprintf(L"录入信息：%ls,%ls,%ls,%ls,%ls\n", stu.ID, stu.name, stu.gender, stu.age, stu.profession);//显示录入信息
+            // wprintf(L"录入信息：%ls,%ls,%ls,%ls,%ls\n", stu.ID, stu.name, stu.gender, stu.age, stu.profession);//显示录入信息
             printf("学生信息已录入！\n");
         } else {
             printf("学号重复出现，请重新输入。\n");
@@ -214,7 +214,7 @@ void enterCourse(){
 
         if (sameIdx == 0) {
             fwprintf(fptr, L"%ls,%ls,%ls\n", course.index, course.name, course.teacher);
-            wprintf(L"录入信息：%ls,%ls,%ls\n", course.index, course.name, course.teacher);//显示录入信息
+            // wprintf(L"录入信息：%ls,%ls,%ls\n", course.index, course.name, course.teacher);//显示录入信息
             printf("课程信息已录入！\n");
         } else {
             printf("课号重复出现，请重新输入。\n");
@@ -263,10 +263,10 @@ void enterScore(){
         score.index[wcslen(score.index) - 1] = L'\0';
 
         wscanf(L"%lf", &score.daily_grade);
-        wprintf(L"平时：%lf\n", score.daily_grade);
+        // wprintf(L"平时：%lf\n", score.daily_grade);
         getwchar();
         wscanf(L"%lf", &score.exam_grade);
-        wprintf(L"卷面：%lf\n", score.exam_grade);
+        // wprintf(L"卷面：%lf\n", score.exam_grade);
         getwchar();
         printf("请选择是否保存学生成绩：0-是,1-否\n");
         

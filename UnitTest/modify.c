@@ -241,13 +241,6 @@ void modify_course(wchar_t* idx, wchar_t* name, wchar_t* new_info, int item) { /
     }
 }
 
-// double calculate_score(wchar_t* idx, double score0, double score1){ //计算综合成绩
-//     if (idx[0] == L'S')//专业课
-//         return score0 * 0.4 + score1 * 0.6;
-//     if (idx[0] == L'P')//公共课
-//         return score0 * 0.3 + score1 * 0.7;
-// }
-
 //修改成绩信息
 void modify_score0(wchar_t* accountName, wchar_t* PassWord, wchar_t* id, wchar_t* idx, double new_grade){//是哪个成绩到gui再做，查找需要id和idx
     //定义变量
